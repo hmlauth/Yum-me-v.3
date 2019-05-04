@@ -1,22 +1,21 @@
 import React from "react";
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Nav from "./components/Nav";
-import Login from "./pages";
-console.log(Login)
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
 
 const App = () => (
-  
-  <div>
-    <Nav />
-    <Login />
-    {/* <Switch>
-      <Route exact path="/" component={Books} />
-      <Route exact path="/books" component={Books} />
-      <Route exact path="/books/:id" component={Detail} />
-      <Route component={NoMatch} />
-    </Switch> */}
-  </div>
-
+  <Router>
+    <div>
+      <Nav />
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/landing" component={Landing} />
+        {/* <Route exact path="/books/:id" component={Detail} /> */}
+        {/* <Route component={NoMatch} /> */}
+      </Switch>
+    </div>
+  </Router>
 );
 
 export default App;
