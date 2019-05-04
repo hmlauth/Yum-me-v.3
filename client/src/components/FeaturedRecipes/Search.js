@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 // import cheerio from "cheerio";
 import $ from "jquery";
 import React, { Component } from "react";
@@ -61,17 +61,10 @@ class Search extends Component {
     )
   }
 
-  // loadRecipes = () => {
-  //   API.getRecipes()
-  //   .then(res =>
-  //     this.setState({ recipes: res.data, title: "" })
-  //   )
-  //   .catch(err => console.log(err));
-  // }
-
   saveRecipe = recipe => {
   
     console.log("...saving recipe", recipe);
+    console.log('API:', API)
     const { recipe_id, title, image_url, source_url, publisher, publisher_url, social_rank } = recipe
 
       API.saveRecipe({
@@ -84,7 +77,7 @@ class Search extends Component {
         social_rank
       })
         .then(res => console.log('Recipe Saved!', res))
-        .catch(err => console.log(err));
+        .catch(err => console.log('errrrrrror', err));
     }
     
 

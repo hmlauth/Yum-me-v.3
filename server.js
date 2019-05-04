@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB - 'recipeScraper'
-var databaseUri = 'mongodb://localhost/yumme';
+var databaseUri = 'mongodb://localhost/yummev3';
 
 if (process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI);

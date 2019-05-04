@@ -1,7 +1,11 @@
 const router = require("express").Router();
+const recipeRoutes = require("./recipes");
 const userRoutes = require("./user");
 
-// user routes
+// Recipe routes
+router.use("/recipes", recipeRoutes);
+
+// User route
 router.use("/user", userRoutes);
 
 module.exports = router;
