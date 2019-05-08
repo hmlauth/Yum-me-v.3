@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <title>Search</title>
+</head>
+
+<body>
+    <div id="buttons">
+        <label> 
+            <input id="query" value='cooking tips' type="text" /><button id="search-button"
+            onclick="makeRequest()">Search</button>
+        </label>
+    </div>
+    <div id="video-list" style="width:853px;overflow:auto;background-color:#EEEEEE"></div>
+    <iframe id="player" width="853" height="480" src="" frameborder="1" allowfullscreen></iframe>
+    <div id="video-container"></div>
+    </div>
+</body>
