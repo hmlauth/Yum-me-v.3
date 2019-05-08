@@ -7,7 +7,8 @@ function NavBar() {
             <a className="navbar-brand">Yum(me).v.3</a>
             <a className="navbar-brand" href="/login">Login</a>
             <a className="navbar-brand" href="/landing">Landing</a>
-        </nav>
+            <a className="navbar-brand" href="/develop">Develop</a>
+    </nav>
     </div>
 }
 
