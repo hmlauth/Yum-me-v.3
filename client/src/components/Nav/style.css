@@ -1,3 +1,13 @@
-a {
+/* a {
     color: blue;
+} */
+
+li {
+    margin-right: 10px;
+    margin-top: 25px;
+}
+
+img {
+    width: 120px; 
+    height: 80px; 
 }
