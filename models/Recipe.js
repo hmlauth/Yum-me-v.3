@@ -2,7 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
-  recipe_id: {
+  id: {
+    type: String, 
+    required: true 
+  },
+  sourceUrl: {
+    type: String,
+    required: true,
+  },
+  img: { 
     type: String, 
     required: true 
   },
@@ -10,20 +18,23 @@ const recipeSchema = new Schema({
     type: String, 
     required: true 
   },
-  image_url: { 
-    type: String, 
-    required: true 
+  servings: String,
+  extendedIngredients: {
+    Ingredients: {
+      type: Array
+    },
+    Toppings: {
+      type: Array
+    }
   },
-  source_url: {
-    type: String,
-    required: true,
+  extendedInstructions: {
+    Instructions: {
+      type: Array
+    },
+    Topping: {
+      type: Array
+    }
   },
-  social_rank: {
-    type: Number,
-    required: true
-  },
-  publisher: String,
-  publisher_url: String,
   dateSaved: { 
     type: Date, 
     default: Date.now 
