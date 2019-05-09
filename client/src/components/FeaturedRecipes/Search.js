@@ -17,14 +17,10 @@ class Search extends Component {
   state = {
     recipes: [],
     searchTerm: "",
-
   };
 
   // componentDidMount
   componentDidMount() {
-    if (this.state.recipes.length === 0) {
-      this.searchRecipes();
-    }
     console.log("Mounted", this.state.recipes);
   };
 
@@ -41,17 +37,26 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-  
-      this.searchRecipes();
+    this.searchRecipes();
   }
 
   searchRecipes = event => {
     console.log('SEARCH TERM', this.state.searchTerm)
+    const searchArr = [];
     hannasAPI.map(i => {
-      // add logic here to query data before pushing
-        this.state.recipes.push(i);
-        console.log("RECIPE STATE", this.state.recipes);
+      const Ingredients = i.extendedIngredients.Ingredients
+      // console.log("INGREDIENTs", Ingredients[1].name.search(this.state.searchTerm));
+      for (var j = 0; j < Ingredients.length; j++) {
+        if (Ingredients[j].name.search(this.state.searchTerm) >= 0) {
+          searchArr.push(i);
+          console.log("NEW STATE", this.state.recipes);
+          break;
+        }
+      }  
     })
+    this.setState({
+      recipes: searchArr
+    });
   }
 
   saveRecipe = recipe => {

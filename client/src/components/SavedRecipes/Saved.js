@@ -31,7 +31,6 @@ class Saved extends Component {
 
   deleteRecipe = id => {
     console.log("...deleting recipe", id);
-
       API.deleteRecipe(id)
         .then(res => this.loadSavedRecipes())
         .catch(err => console.log(err));
