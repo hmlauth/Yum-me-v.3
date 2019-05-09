@@ -11,6 +11,7 @@ module.exports = {
         console.log("Inside controller findAll");
         // use the Recipes model as defined in the ../models directory
         db.Recipe.find()
+            .sort({dateSaved: -1})
             // run mongoose method .find utilizing the req.query to retrieve all appropriate entries
             // return all documents and send it to front end in json
             .then(dbModel => res.json(dbModel))
