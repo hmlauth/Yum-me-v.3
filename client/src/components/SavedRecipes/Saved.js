@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import Container from "../../components/Container"
+import Container from "../../components/Container";
+import { DeleteBtn } from "../../components/Buttons"
 
 class Saved extends Component {
 
@@ -28,17 +29,20 @@ class Saved extends Component {
     .catch(err => console.log("ERR", err));
   }
 
-//   deleteRecipe = id => {
-//     console.log("...deleting recipe", id);
+  deleteRecipe = id => {
+    console.log("...deleting recipe", id);
 
-//       API.deleteRecipe(id)
-//         .then(res => this.loadSavedRecipes())
-//         .catch(err => console.log(err));
-//     }
+      API.deleteRecipe(id)
+        .then(res => this.loadSavedRecipes())
+        .catch(err => console.log(err));
+    }
     
   render() {
     const items = this.state.recipes.map( recipe => 
-        <p>{recipe.title}</p>     
+        <ul>
+          <p>{recipe.title}</p> 
+          <DeleteBtn id={recipe._id} onClick={this.deleteRecipe} /> 
+        </ul>   
     )
 
     return (
