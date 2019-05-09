@@ -1,21 +1,55 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from "react";
+import { Route, Redirect } from "react-router-dom";
 import Nav from "./components/Nav";
 import Landing from "./pages/Landing";
-import Login from "./pages/Login";
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Auth from "./Auth/Auth";
+import Callback from "./Callback";
 
-const App = () => (
-  <Router>
-    <div>
-      <Nav />
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/landing" component={Landing} />
-        {/* <Route exact path="/books/:id" component={Detail} /> */}
-        {/* <Route component={NoMatch} /> */}
-      </Switch>
-    </div>
-  </Router>
-);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.auth = new Auth(this.props.history);
+  }
+  render() {
+    return (
+      <>
+        <Nav auth={this.auth} />
+        <div className="body">
+          <Route
+            path="/"
+            exact
+            render={props => <Home auth={this.auth} {...props} />}
+          />
+          <Route
+            path="/callback"
+            render={props => <Callback auth={this.auth} {...props} />}
+          />
+          <Route
+            path="/profile"
+            render={props =>
+              this.auth.isAuthenticated() ? (
+                <Profile auth={this.auth} {...props} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route
+          path="/landing"
+          render={props =>
+            this.auth.isAuthenticated() ? (
+              <Landing auth={this.auth} {...props} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+        </div>
+      </>
+    );
+  }
+}
 
 export default App;

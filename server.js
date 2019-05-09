@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
+require("dotenv").config();
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +27,13 @@ if (process.env.MONGODB_URI) {
     mongoose.connect(databaseUri)
 }
 
+app.get("/public", function(req, res) {
+  res.json({
+    message: "Hello from a public API"
+  });
+});
+
 // Start the API server
 app.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!` + process.env.REACT_APP_AUTH0_AUDIENCE);
 });

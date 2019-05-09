@@ -3,7 +3,7 @@ import "./style.css";
 
 function Header() {
     return <div>
-        <h5>Continue Developing!</h5>
+        <h2>Welcome to Yum(Me)!</h2>
     </div>
 }
 
