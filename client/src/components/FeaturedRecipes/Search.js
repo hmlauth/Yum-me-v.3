@@ -139,7 +139,7 @@ class Search extends Component {
                   ))}
                 </List>
               ) : (
-                  <h4>No results to display</h4>
+                  <h5>No results to display</h5>
                 )}
             </ResultsCard>
           </Col>
