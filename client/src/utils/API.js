@@ -3,6 +3,10 @@
 import axios from "axios";
 
 export default {
+  searchRecipes: function(searchTerm) {
+    console.log("Inside API route searchRecipes", searchTerm);
+    return axios.get("/api/recipes/" + searchTerm);
+  },
   // Gets all recipes
   getSavedRecipes: function() {
     console.log("Inside API route getSavedRecipes")

@@ -7,8 +7,8 @@ import { SearchCard, ResultsCard } from "../Card";
 import { Input, FormBtn } from "../Form";
 import { List, ListItem } from "../List";
 import { SaveBtn, ViewBtn } from "../../components/Buttons";
-import hannasAPI from "../../utils/recipes";
-console.log("hannasAPI", hannasAPI);
+// import hannasAPI from "../../utils/recipes";
+// console.log("hannasAPI", hannasAPI);
 
 
 class Search extends Component {
@@ -42,21 +42,18 @@ class Search extends Component {
 
   searchRecipes = event => {
     console.log('SEARCH TERM', this.state.searchTerm)
-    const searchArr = [];
-    hannasAPI.map(i => {
-      const Ingredients = i.extendedIngredients.Ingredients
-      // console.log("INGREDIENTs", Ingredients[1].name.search(this.state.searchTerm));
-      for (var j = 0; j < Ingredients.length; j++) {
-        if (Ingredients[j].name.search(this.state.searchTerm) >= 0) {
-          searchArr.push(i);
-          console.log("NEW STATE", this.state.recipes);
-          break;
-        }
-      }  
-    })
-    this.setState({
-      recipes: searchArr
-    });
+
+    API.searchRecipes(this.state.searchTerm)
+      .then(res => {
+        console.log('res', res.data);
+            this.setState({
+              recipes: res.data
+            });
+        })
+        .catch(err => {
+          console.log("ERR", err)
+        })
+  
   }
 
   saveRecipe = recipe => {
