@@ -1,16 +1,14 @@
-// import axios from "axios";
-// import cheerio from "cheerio";
 import $ from "jquery";
 import React, { Component } from "react";
-// import DeleteBtn from "../../components/DeleteBtn";
 import API from "../../utils/API";
-// import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../Grid";
 import Header from "../Header";
 import { SearchCard, ResultsCard } from "../Card";
 import { Input, FormBtn } from "../Form";
 import { List, ListItem } from "../List";
-import { SaveBtn, ViewBtn } from "../../components/Buttons"
+import { SaveBtn, ViewBtn } from "../../components/Buttons";
+import hannasAPI from "../../utils/recipes";
+console.log("hannasAPI", hannasAPI);
 
 
 class Search extends Component {
@@ -19,12 +17,11 @@ class Search extends Component {
   state = {
     recipes: [],
     searchTerm: "",
-
   };
 
   // componentDidMount
   componentDidMount() {
-    console.log("Mounted");
+    console.log("Mounted", this.state.recipes);
   };
 
   // handleInputChange
@@ -44,43 +41,50 @@ class Search extends Component {
   }
 
   searchRecipes = event => {
-    console.log('searchterm', this.state.searchTerm)
-    const corsURL = 'https://cors-anywhere.herokuapp.com/'
-    const apiURL = 'https://www.food2fork.com/api/search?key=f4f40279aca7dd14a4df19d4902cae70&q='
-
-    $.ajax({
-      url: corsURL + apiURL + this.state.searchTerm,
-      method: 'GET'
-    }).then(JSONresponse => {
-      var response = JSON.parse(JSONresponse);
-      this.setState({
-        recipes: response.recipes
-      })
-      console.log("Recipe State", this.state.recipes)
-    }
-    )
+    console.log('SEARCH TERM', this.state.searchTerm)
+    const searchArr = [];
+    hannasAPI.map(i => {
+      const Ingredients = i.extendedIngredients.Ingredients
+      // console.log("INGREDIENTs", Ingredients[1].name.search(this.state.searchTerm));
+      for (var j = 0; j < Ingredients.length; j++) {
+        if (Ingredients[j].name.search(this.state.searchTerm) >= 0) {
+          searchArr.push(i);
+          console.log("NEW STATE", this.state.recipes);
+          break;
+        }
+      }  
+    })
+    this.setState({
+      recipes: searchArr
+    });
   }
 
   saveRecipe = recipe => {
   
     console.log("...saving recipe", recipe);
-    console.log('API:', API)
-    const { recipe_id, title, image_url, source_url, publisher, publisher_url, social_rank } = recipe
+    const { 
+      id, 
+      sourceUrl, 
+      img, 
+      title, 
+      servings, 
+      extendedIngredients, 
+      extendedInstructions 
+    } = recipe
 
       API.saveRecipe({
-        recipe_id,
+        id,
+        sourceUrl,
+        img,
         title,
-        image_url,
-        source_url,
-        publisher,
-        publisher_url,
-        social_rank
+        servings,
+        extendedIngredients,
+        extendedInstructions
       })
         .then(res => console.log('Recipe Saved!', res))
         .catch(err => console.log('errrrrrror', err));
     }
     
-
   render() {
     return (
       <Container fluid>
@@ -122,15 +126,15 @@ class Search extends Component {
             <ResultsCard>
               {this.state.recipes.length ? (
                 <List>
-                  {this.state.recipes.map(recipe => (
+                  {this.state.recipes.map(i => (
                     <ListItem
-                      key={recipe.recipe_id}
-                      img={recipe.image_url}
-                      title={recipe.title}>
+                      key={i.id}
+                      img={i.img}
+                      title={i.title}>
                       <SaveBtn 
-                      recipe={recipe}
+                      recipe={i}
                       onClick={this.saveRecipe}/>
-                      <ViewBtn link={recipe.source_url} />
+                      <ViewBtn link={i.sourceUrl} />
                     </ListItem>
                   ))}
                 </List>

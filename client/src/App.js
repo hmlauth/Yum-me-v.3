@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import Nav from "./components/Nav";
 import Landing from "./pages/Landing";
+import Develop from "./pages/Develop";
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Auth from "./Auth/Auth";
@@ -41,6 +42,16 @@ class App extends Component {
           render={props =>
             this.auth.isAuthenticated() ? (
               <Landing auth={this.auth} {...props} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+         <Route
+          path="/develop"
+          render={props =>
+            this.auth.isAuthenticated() ? (
+              <Develop auth={this.auth} {...props} />
             ) : (
               <Redirect to="/" />
             )

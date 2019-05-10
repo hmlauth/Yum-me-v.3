@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-
 class Nav extends Component {
     render() {
       const { isAuthenticated, logout, login } = this.props.auth;
@@ -19,6 +18,9 @@ class Nav extends Component {
             </li>
             <li className="navButton" class="btn btn-primary btn-sm">
             <Link to="/landing">Landing</Link>
+            </li>
+            <li className="navButton" class="btn btn-primary btn-sm">
+            <Link to="/develop">Develop</Link>
             </li>
             
             <div id="loginButton">
