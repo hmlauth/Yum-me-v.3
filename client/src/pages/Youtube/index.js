@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import './style.css';
 import _ from 'lodash';
 import SearchBar from  "../../components/Youtube/search_bar"
-import YTSearch from 'youtube-api-search';
 import VideoList from '../../components/Youtube/video_list';
 import VideoDetail from '../../components/Youtube/video_detail';
-const API_KEY = 'AIzaSyDVwj59JCyEm2n4lmlTC7YUZDN8z5SRANY';
+import API from '../../utils/API';
 
 class Youtube extends Component {
   constructor(props) {
@@ -17,13 +16,16 @@ class Youtube extends Component {
        this.videoSearch('green salad')
   }
 
-  videoSearch(term) {
-    YTSearch({key: API_KEY, term: term}, (videos) => {
-      this.setState({ 
-        videos : videos,
-        selectedVideo: videos[0]
-      });
-    });
+  videoSearch = searchTerm => {
+    console.log('YTSearch', searchTerm)
+      API.videoSearch(searchTerm)
+      .then(videos => {
+        console.log('videos res', videos.data)
+        this.setState({ 
+            videos : videos.data,
+            selectedVideo: videos.data[0]
+          });
+      })
   }
 
   render() {
