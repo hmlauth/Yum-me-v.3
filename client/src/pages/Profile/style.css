@@ -1,8 +1,15 @@
+
+.profileTitle {
+ color: red
+
+}
 .profileName {
     font-size:  25px;
+    color: blue
+
 }
 
 .profilePic {
-    border: blue 1px solid;
-
+    width: 200px;
+    height: 100%;
 }
