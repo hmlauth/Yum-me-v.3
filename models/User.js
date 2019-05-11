@@ -42,7 +42,13 @@ var UserSchema = new Schema({
   userCreated: {
     type: Date,
     default: Date.now
-  }
+  },
+  recipe: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Recipe"
+    }
+  ]
 });
 
 // This creates our model from the above schema, using mongoose's model method

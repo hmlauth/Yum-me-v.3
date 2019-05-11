@@ -38,7 +38,14 @@ const recipeSchema = new Schema({
   dateSaved: { 
     type: Date, 
     default: Date.now 
-  }
+  },
+  user: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
+  // add user reference
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);

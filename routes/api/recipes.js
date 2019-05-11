@@ -5,8 +5,11 @@ console.log("inside recipes get and post routes");
 
 // Matches "/api/recipes" 
 router.route("/")
-    .get(recipeController.findAll)
+    .get(recipeController.findSaved)
     .post(recipeController.create);
+
+router.route("/:search")
+    .get(recipeController.searchRecipes)
 
 router.route("/:id")
     .delete(recipeController.remove);
