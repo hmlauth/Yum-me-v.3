@@ -44,22 +44,18 @@ module.exports = {
             });
     }, 
     create: function(req, res) {
-        console.log("Inside controller create", req.body);
-        console.log("REQ.BODY>ID", req.body.id)
-        db.Recipe.findOneAndUpdate({
-            query: {id: req.body.id},
-            update: {
-              $setOnInsert: req.body
-            },
-            new: true,   // return new doc if one is upserted
-            upsert: true // insert the document if it does not exist
-          })
-            // db.Recipe.create(req.body)
-            .then(dbModel => res.json(dbModel))
+        db.Recipe.find({$and : [ {id: req.body.id}, {user: {$ne: null}} ]})
+            .then(dbModel => {
+                if (dbModel.length === 0) {
+                    db.Recipe.create(req.body)
+                    .then(dbModel => {
+                        res.json(dbModel)
+                    })
+                } 
+            })
             .catch(err => res.status(422).json(err));
         },
     remove: function(req, res) {
-        console.log("Inside controller delete", req.params.id);
         db.Recipe.findById({ _id: req.params.id })
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
