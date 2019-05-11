@@ -62,15 +62,3 @@ module.exports = {
             .catch(err => res.status(422).json(err))
     }
 }
-
-// Chicken Scratch for future check if recipe has been saved yet. 
-// console.log("PARAMS", req.params.id);
-// db.Recipe.find({_id: req.params.id}, (err, res) => {
-//     console.log("Inside find _id", req.params.id);
-//     if (err) {
-//         console.log("ERR", err)
-//     } 
-
-//     if (res) {
-//         console.log("This recipe has already been saved", res)
-//     } else {
