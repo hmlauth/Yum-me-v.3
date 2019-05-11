@@ -8,6 +8,7 @@ li {
 }
 
 img {
-    width: 120px; 
-    height: 80px; 
+    width: 100px; 
+    height: 100%; 
+    padding-bottom: 70px
 }

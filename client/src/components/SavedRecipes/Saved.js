@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import Container from "../../components/Container";
 import { DeleteBtn, VersionBtn } from "../../components/Buttons"
+import "./style.css";
 
 class Saved extends Component {
 
@@ -50,9 +51,13 @@ class Saved extends Component {
     )
 
     return (
-      <Container fluid>
-        {items}  
+    
+    <div className='recipeName'>
+      <Container>
+        {items}
       </Container>
+    </div>
+      
     );
 
   }
