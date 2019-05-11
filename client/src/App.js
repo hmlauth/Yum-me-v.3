@@ -7,12 +7,15 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Auth from "./Auth/Auth";
 import Callback from "./Callback";
+import Youtube from "./pages/Youtube";
+// import "./App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.auth = new Auth(this.props.history);
   }
+
   render() {
     return (
       <>
@@ -56,6 +59,16 @@ class App extends Component {
               <Redirect to="/" />
             )
           }
+        />
+        <Route
+        path="/youtube"
+        render={props =>
+          this.auth.isAuthenticated() ? (
+            <Youtube auth={this.auth} {...props} />
+          ) : (
+            <Redirect to="/" />
+          )
+        }
         />
         </div>
       </>

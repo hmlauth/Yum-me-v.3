@@ -22,10 +22,10 @@ class Profile extends Component {
     if (!profile) return null;
     return ( 
       <> 
-        <h2>Profile</h2>
-        <p className = "profileName">Hi, {profile.nickname}!</p>
+        <h2 className="profileTitle">Profile</h2>
+        <h3 className = "profileName">Hi, {profile.nickname}!</h3>
         <img
-          className = "profilePic" style={{ maxWidth: 300, maxHeight: 300,}}
+          className ="profilePic" style={{ maxWidth: 300, maxHeight: 300,}}
           src={profile.picture} 
           alt="profile pic" 
         />

@@ -34,7 +34,7 @@ nav ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-image: linear-gradient(to bottom right, #2ac2f0, #0697eb);
+  background-image: linear-gradient(to bottom right, #c05711, #ebee47);
 }
 
 nav li {
@@ -60,4 +60,38 @@ nav button {
 
 #loginButton {
   float: right;
+}
+
+
+.search-bar {
+	margin: 20px;
+	text-align: center;
+}
+
+.search-bar input {
+	width:75%;
+}
+
+.video-item img {
+	max-width: 64px;
+}
+
+.video-detail .details {
+	margin-top: 10px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+
+.list-group-item {
+	cursor: pointer;
+}
+
+
+.list-group-item:hover {
+	background-color: #eee;
+}
+
+.media-heading {
+	padding: 0px 10px;
 }
