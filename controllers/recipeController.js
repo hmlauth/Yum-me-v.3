@@ -44,28 +44,21 @@ module.exports = {
             });
     }, 
     create: function(req, res) {
-        console.log("Inside controller create", req.body);
-            db.Recipe.create(req.body)
-            .then(dbModel => res.json(dbModel))
+        db.Recipe.find({$and : [ {id: req.body.id}, {user: {$ne: null}} ]})
+            .then(dbModel => {
+                if (dbModel.length === 0) {
+                    db.Recipe.create(req.body)
+                    .then(dbModel => {
+                        res.json(dbModel)
+                    })
+                } 
+            })
             .catch(err => res.status(422).json(err));
         },
     remove: function(req, res) {
-        console.log("Inside controller delete", req.params.id);
         db.Recipe.findById({ _id: req.params.id })
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err))
     }
 }
-
-// Chicken Scratch for future check if recipe has been saved yet. 
-// console.log("PARAMS", req.params.id);
-// db.Recipe.find({_id: req.params.id}, (err, res) => {
-//     console.log("Inside find _id", req.params.id);
-//     if (err) {
-//         console.log("ERR", err)
-//     } 
-
-//     if (res) {
-//         console.log("This recipe has already been saved", res)
-//     } else {
