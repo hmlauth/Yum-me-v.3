@@ -4,7 +4,7 @@ img {
 } */
 
 h1 {
-  background: rgb(218, 96, 48);
+  /* background: rgb(218, 96, 48); */
   opacity: 0.8;
   border-radius: 25px;
   width: 30%;
@@ -12,7 +12,7 @@ h1 {
 
 
 .title {
-  color: white;
+  color: orange;
 }
 
 .lead {
@@ -31,7 +31,7 @@ p {
 
 .homepage {
     position: relative;
-    background: url('./../../img/mainbg.jpeg') no-repeat;
+    background: url('./../../img/pho.jpeg') no-repeat;
     background-size: cover;
     background-position: center;
     height: 100vh;
