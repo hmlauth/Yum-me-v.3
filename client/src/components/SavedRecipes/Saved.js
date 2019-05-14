@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import SavedCarousel from "../Carousel/SavedCarousel"
+import SavedCarousel from "../Carousel/SavedCarousel";
+import Header from "../Header"
 // import { DeleteBtn, VersionBtn } from "../../components/Buttons";
 import "./style.css";
 
 class Saved extends Component {
 
-    // state
-    state = {
-      recipes: [],
-      showItems: 3
-    };
+  // state
+  state = {
+    recipes: [],
+    showItems: 3
+  };
 
   // componentDidMount
   componentDidMount() {
@@ -21,14 +22,14 @@ class Saved extends Component {
   loadSavedRecipes = () => {
     console.log("...loading saved recipes")
     API.getSavedRecipes()
-    .then(res => {
+      .then(res => {
         console.log("Recipe Saved!", res.data)
-        this.setState({ 
+        this.setState({
           recipes: res.data
         })
       }
-    )
-    .catch(err => console.log("ERR", err));
+      )
+      .catch(err => console.log("ERR", err));
   };
 
   // viewAllVersions = id => {
@@ -41,12 +42,15 @@ class Saved extends Component {
   //       .then(res => this.loadSavedRecipes())
   //       .catch(err => console.log(err));
   //   }
-    
+
   render() {
 
     return (
       <div className="saved-carousel-container">
-          <SavedCarousel />
+        <Header>
+          Continue Developing!
+        </Header>
+        <SavedCarousel />
       </div>
     );
 

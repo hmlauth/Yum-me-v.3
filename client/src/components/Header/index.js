@@ -1,9 +1,9 @@
 import React from "react";
 import "./style.css";
 
-function Header() {
+export const Header = ({props, children}) => {
     return <div>
-        <h2 className='header'>Welcome to Yum(Me)!</h2>
+        <h2 className='header'>{children}</h2>
     </div>
 }
 

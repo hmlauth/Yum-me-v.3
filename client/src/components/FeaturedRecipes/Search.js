@@ -100,6 +100,11 @@ class Search extends Component {
     return (
       <Container fluid>
       <Row>
+        <Header>
+          Get Inspired!
+        </Header>
+      </Row>
+      <Row>
           <Col size="lg-10 md-6 sm-12">
             <ResultsCard>
             <form>
