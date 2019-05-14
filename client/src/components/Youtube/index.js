@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './style.css';
 import _ from 'lodash';
-import SearchBar from  "../../components/Youtube/search_bar"
-import VideoList from '../../components/Youtube/video_list';
-import VideoDetail from '../../components/Youtube/video_detail';
+import SearchBar from  "./search_bar"
+import VideoList from './video_list';
+import VideoDetail from './video_detail';
 import API from '../../utils/API';
 
 class Youtube extends Component {

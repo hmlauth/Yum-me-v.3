@@ -3,8 +3,8 @@ import "./List.css";
 
 export const ListItem = ({title, img, children }) => {
     return (
-        <li className="list-group-item" >
-            <div className="card mb-3">
+        // <li className="list-group-item" >
+        //     <div className="card mb-3">
                 <div className="row no-gutters">
                     <div className="col-md-4">
                         <img src={img} className="card-img" alt={title}>
@@ -19,7 +19,7 @@ export const ListItem = ({title, img, children }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-        </li>
+        //         </div>
+        // </li>
     )
 }

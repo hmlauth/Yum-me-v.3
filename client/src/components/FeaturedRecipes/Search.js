@@ -7,8 +7,7 @@ import { ResultsCard } from "../Card";
 import { Input, FormBtn } from "../Form";
 import { List, ListItem } from "../List";
 import { SaveBtn, ViewBtn } from "../../components/Buttons";
-// import hannasAPI from "../../utils/recipes";
-// console.log("hannasAPI", hannasAPI);
+// import SearchCarousel from "../Carousel/SearchCarousel"
 
 
 class Search extends Component {
@@ -121,10 +120,12 @@ class Search extends Component {
               </FormBtn>
               </form>
               {this.state.recipes.length ? (
-                {recipes}
-              ) : (
+                [recipes]
+                // <SearchCarousel recipes={this.state.recipes} recipe={this.state.recipes[0]}/>
+                ) : (
                   <h5>No results to display</h5>
                 )}
+                
             </ResultsCard>
           </Col>
       </Row> 
