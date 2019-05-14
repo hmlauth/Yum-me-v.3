@@ -54,6 +54,17 @@ class SavedCarousel extends React.Component {
         })
     }
 
+// viewAllVersions = id => {
+  //   console.log("Getting all versions and notes");
+  // }
+
+  // deleteRecipe = id => {
+  //   console.log("...deleting recipe", id);
+  //     API.deleteRecipe(id)
+  //       .then(res => this.loadSavedRecipes())
+  //       .catch(err => console.log(err));
+  //   }
+
     render() {
         const { initialIndex, recipes, recipe, currIndex } = this.state;
         return (

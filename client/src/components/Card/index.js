@@ -1,4 +1,4 @@
-export * from "./ResultsCard";
+export * from "./SearchCard";
 export * from "./CarouselCard";
 
 
