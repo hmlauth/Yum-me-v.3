@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import { Col, Row, Container } from "../Grid";
 import Header from "../Header";
-import { SearchCard, ResultsCard } from "../Card";
+import { ResultsCard } from "../Card";
 import { Input, FormBtn } from "../Form";
 import { List, ListItem } from "../List";
 import { SaveBtn, ViewBtn } from "../../components/Buttons";
@@ -17,6 +17,7 @@ class Search extends Component {
   state = {
     recipes: [],
     searchTerm: "",
+    showItems: 3
   };
 
   // componentDidMount
@@ -83,22 +84,26 @@ class Search extends Component {
     }
     
   render() {
+    const recipes = this.state.recipes.slice(0, this.state.showItems).map(
+      (recipe) => <List>
+                <ListItem 
+                  key={recipe.id}
+                  img={recipe.img}
+                      title={recipe.title}>
+                      <SaveBtn 
+                      recipe={recipe}
+                      onClick={this.saveRecipe}/>
+                      <ViewBtn link={recipe.sourceUrl} />
+                  </ListItem>
+              </List>
+    )
+
     return (
       <Container fluid>
       <Row>
-          <Col size="md-6">
-            <Header />
-          </Col>
-        </Row>
-      <Row>
-        <Col size="md-3">
-
-        </Col>
-        <Col size="md-9">
-        <Row>
           <Col size="lg-10 md-6 sm-12">
-            <SearchCard>
-              <form>
+            <ResultsCard>
+            <form>
                 <Input
                   type="text"
                   required="true"
@@ -115,35 +120,14 @@ class Search extends Component {
                   Find Recipes!
               </FormBtn>
               </form>
-            </SearchCard>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="lg-10 md-6 sm-12">
-            <ResultsCard>
               {this.state.recipes.length ? (
-                <List>
-                  {this.state.recipes.map(i => (
-                    <ListItem
-                      key={i.id}
-                      img={i.img}
-                      title={i.title}>
-                      <SaveBtn 
-                      recipe={i}
-                      onClick={this.saveRecipe}/>
-                      <ViewBtn link={i.sourceUrl} />
-                    </ListItem>
-                  ))}
-                </List>
+                {recipes}
               ) : (
                   <h5>No results to display</h5>
                 )}
             </ResultsCard>
           </Col>
-        </Row>
-        </Col>
-      </Row>
-        
+      </Row> 
       </Container>
     );
   }

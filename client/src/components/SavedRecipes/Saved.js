@@ -9,6 +9,7 @@ class Saved extends Component {
     // state
     state = {
       recipes: [],
+      showItems: 3
     };
 
   // componentDidMount
@@ -42,7 +43,7 @@ class Saved extends Component {
     }
     
   render() {
-    const items = this.state.recipes.map( recipe => 
+    const items = this.state.recipes.slice(0, this.state.showItems).map( recipe => 
         <ul>
           <p>{recipe.title}</p> 
           <DeleteBtn id={recipe._id} onClick={this.deleteRecipe} />

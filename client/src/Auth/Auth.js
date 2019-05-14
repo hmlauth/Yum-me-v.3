@@ -1,4 +1,7 @@
 import auth0 from "auth0-js";
+import API from "../utils/API";
+import { access } from "fs";
+const clientid = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 export default class Auth {
   constructor(history) {
@@ -38,7 +41,7 @@ export default class Auth {
       authResult.expiresIn * 1000 + new Date().getTime()
     );
 
-    localStorage.setItem("acces_token", authResult.accessToken);
+    localStorage.setItem("access_token", authResult.accessToken);
     localStorage.setItem("id_token", authResult.idToken);
     localStorage.setItem("expires_at", expiresAt);
   };
@@ -49,7 +52,7 @@ export default class Auth {
   }
 
   logout = () => {
-    localStorage.removeItem("acces_token");
+    localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     this.userProfile = null;
@@ -60,18 +63,22 @@ export default class Auth {
   };
 
   getAccessToken = () => {
-    const accesToken = localStorage.getItem("acces_token");
-    if (!accesToken) {
+    const accessToken = localStorage.getItem("access_token");
+    if (!accessToken) {
       throw new Error("No access token found");
-    }
-    return accesToken;
+    } 
+    return accessToken;
   };
-
+ 
   getProfile = cb => {
     if (this.userProfile) return cb(this.userProfile);
     this.auth0.client.userInfo(this.getAccessToken(), (err, profile) => {
+      console.log('profile', profile);
       if (profile) this.userProfile = profile;
       cb(profile, err);
     });
   };
+
+
 }
+
