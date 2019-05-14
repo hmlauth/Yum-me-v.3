@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import Nav from "./components/Nav";
 import Landing from "./pages/Landing";
-import Develop from "./pages/Develop";
+// import Develop from "./pages/Develop";
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Auth from "./Auth/Auth";
 import Callback from "./Callback";
-import Youtube from "./pages/Youtube";
 // import "./App.css";
 
 class App extends Component {
@@ -50,7 +49,7 @@ class App extends Component {
             )
           }
         />
-         <Route
+         {/* <Route
           path="/develop"
           render={props =>
             this.auth.isAuthenticated() ? (
@@ -59,17 +58,7 @@ class App extends Component {
               <Redirect to="/" />
             )
           }
-        />
-        <Route
-        path="/youtube"
-        render={props =>
-          this.auth.isAuthenticated() ? (
-            <Youtube auth={this.auth} {...props} />
-          ) : (
-            <Redirect to="/" />
-          )
-        }
-        />
+        /> */}
         </div>
       </>
     );

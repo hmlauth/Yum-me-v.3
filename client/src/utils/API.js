@@ -2,6 +2,10 @@
 import axios from "axios";
 
 export default {
+
+  saveUser: function(userId) {
+    console.log("Inside API route saveUser", userId)
+  },
   searchRecipes: function(searchTerm) {
     console.log("Inside API route searchRecipes", searchTerm);
     return axios.get("/api/recipes/" + searchTerm);

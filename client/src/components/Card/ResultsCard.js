@@ -5,13 +5,8 @@ import { PromiseProvider } from "mongoose";
 
 export const ResultsCard = ({ children }) => {
     return <div>
-        <div className="card">
-        <div className="card-header">
-            <h3>Results</h3>
-        </div>
         <div className="card-body">
             {children}
-        </div>
         </div>
     </div>
 }
