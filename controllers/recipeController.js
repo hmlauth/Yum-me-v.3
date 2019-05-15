@@ -33,7 +33,7 @@ module.exports = {
         console.log("Inside controller findAll");
         // use the Recipes model as defined in the ../models directory
         // eventually need to update find method to include all those recipes for the specified user. 
-        db.Recipe.find()
+        db.Recipe.find({$and : [{user: {$ne: null}}]})
             .sort({dateSaved: -1})
             // run mongoose method .find utilizing the req.query to retrieve all appropriate entries
             // return all documents and send it to front end in json
@@ -51,7 +51,7 @@ module.exports = {
                     .then(dbModel => {
                         res.json(dbModel)
                     })
-                } 
+                }
             })
             .catch(err => res.status(422).json(err));
         },

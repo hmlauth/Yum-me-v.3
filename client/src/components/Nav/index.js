@@ -19,6 +19,9 @@ class Nav extends Component {
             <li className="navButton" class="btn btn-primary btn-sm">
             <Link to="/landing">Explore</Link>
             </li>
+            <li className="navButton" class="btn btn-primary btn-sm">
+            <Link to="/develop">Develop</Link>
+            </li>
             <div id="loginButton">
               <button type="button" class="btn btn-primary" onClick={isAuthenticated() ? logout : login}>
                 {isAuthenticated() ? "Log out" : "Log In"} 

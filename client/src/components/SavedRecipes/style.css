@@ -26,11 +26,12 @@
     content: "";
     display: block;
     width: 88%;
-    height: 413px;
+    height: 442px;
     outline: 5px solid black;
     position: absolute;
     top: 0;
-    left: 0;
+	left: 0;
+	pointer-events: none;
 }
 
 
