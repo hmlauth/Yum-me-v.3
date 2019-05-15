@@ -1,10 +1,13 @@
+.search-carousel-container {
+    height: 750px;
+}
 
 .card {
     flex: 1;
     min-width: 200px
 }
 
-.cards-slider {
+#search-card-slider {
     position: relative;
     max-width: 226px;
     margin: 0 auto
@@ -18,15 +21,8 @@
 }
 
 /* border for active element */
-.cards-slider::after {
-    content: "";
-    display: block;
-    width: 88%;
-    height: 413px;
-    outline: 5px solid blue;
-    position: absolute;
-    top: 0;
-    left: 0;
+#search-card-slider::after {
+    outline: none;
 }
 
 

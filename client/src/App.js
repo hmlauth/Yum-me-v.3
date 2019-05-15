@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import Nav from "./components/Nav";
 import Landing from "./pages/Landing";
-// import Develop from "./pages/Develop";
+import Develop from "./pages/Develop";
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Auth from "./Auth/Auth";
@@ -49,7 +49,7 @@ class App extends Component {
             )
           }
         />
-         {/* <Route
+         <Route
           path="/develop"
           render={props =>
             this.auth.isAuthenticated() ? (
@@ -58,7 +58,7 @@ class App extends Component {
               <Redirect to="/" />
             )
           }
-        /> */}
+        />
         </div>
       </>
     );

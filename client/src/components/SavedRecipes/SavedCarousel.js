@@ -54,10 +54,22 @@ class SavedCarousel extends React.Component {
         })
     }
 
+viewAllVersions = id => {
+    console.log("Getting all versions and notes");
+  }
+
+  deleteRecipe = id => {
+    console.log("...deleting recipe", id);
+      API.deleteRecipe(id)
+        .then(res => this.loadSavedRecipes())
+        .catch(err => console.log(err));
+    }
+
     render() {
         const { initialIndex, recipes, recipe, currIndex } = this.state;
         return (
                  <div className="carousel-saved">
+                 
                 <button
                     onClick={() => this.prevRecipe()}
                     disabled={currIndex === initialIndex}>
@@ -68,18 +80,26 @@ class SavedCarousel extends React.Component {
                     disabled={currIndex === recipes.length - 1}>
                     Next
                 </button>
-
+                {recipes.length  ? (
                 <div className="page">
                     <div className={`cards-slider active-slide-${recipe.id}`}>
                         <div className="cards-slider-wrapper" style={{ transform: `translateX(-${currIndex * (100 / recipes.length)}%)` }}>
                             {
-                                recipes.map(recipe => <CarouselCard key={recipe._id} recipe={recipe} />)
+                                recipes.map(r => <CarouselCard 
+                                    key={r._id} 
+                                    recipe={r} 
+                                    isActive={r.id === recipe.id} 
+                                    viewVersion={this.viewAllVersions}
+                                    deleteRecipe={this.deleteRecipe}
+                                />)
                             }
 
                         </div>
                     </div>
                 </div>
-
+                ) : (
+                    <p> You have no saved recipes! </p>
+                )}
             </div>
 
         )
