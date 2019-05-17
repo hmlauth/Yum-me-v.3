@@ -43,10 +43,11 @@ var UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+
   recipe: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Recipe"
+      ref: "OriginalRecipe"
     }
   ]
 });

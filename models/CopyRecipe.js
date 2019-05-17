@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const recipeSchema = new Schema({
+const copyRecipeSchema = new Schema({
   id: {
     type: String, 
     required: true 
@@ -38,16 +38,9 @@ const recipeSchema = new Schema({
   dateSaved: { 
     type: Date, 
     default: Date.now 
-  },
-  user: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ]
-  // add user reference
+  }
 });
 
-const Recipe = mongoose.model("Recipe", recipeSchema);
+const CopyRecipe = mongoose.model("CopyRecipe", copyRecipeSchema);
 
-module.exports = Recipe;
+module.exports = CopyRecipe;

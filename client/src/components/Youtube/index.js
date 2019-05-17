@@ -18,10 +18,8 @@ class Youtube extends Component {
   }
 
   videoSearch = searchTerm => {
-    console.log('YTSearch', searchTerm)
       API.videoSearch(searchTerm)
       .then(videos => {
-        console.log('videos res', videos.data)
         this.setState({ 
             videos : videos.data,
             selectedVideo: videos.data[0]

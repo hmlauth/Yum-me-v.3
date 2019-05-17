@@ -21,7 +21,7 @@ class SearchCarousel extends React.Component {
 
     // componentDidMount
     componentDidMount() {
-        console.log("Mounted", this.state.recipes);
+        console.log("SearchCarousel mounted");
     };
 
     // handleInputChange
