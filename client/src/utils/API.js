@@ -10,7 +10,7 @@ export default {
 
   // Searches all seed data recipes
   searchRecipes: function(searchTerm) {
-    return axios.get("/api/recipes/" + searchTerm);
+    return axios.get("/api/recipes/search/" + searchTerm);
   },
 
   // Gets all saved OriginalRecipes
