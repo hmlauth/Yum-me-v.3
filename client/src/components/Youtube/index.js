@@ -5,7 +5,7 @@ import SearchBar from  "./search_bar"
 import VideoList from './video_list';
 import VideoDetail from './video_detail';
 import API from '../../utils/API';
-import Header from "../Header"
+// import Header from "../Header"
 
 class Youtube extends Component {
   constructor(props) {
@@ -33,9 +33,9 @@ class Youtube extends Component {
     const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 500);
     return (
       <div>
-        <Header>
+        <h2>
           Sharpen Your Skills!
-        </Header>
+        </h2>
         <SearchBar onSearchTermChange={videoSearch}/>
         <div className="row">
         <VideoDetail video={this.state.selectedVideo}/>

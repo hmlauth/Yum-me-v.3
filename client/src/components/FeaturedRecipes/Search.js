@@ -1,7 +1,7 @@
 import $ from "jquery";
 import React, { Component } from "react";
 import API from "../../utils/API";
-import Header from "../Header";
+// import Header from "../Header";
 import SearchCarousel from "./SearchCarousel";
 import { Col, Row, Container } from "../Grid";
 class Search extends Component {
@@ -11,9 +11,9 @@ class Search extends Component {
       <Container fluid>
         <Row>
           <Col size="12">
-            <Header>
+            <h2>
               Get Inspired!
-            </Header>
+            </h2>
           </Col>
         </Row>
         <SearchCarousel />
