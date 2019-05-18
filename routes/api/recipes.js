@@ -15,7 +15,7 @@ router.route("/search/:search")
 // Matches "/api/recipes"
 router.route("/:id")
     .delete(recipeController.remove)
-    // .get(recipeController.getVersions)
+    .get(recipeController.getVersions)
     // .post(recipeController.copyRecipe)
 
 
