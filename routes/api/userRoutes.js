@@ -9,11 +9,17 @@ router.post("/login", passport.authenticate("local", {
   failureRedirect: "/api/users/unauthorized",
   failureFlash : true
 }), function (req, res, next) {
-  console.log("sign in successful")
-  res.json({
-    user: req.user,
-    loggedIn: true
-  });
+
+  req.session.save((err) => {
+    console.log("sign in successful");
+
+
+    res.json({
+      user: req.user, 
+      loggedIn: true
+    });
+  })
+  
 });
 
 // /api/users/signup
@@ -32,10 +38,16 @@ router.post("/signup", function(req, res, next) {
       })
       newUser.password = newUser.generateHash(req.body.password);
       newUser.save(function(err) {
-        if (err) throw err;
-        console.log("user saved!");
-        // redirects to the login route as a post route *307*
-        res.redirect(307, "/api/users/login")
+
+        passport.authenticate('local')(req, res, () => {
+          req.session.save((err) => {
+            if (err) throw err;
+            console.log("user saved!");
+            // redirects to the login route as a post route *307*
+            res.redirect(307, "/api/users/login")
+          });
+        });
+        
       });  
     }
   })

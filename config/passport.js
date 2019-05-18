@@ -4,21 +4,25 @@ const db = require("../models");
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
+        console.log('hi');
+        console.log(username);
         db.User.findOne({
             username: username
-        }, function(err, user) {
-            if (err) {
-                console.log("something went wrong\n",err);
-                return done(err)
-            }
+        }).then(function(user) {
+            console.log(user);
+            
             if (!user) {
-                return done(null, false, {message: "User not found"});
+                return done(null, false, {message: "User not found :)"});
             }
             if (!user.validPassword(password, user.password)) {
                 return done(null, false, {message: "invalid password"});
             } else {
                 return done(null, user)
             }
+            
+        }).catch(function(err) {
+            console.log("something went wrong\n",err);
+            return done(err)
         });
     }
   ));

@@ -28,7 +28,11 @@ const usersSchema = new Schema({
   createdAt: {
       type: Date,
       default: Date.now()
-  }
+  },
+  recipes: [{
+      type: Schema.Types.ObjectId,
+      ref: "Recipe"
+  }]
 });
 
 usersSchema.methods.generateHash = function(password) {
