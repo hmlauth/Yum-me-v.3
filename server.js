@@ -36,7 +36,7 @@ app.use(routes);
 
 // --------Database configuration with Mongoose------------
 // Connect to the Mongo DB - 'yummev3'
-var databaseUri = 'mongodb://localhost/yummev3';
+var databaseUri = 'mongodb://localhost/yummedb';
 
 if (process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI);
