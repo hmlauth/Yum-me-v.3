@@ -1,0 +1,111 @@
+@import "../../sass/variable.scss";
+
+.profilePage {
+    
+
+    .noUser {
+        background-color:rgba(0, 0, 0, 0.6);
+        color:white;
+        padding-top: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
+        margin: 0 auto;
+        margin-top: 10px;
+        width: 65%;
+        text-shadow: 0px 0 darkslategrey, 0 1px darkslategrey, 0px 0 darkslategrey, 0 0px darkslategrey;
+        text-align: center;
+        font-family: $title-font;
+        color: white;
+        
+        .loginBtn {
+            margin-top: 25px;
+            font-family: $text-font;
+        }
+        
+        .loginLink {
+            color: $light-text;
+        }
+    
+        .loginLink:hover {
+            text-decoration: none;
+        }
+
+        #loadingIcon {
+            height: 200px;
+            width: 200px;
+            margin: 0 auto;
+            // margin-top: 25px;
+        }
+    }
+
+    .profileBox {
+        background-color:rgba(0, 0, 0, 0.6);
+        color:white;
+        padding-top: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
+        margin: 0 auto;
+        margin-top: 10px;
+        width: 65%;
+        font-family: $text-font;
+        text-shadow: 0px 0 darkslategrey, 0 1px darkslategrey, 0px 0 darkslategrey, 0 0px darkslategrey;
+        
+        #userTitle {
+            font-family: $title-font;
+            text-align: center
+        }
+        
+        .cookBtn {
+            text-align: center;
+            color: white;
+        }
+    }
+   
+    .spriteBox {
+        text-align: center;
+    }
+
+    .sprite-bounce {
+        position: relative;
+        text-align: center;
+        padding: 25px;
+        margin-right: auto;
+        margin-left: auto;
+        -moz-animation: bounce 1s infinite linear;
+        -o-animation: bounce 1s infinite linear;
+        -webkit-animation: bounce 1s infinite linear;
+        animation: bounce 1s infinite linear;
+        width: 400px; 
+        height: 100%; 
+    }
+}
+@-webkit-keyframes bounce {
+    0% { top: 0; }
+    50% { top: -0.2em; }
+    70% { top: -0.3em; }
+    100% { top: 0; }
+}
+@-moz-keyframes bounce {
+    0% { top: 0; }
+    50% { top: -0.2em; }
+    70% { top: -0.3em; }
+    100% { top: 0; }
+}
+@-o-keyframes bounce {
+    0% { top: 0; }
+    50% { top: -0.2em; }
+    70% { top: -0.3em; }
+    100% { top: 0; }
+}
+@-ms-keyframes bounce {
+    0% { top: 0; }
+    50% { top: -0.2em; }
+    70% { top: -0.3em; }
+    100% { top: 0; }
+}
+@keyframes bounce {
+    0% { top: 0; }
+    50% { top: -0.2em; }
+    70% { top: -0.3em; }
+    100% { top: 0; }
+}

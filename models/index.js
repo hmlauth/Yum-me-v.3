@@ -1,5 +1,5 @@
 module.exports = {
-    User: require("./User"),
+    User: require("./Users"),
     Recipe: require("./OriginalRecipe"),
     CopyRecipe: require("./CopyRecipe.js")
   };

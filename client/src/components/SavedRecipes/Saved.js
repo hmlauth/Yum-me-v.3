@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import SavedCarousel from "./SavedCarousel";
-import Header from "../Header"
+// import Header from "../Header"
 import "./style.css";
 
 class Saved extends Component {
@@ -10,9 +10,9 @@ class Saved extends Component {
 
     return (
       <div className="saved-carousel-container">
-        <Header>
+        <h2>
           Continue Developing!
-        </Header>
+        </h2>
         <SavedCarousel />
       </div>
     );

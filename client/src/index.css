@@ -16,7 +16,7 @@ body {
 h1,
 h2,
 h3 {
-  color: #0640e0;
+  color: #eb0b29;
 }
 
 button {
@@ -29,13 +29,13 @@ ul.unstyled {
   padding: 0;
 }
 
-nav ul {
+/* nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-image: linear-gradient(to bottom right, #c05711, #ebee47);
-}
+} */
 
 nav li {
   float: left;

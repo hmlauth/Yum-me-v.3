@@ -1,0 +1,43 @@
+@import "../../sass/variable.scss";
+
+.navbar {
+    background: $primary-color;
+    box-shadow: 0 3px 10px $dark-text;
+    font-family: $text-font;
+
+    a.titleFont {
+        font-family: $title-font;
+        color: $light-text;
+    }
+
+    a.titleFont:hover {
+        color: $light-text;
+        font-weight: bold;
+    }
+
+    a.nav-link {
+        font-size: 1.2em;
+        font-family: $title-font;
+        font-weight: bold;
+
+    }
+
+    .light-text {
+        color: $light-text
+    }
+    .dropdown-menu {
+        font-weight: bold;
+        background: #607773;
+        box-shadow: 0 1px 2px $dark-text;
+        
+    }
+    .dropdown-menu:hover {
+        color: $dark-text;
+        font-weight: bold;
+    }
+    img {
+        width: 110px; 
+        height: 100%; 
+    }
+}
+

@@ -1,68 +1,37 @@
-import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
-import Nav from "./components/Nav";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import Nav from "./components/Nav";
 import Landing from "./pages/Landing";
 import Develop from "./pages/Develop";
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import Auth from "./Auth/Auth";
-import Callback from "./Callback";
+import Auth from "./pages/Auth";
+import NoMatch from "./pages/NoMatch";
+import TopNav from "./components/TopNav";
+import Footer from "./components/Footer";
+import { Container } from 'reactstrap';
 // import "./App.css";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.auth = new Auth(this.props.history);
-  }
-
-  render() {
-    return (
-      <>
-        <Nav auth={this.auth} />
-        <div className="body">
-          <Route
-            path="/"
-            exact
-            render={props => <Home auth={this.auth} {...props} />}
-          />
-          <Route
-            path="/callback"
-            render={props => <Callback auth={this.auth} {...props} />}
-          />
-          <Route
-            path="/profile"
-            render={props =>
-              this.auth.isAuthenticated() ? (
-                <Profile auth={this.auth} {...props} />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
-          <Route
-          path="/landing"
-          render={props =>
-            this.auth.isAuthenticated() ? (
-              <Landing auth={this.auth} {...props} />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
-         <Route
-          path="/develop"
-          render={props =>
-            this.auth.isAuthenticated() ? (
-              <Develop auth={this.auth} {...props} />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
+function App() {
+  return (
+      <Router>
+        <div>
+          <TopNav />
+          <Container>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/signup" render={(props) => <Auth {...props} action="signup" />} />
+              <Route exact path="/login" render={(props) => <Auth {...props} action="login" />} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/landing" component={Landing} />
+              <Route exact path="/develop" component={Develop} />
+              <Route component={NoMatch} />
+            </Switch>
+          </Container>
+          <Footer />
         </div>
-      </>
-    );
-  }
+      </Router>
+  );
 }
 
 export default App;
