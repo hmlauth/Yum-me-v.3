@@ -46,10 +46,7 @@ module.exports = {
                 if (dbModel.length === 0) {
                     db.Recipe.create(req.body)
                     .then(data => {
-                        console.log(req.user);
-                        // console.log("userid", req.user.id);
-                        // return db.User.findOne({id: userid}, {recipies: {$push: data.id }})
-
+                        console.log(req.user._id);
                     })
                     .then(dbModel => {
                         res.json(dbModel)
@@ -65,18 +62,13 @@ module.exports = {
             .catch(err => res.status(422).json(err))
     },
     
-    // copyRecipe: function(req, res) {
-    //     db.CopyRecipe.create(req.body)
-    //     .then(dbModel => {
-    //         console.log("Recipe copied!", dbModel)
-    //     })
-    // },
+    updateRecipe: function(req, res) {
+    },
 
     // Each recipe copy will reference the original recipe's ObjectId. This route will locate all recipe copies with the reference to the selected req.params.id
     getVersions: function(req, res) {
         console.log("Inside getVersions Controller", req.params.id)
         db.Recipe.find({_id: req.params.id})
-        .populate("OriginalRecipe")
         .then(versions => {
             res.json(versions)
         })
