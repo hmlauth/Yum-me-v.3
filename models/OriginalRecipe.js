@@ -39,10 +39,12 @@ const originalRecipeSchema = new Schema({
     type: Date, 
     default: Date.now 
   },
-  user: {
-    type: String,
-    ref: "User"
-  }
+  user: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
 });
 
 const OriginalRecipe = mongoose.model("Recipe", originalRecipeSchema);
