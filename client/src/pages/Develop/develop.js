@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import Container from "../../components/Container";
 import { Row, Col } from "../../components/Grid";
 import Header from "../../components/Header"
+import { EditVersionBtn } from "../../components/Buttons";
 
 class Develop extends Component {
 
@@ -16,12 +17,12 @@ class Develop extends Component {
             Instructions: [],
             topInstructions: [],
             comments: [],
-            isEditable: true,
+            isEditable: false,
             textInput: []
         }
 
         this.handleChange = this.handleChange.bind(this)
-        
+
     }
 
     componentDidMount() {
@@ -60,6 +61,22 @@ class Develop extends Component {
         })
     }
 
+    editRecipe = () => {
+        console.log("editRecipe")
+        this.setState({
+            isEditable: true
+        })
+    }
+
+    saveRecipe = () => {
+
+        // API.copyRecipe
+        this.setState({
+            isEditable: false
+        })
+
+    }
+
     render() {
         const { sourceUrl, title, img, servings } = this.state.recipe;
         const { Ingredients, Instructions, topIngredients, topInstructions, comments } = this.state
@@ -85,6 +102,18 @@ class Develop extends Component {
                     <Header>
                         {title}
                     </Header>
+                </Row>
+                {/* Buttons */}
+                <Row>
+                    {this.state.isEditable ? (
+                        <EditVersionBtn onClick={this.saveRecipe}> 
+                            Save Recipe
+                        </EditVersionBtn>
+                    ) : ( 
+                        <EditVersionBtn onClick={this.editRecipe}>
+                            Edit Recipe
+                        </EditVersionBtn>
+                    )}
                 </Row>
             {/* Recipe */}
                 <Row>

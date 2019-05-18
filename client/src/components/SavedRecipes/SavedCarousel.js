@@ -59,10 +59,6 @@ class SavedCarousel extends React.Component {
         .catch(err => console.log(err));
     }
 
-    copyRecipe = id => {
-
-    }
-
     render() {
         const { initialIndex, recipes, recipe, currIndex } = this.state;
         return (

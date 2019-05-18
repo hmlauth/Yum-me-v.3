@@ -38,6 +38,10 @@ const copyRecipeSchema = new Schema({
   dateSaved: { 
     type: Date, 
     default: Date.now 
+  },
+  original: {
+    type: Schema.Types.ObjectId,
+    ref: "OriginalRecipe"
   }
 });
 

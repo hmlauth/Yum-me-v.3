@@ -19,10 +19,10 @@ export default {
   },
 
   // Gets all saved CopyRecipes and OriginalRecipes
-  getVersions: function(id) {
-    console.log("Inside getVersion route", id)
-    return axios.get("/api/recipes/" + id);
-  },
+  // getVersions: function(id) {
+  //   console.log("Inside getVersion route", id)
+  //   return axios.get("/api/recipes/" + id);
+  // },
 
   deleteRecipe: function(id) {
     return axios.delete("/api/recipes/" + id);

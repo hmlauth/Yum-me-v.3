@@ -38,12 +38,7 @@ const originalRecipeSchema = new Schema({
   dateSaved: { 
     type: Date, 
     default: Date.now 
-  },
-  copy: [{
-      type: Schema.Types.ObjectId,
-      ref: "CopyRecipe"
-    }
-  ]
+  }
 });
 
 const OriginalRecipe = mongoose.model("Recipe", originalRecipeSchema);
