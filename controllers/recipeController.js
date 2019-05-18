@@ -45,6 +45,12 @@ module.exports = {
             .then(dbModel => {
                 if (dbModel.length === 0) {
                     db.Recipe.create(req.body)
+                    .then(data => {
+                        console.log(req.user);
+                        // console.log("userid", req.user.id);
+                        // return db.User.findOne({id: userid}, {recipies: {$push: data.id }})
+
+                    })
                     .then(dbModel => {
                         res.json(dbModel)
                     })
