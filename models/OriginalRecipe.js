@@ -38,6 +38,10 @@ const originalRecipeSchema = new Schema({
   dateSaved: { 
     type: Date, 
     default: Date.now 
+  },
+  user: {
+    type: String,
+    ref: "User"
   }
 });
 

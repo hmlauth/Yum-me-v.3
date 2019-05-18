@@ -143,7 +143,8 @@ class SearchCarousel extends React.Component {
                                 <div className="cards-slider-wrapper" style={{ transform: `translateX(-${currIndex * (100 / recipes.length)}%)` }}>
                                     {
                                         recipes.map(recipe => <SearchCard 
-                                            key={recipe.id} 
+                                            key={recipe.id}
+                                            id={recipe.id} 
                                             recipe={recipe} 
                                             onClick={this.saveRecipe} 
                                             sourceUrl={recipe.sourceUrl}/>
