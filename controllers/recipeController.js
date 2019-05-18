@@ -5,7 +5,6 @@ const db = require("../models");
 
 module.exports = {
     searchRecipes: function(req, res) {
-        console.log("Inside controller search", req.params.search);
         db.Recipe.find({user: null})
         .map(function(doc) {
             const searchArr = [];
@@ -23,14 +22,12 @@ module.exports = {
         })
 
         .then(dbModel => {
-            console.log("Inside Controller RES", dbModel);
             res.json(dbModel) 
         })
         .catch(err => res.status(422).json(err))
     },
     // the findAll method accepts a request and response.
     findSaved: function(req, res) {
-        console.log("Inside controller findAll");
         // use the Recipes model as defined in the ../models directory
         // eventually need to update find method to include all those recipes for the specified user. 
         db.Recipe.find({$and : [{user: {$ne: null}}]})
@@ -60,5 +57,23 @@ module.exports = {
             .then(dbModel => dbModel.remove())
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err))
+    },
+    
+    // copyRecipe: function(req, res) {
+    //     db.CopyRecipe.create(req.body)
+    //     .then(dbModel => {
+    //         console.log("Recipe copied!", dbModel)
+    //     })
+    // },
+
+    // Each recipe copy will reference the original recipe's ObjectId. This route will locate all recipe copies with the reference to the selected req.params.id
+    getVersions: function(req, res) {
+        console.log("Inside getVersions Controller", req.params.id)
+        db.Recipe.find({_id: req.params.id})
+        .populate("OriginalRecipe")
+        .then(versions => {
+            res.json(versions)
+        })
+        .catch(err => res.status(422).json(err))
     }
 }

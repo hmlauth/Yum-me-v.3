@@ -34,16 +34,18 @@ if (process.env.NODE_ENV === "production") {
 // Add routes, both API and view
 app.use(routes);
 
-// Connect to the Mongo DB - 'recipeScraper'
-var databaseUri = 'mongodb://localhost/yummedb';
+// --------Database configuration with Mongoose------------
+// Connect to the Mongo DB - 'yummev3'
+var databaseUri = 'mongodb://localhost/yummev3';
 
 if (process.env.MONGODB_URI) {
     mongoose.connect(process.env.MONGODB_URI);
 } else {
     mongoose.connect(databaseUri)
 }
+// --------End database configuration with Mongoose------------
 
-// 
+
 app.get("/public", function(req, res) {
   res.json({
     message: "Hello from a public API"

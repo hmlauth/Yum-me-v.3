@@ -19,7 +19,6 @@ class SavedCarousel extends React.Component {
 
     // componentDidMount
     componentDidMount() {
-        console.log("SaveRecipes component mounted");
         this.loadSavedRecipes();
     };
 
@@ -27,7 +26,6 @@ class SavedCarousel extends React.Component {
         console.log("...loading saved recipes")
         API.getSavedRecipes()
             .then(res => {
-                console.log("Recipe Saved!", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
@@ -54,11 +52,7 @@ class SavedCarousel extends React.Component {
         })
     }
 
-viewAllVersions = id => {
-    console.log("Getting all versions and notes");
-  }
-
-  deleteRecipe = id => {
+    deleteRecipe = id => {
     console.log("...deleting recipe", id);
       API.deleteRecipe(id)
         .then(res => this.loadSavedRecipes())
@@ -87,10 +81,9 @@ viewAllVersions = id => {
                             {
                                 recipes.map(r => <CarouselCard 
                                     key={r._id} 
+                                    id={r._id}
                                     recipe={r} 
                                     isActive={r.id === recipe.id} 
-                                    viewVersion={this.viewAllVersions}
-                                    deleteRecipe={this.deleteRecipe}
                                 />)
                             }
 

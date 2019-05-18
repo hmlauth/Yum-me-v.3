@@ -7,13 +7,16 @@ router.route("/")
     .get(recipeController.findSaved)
     .post(recipeController.create);
 
-router.route("/:search")
+// Matches "/api/recipes"
+router.route("/search/:search")
     .get(recipeController.searchRecipes)
 
+
+// Matches "/api/recipes"
 router.route("/:id")
-    .delete(recipeController.remove);
-//     .get(recipesController.findById)
-//     .put(recipesController.update)
+    .delete(recipeController.remove)
+    .get(recipeController.getVersions)
+    // .post(recipeController.copyRecipe)
 
 
 

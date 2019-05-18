@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const recipeSchema = new Schema({
+const originalRecipeSchema = new Schema({
   id: {
     type: String, 
     required: true 
@@ -45,9 +45,8 @@ const recipeSchema = new Schema({
       ref: "User"
     }
   ]
-  // add user reference
 });
 
-const Recipe = mongoose.model("Recipe", recipeSchema);
+const OriginalRecipe = mongoose.model("Recipe", originalRecipeSchema);
 
-module.exports = Recipe;
+module.exports = OriginalRecipe;

@@ -5,10 +5,10 @@ import "./style.css"
 
 const SearchCard = props => {
     console.log(props);
-    const { key, recipe, onClick, sourceUrl } = props;
+    const { id, recipe, onClick, sourceUrl } = props;
 
     return (
-        <div id={`card-${key}`} className="card">
+        <div id={`card-${id}`} className="card">
             <img src={recipe.img} alt={recipe.title} className="card-img"/>
             <div className="details">
                 <p className="title">
