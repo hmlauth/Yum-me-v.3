@@ -41,7 +41,7 @@ const originalRecipeSchema = new Schema({
   },
   copy: [{
       type: Schema.Types.ObjectId,
-      ref: "OriginalRecipe"
+      ref: "CopyRecipe"
     }
   ]
 });

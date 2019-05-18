@@ -15,8 +15,13 @@ class Develop extends Component {
             topIngredients: [],
             Instructions: [],
             topInstructions: [],
-            comments: []
+            comments: [],
+            isEditable: true,
+            textInput: []
         }
+
+        this.handleChange = this.handleChange.bind(this)
+        
     }
 
     componentDidMount() {
@@ -31,7 +36,8 @@ class Develop extends Component {
                 Ingredients: res.data[0].extendedIngredients.Ingredients,
                 topIngredients: res.data[0].extendedIngredients.Toppings,
                 Instructions: res.data[0].extendedInstructions.Instructions,
-                topInstructions: res.data[0].extendedInstructions.Topping
+                topInstructions: res.data[0].extendedInstructions.Topping,
+                textInput: res.data[0].extendedIngredients.Ingredients.map(ingredient => ingredient.originalString).join("\n")
             })
         })
 
@@ -43,6 +49,15 @@ class Develop extends Component {
         //         comments: res.data
         //     })
         // })
+    }
+
+    handleChange(event) {
+        event.preventDefault();
+        console.log(event.target.value.split("\n"))
+        console.log(this);
+        this.setState({
+            textInput: event.target.value
+        })
     }
 
     render() {
@@ -74,7 +89,14 @@ class Develop extends Component {
             {/* Recipe */}
                 <Row>
                     <Col size="5">
-                        {ingredients}
+                        {this.state.isEditable ? 
+                        <textarea 
+                            value={this.state.textInput} 
+                            onChange={this.handleChange}>
+                        </textarea> :
+                        ingredients
+                    
+                    }    
                     </Col>
                     <Col size="5">
                         {instructions}
