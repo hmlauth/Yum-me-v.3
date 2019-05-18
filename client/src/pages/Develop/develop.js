@@ -4,7 +4,7 @@ class Develop extends Component {
 
     render() {
         return (
-            <h1>Develop Page!</h1>
+            <h2>Develop Page!</h2>
         )}
 
 }

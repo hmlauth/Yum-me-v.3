@@ -10,11 +10,13 @@
     "gh-pages": "^2.0.1",
     "jquery": "^3.4.1",
     "lodash": "^4.17.4",
+    "node-sass": "^4.11.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
+    "reactstrap": "^7.1.0",
     "youtube-api-search": "0.0.5"
   },
   "scripts": {

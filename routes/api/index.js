@@ -1,15 +1,15 @@
 const router = require("express").Router();
 const recipeRoutes = require("./recipes");
-const userRoutes = require("./user");
+const userRoutes = require("./userRoutes");
 const videoRoutes = require("./videos");
 
 // Recipe routes
 router.use("/recipes", recipeRoutes);
 
 // User route
-router.use("/user", userRoutes);
+router.use("/users", userRoutes);
 
-// Vido route
+// Video route
 router.use("/videos", videoRoutes);
 
 module.exports = router;

@@ -1,0 +1,39 @@
+@import "../../sass/variable.scss";
+
+.authBox {
+    background-color:rgba(0, 0, 0, 0.6);
+    color:white;
+    padding-top: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 65%;
+    font-family: $text-font;
+    text-shadow: 0px 0 darkslategrey, 0 1px darkslategrey, 0px 0 darkslategrey, 0 0px darkslategrey;
+
+    .loginTitle {
+        text-align: center;
+        color: white;
+        text-shadow: 0px 0 black, 0 1px black, 0px 0 black, 0 0px black;
+    }
+
+    .signupLink {
+        margin-top: 15px;
+        text-align: center;
+        text-shadow: 0px 0 black, 0 0px black, 0px 0 black, 0 0px black;
+    }
+
+    .title-font {
+        font-family: $title-font;
+        
+    }
+
+    #loginBtn {
+        font-family: $text-font;
+        color: $light-text;
+        border: none;
+        font-size: 1.2em;
+    }
+}
+
