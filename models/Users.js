@@ -30,8 +30,12 @@ const usersSchema = new Schema({
       default: Date.now()
   },
   recipes: [{
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
       ref: "Recipe"
+  }],
+  version: [{
+      type: Schema.Types.ObjectId,
+      ref: "Version"
   }]
 });
 

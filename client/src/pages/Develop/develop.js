@@ -24,9 +24,9 @@ class Develop extends Component {
 
     componentDidMount() {
         const { id } = this.props.location.state
-            API.getVersions(id)
+            API.loadMostRecentlySavedVersion(id)
             .then(res => {
-                console.log("getVersions", res.data)
+                console.log("loadMostRecentlySavedVersion", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],

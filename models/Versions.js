@@ -15,10 +15,6 @@ const VersionSchema = new Schema({
         }
       }
     ]
-//   dateSaved: { 
-//     type: Date, 
-//     default: Date.now 
-//   }
 });
 
 const Version = mongoose.model("Version", VersionSchema);

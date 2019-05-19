@@ -25,11 +25,7 @@ const SeedRecipeSchema = new Schema({
     Instructions: {
         type: Array
     },
-  user: String,
-  dateSaved: { 
-    type: Date, 
-    default: Date.now 
-  }
+  user: String
 });
 
 const SeedRecipe = mongoose.model("SeedRecipe", SeedRecipeSchema);

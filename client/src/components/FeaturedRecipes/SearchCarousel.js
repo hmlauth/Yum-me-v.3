@@ -82,7 +82,6 @@ class SearchCarousel extends React.Component {
             .catch(err => console.log('errrrrrror', err));
     }
 
-
     nextRecipe = () => {
         const newIndex = this.state.currIndex + 1
         this.setState({
