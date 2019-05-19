@@ -18,7 +18,7 @@ app.use(parser())
 app.use(flash())
 app.use(express.static("public"));
 app.use(session({
-    secret: "lord of bones",
+    secret: "yummev3",
     resave: false,
     saveUninitialized: true,
     // cookie: { secure: true }
