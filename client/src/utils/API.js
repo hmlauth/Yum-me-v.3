@@ -30,9 +30,13 @@ export default {
     console.log("RECIPE", recipe)
     return axios.post("/api/recipes", recipe)
   },
-  updateRecipe: function(update) {
-    console.log("UPDATE", update)
-    return axios.post("api/recipes/update", update)
+  saveVersion: function(version) {
+    console.log("version", version)
+    return axios.post("api/recipes/saveversion", version)
+  },
+  logVersion: function(version) {
+    console.log("Version", version);
+    return axios.post("api/recipes/logversion", version)
   },
   // YouTube Search
   videoSearch: function(searchTerm) {

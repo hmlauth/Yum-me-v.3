@@ -7,8 +7,11 @@ router.route("/")
     .get(recipeController.findSaved)
     .post(recipeController.create)
 
-router.route("/update")
-    .post(recipeController.updateRecipe)
+router.route("/saveversion")
+    .post(recipeController.saveVersion)
+
+router.route("/logversion")
+    .post(recipeController.logVersion)
 
 // Matches "/api/recipes"
 router.route("/search/:search")

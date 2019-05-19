@@ -58,11 +58,35 @@ module.exports = {
             .catch(err => res.status(422).json(err))
     },
     
-    updateRecipe: function(req, res) {
-        console.log("INSIDE UPDATE CONTROLLER")
+    saveVersion: function(req, res) {
+        console.log("\nINSIDE SAVEVERSION CONTROLLER\n", req.body);
+        db.Recipe.create(req.body)
+                .then(dbModel => {
+                    console.log("\nRecipe Saved!\n", dbModel)
+                    res.json(dbModel)
+                    })
+                .catch(err => res.status(422).json(err));
        
     },
-
+    logVersion: function(req, res) {
+        console.log("INSIDE LOG VERSION CONTROLLER", req.body)
+        db.Version.find({recipeId: req.body.id})
+        .then(dbVersion => {
+            console.log("\n------\ndbVersion", dbVersion)
+            console.log("dbVersion", dbVersion.length)
+            if (dbVersion.length === 0) {
+                db.Version.create({
+                    recipeId: req.body.id,
+                    mongoId: req.body._id
+                })
+            } else {
+                db.Version.update({
+                    $push: {mongoId: req.body._id}
+                })
+            }
+        })
+        .then(dbVersion => console.log("\nVersion updated", dbVersion))
+    },
     // Each recipe copy will reference the original recipe's ObjectId. This route will locate all recipe copies with the reference to the selected req.params.id
     getVersions: function(req, res) {
         console.log("Inside getVersions Controller", req.params.id)
@@ -73,7 +97,6 @@ module.exports = {
         .catch(err => res.status(422).json(err))
     }
 }
-
 
 
 //// CHICKEN SCRATCH FOR POSSIBLE UPDATE ////
