@@ -24,10 +24,6 @@ class Develop extends Component {
 
     componentDidMount() {
         const { id } = this.props.location.state
-        if (id === 'undefined') {
-            console.log("Develop page mounted")
-        } else {
-            console.log(id)
             API.getVersions(id)
             .then(res => {
                 console.log("getVersions", res.data)
@@ -39,16 +35,6 @@ class Develop extends Component {
                     ingredientTextInput: res.data[0].Ingredients.join("\n")
                 })
             })
-        }
-        
-        // API for when comments are ready to be populated
-        // API.getComments(id)
-        // .then(res => {
-        //     console.log("getComments", res.data);
-        //     this.setState({
-        //         comments: res.data
-        //     })
-        // })
     }
 
     handleChange(event) {
@@ -76,9 +62,7 @@ class Develop extends Component {
         console.log("...saving copy of recipe", this.state.recipe._id);
 
         const ingredientTextInput = this.state.ingredientTextInput.split("\n")
-        // const instructionTextInput =this.state.instructionTextInput.split("\n")
         console.log("ingredientTextInput", ingredientTextInput);
-        // console.log("instructionTextInput", instructionTextInput);
 
         const { id, sourceUrl, img, title, servings } = this.state.recipe
 
@@ -95,7 +79,8 @@ class Develop extends Component {
         })
         .then(res => {
             console.log("Version RESPONSE", res.data);
-            API.logVersion(res.data)
+            const { id, _id } = res.data;
+            API.logVersion({ id, _id })
             .then(res => console.log("Version Created!", res))
         })
         .catch(err => console.log("ERRRRRRR", err))
