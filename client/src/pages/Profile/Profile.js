@@ -4,6 +4,8 @@ import { Button } from "reactstrap";
 import { Link } from "react-router-dom"
 import API from "../../utils/API"
 import chef from '../../assets/images/chef.png';
+import loading from '../../assets/images/loading.gif';
+
 
 class Profile extends Component {
     state = {
@@ -35,7 +37,7 @@ class Profile extends Component {
             this.setState({
                 loading: false
             })
-        }, 1000)
+        }, 3000)
     }
 
     render() {
@@ -56,11 +58,15 @@ class Profile extends Component {
                             {!this.state.loading ? (
                                 <>
                                     <h1>Please log in.</h1>
-                                    <Link className="loginLink" to="/login"><Button className="loginBtn" color="info" block>Login</Button></Link>
+                                    <Link className="loginLink" to="/login">
+                                    <Button className="loginBtn" color="info" block>Login</Button>
+                                    </Link>
                                <br></br>
                                 </>
                             ) : (
-                                    <img id="loadingIcon" src="./assets/images/loading.gif" alt="loading" />
+
+                                <img src={loading} className="loadingIcon" alt="loading"></img>
+                                
                                 )}
                         </div>
                     )}

@@ -1,0 +1,40 @@
+@import "../../sass/variable.scss";
+
+.landingPage {
+    
+
+    .noUser {
+        background-color:rgba(0, 0, 0, 0.6);
+        color:white;
+        padding-top: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
+        margin: 0 auto;
+        margin-top: 10px;
+        width: 65%;
+        text-shadow: 0px 0 darkslategrey, 0 1px darkslategrey, 0px 0 darkslategrey, 0 0px darkslategrey;
+        text-align: center;
+        font-family: $title-font;
+        color: white;
+        
+        .loginBtn {
+            margin-top: 25px;
+            font-family: $text-font;
+        }
+        
+        .loginLink {
+            color: $light-text;
+        }
+    
+        .loginLink:hover {
+            text-decoration: none;
+        }
+
+        .loadingIcon {
+            height: 80px;
+            width: 80px;
+            margin: 0 auto;
+            // margin-top: 25px;
+        }
+    }
+}
