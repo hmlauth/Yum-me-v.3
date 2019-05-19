@@ -5,7 +5,7 @@ const db = require("../models");
 
 module.exports = {
     searchRecipes: function(req, res) {
-        db.Recipe.find({user: null})
+        db.SeedRecipe.find()
         .map(function(doc) {
             const searchArr = [];
             for (var i = 0; i < doc.length; i++) {
@@ -26,11 +26,12 @@ module.exports = {
         })
         .catch(err => res.status(422).json(err))
     },
+
     // the findAll method accepts a request and response.
     findSaved: function(req, res) {
         // use the Recipes model as defined in the ../models directory
         // eventually need to update find method to include all those recipes for the specified user. 
-        db.Recipe.find({$and : [{user: {$ne: null}}]})
+        db.Recipe.find({})
             .sort({dateSaved: -1})
             // run mongoose method .find utilizing the req.query to retrieve all appropriate entries
             // return all documents and send it to front end in json
@@ -40,21 +41,16 @@ module.exports = {
                 res.status(422).json(err)
             });
     }, 
+
     create: function(req, res) {
-        db.Recipe.find({$and : [ {id: req.body.id}, {user: {$ne: null}} ]})
-            .then(dbModel => {
-                if (dbModel.length === 0) {
-                    db.Recipe.create(req.body)
-                    .then(data => {
-                        console.log(req.user._id);
-                    })
-                    .then(dbModel => {
+        db.Recipe.create(req.body)
+                .then(dbModel => {
+                    console.log("Recipe Saved!", dbModel)
                         res.json(dbModel)
                     })
-                }
-            })
-            .catch(err => res.status(422).json(err));
-        },
+                .catch(err => res.status(422).json(err));
+    },
+
     remove: function(req, res) {
         db.Recipe.findById({ _id: req.params.id })
             .then(dbModel => dbModel.remove())

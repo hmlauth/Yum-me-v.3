@@ -10,6 +10,7 @@ export default {
 
   // Searches all seed data recipes
   searchRecipes: function(searchTerm) {
+    console.log("SEARCH TERM", searchTerm)
     return axios.get("/api/recipes/search/" + searchTerm);
   },
 
