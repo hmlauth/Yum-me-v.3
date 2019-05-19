@@ -24,18 +24,23 @@ class Develop extends Component {
 
     componentDidMount() {
         const { id } = this.props.location.state
-        console.log(id)
-        API.getVersions(id)
-        .then(res => {
-            console.log("getVersions", res.data)
-            this.setState({
-                recipes: res.data,
-                recipe: res.data[0],
-                Ingredients: res.data[0].Ingredients,
-                Instructions: res.data[0].Instructions,
-                ingredientTextInput: res.data[0].Ingredients.join("\n")
+        if (id === 'undefined') {
+            console.log("Develop page mounted")
+        } else {
+            console.log(id)
+            API.getVersions(id)
+            .then(res => {
+                console.log("getVersions", res.data)
+                this.setState({
+                    recipes: res.data,
+                    recipe: res.data[0],
+                    Ingredients: res.data[0].Ingredients,
+                    Instructions: res.data[0].Instructions,
+                    ingredientTextInput: res.data[0].Ingredients.join("\n")
+                })
             })
-        })
+        }
+        
         // API for when comments are ready to be populated
         // API.getComments(id)
         // .then(res => {
