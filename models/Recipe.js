@@ -19,22 +19,12 @@ const RecipeSchema = new Schema({
     required: true 
   },
   servings: String,
-  extendedIngredients: {
     Ingredients: {
       type: Array
     },
-    Toppings: {
-      type: Array
-    }
-  },
-  extendedInstructions: {
     Instructions: {
       type: Array
     },
-    Topping: {
-      type: Array
-    }
-  },
   dateSaved: { 
     type: Date, 
     default: Date.now 

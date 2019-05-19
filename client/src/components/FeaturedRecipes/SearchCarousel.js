@@ -65,8 +65,8 @@ class SearchCarousel extends React.Component {
             img,
             title,
             servings,
-            extendedIngredients,
-            extendedInstructions
+            Ingredients,
+            Instructions
         } = recipe
 
         API.saveRecipe({
@@ -75,8 +75,8 @@ class SearchCarousel extends React.Component {
             img,
             title,
             servings,
-            extendedIngredients,
-            extendedInstructions
+            Ingredients,
+            Instructions
         })
             .then(res => console.log('Recipe Saved!', res))
             .catch(err => console.log('errrrrrror', err));

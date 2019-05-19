@@ -19,22 +19,12 @@ const SeedRecipeSchema = new Schema({
     required: true 
   },
   servings: String,
-  extendedIngredients: {
     Ingredients: {
-      type: Array
+        type: Array
     },
-    Toppings: {
-      type: Array
-    }
-  },
-  extendedInstructions: {
     Instructions: {
-      type: Array
+        type: Array
     },
-    Topping: {
-      type: Array
-    }
-  },
   user: String,
   dateSaved: { 
     type: Date, 

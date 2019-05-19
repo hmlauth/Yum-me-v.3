@@ -13,10 +13,7 @@ class Develop extends Component {
             recipes: [],
             recipe: [],
             Ingredients: [],
-            topIngredients: [],
             Instructions: [],
-            topInstructions: [],
-            comments: [],
             isEditable: false,
             textInput: []
         }
@@ -34,14 +31,12 @@ class Develop extends Component {
             this.setState({
                 recipes: res.data,
                 recipe: res.data[0],
-                Ingredients: res.data[0].extendedIngredients.Ingredients,
-                topIngredients: res.data[0].extendedIngredients.Toppings,
-                Instructions: res.data[0].extendedInstructions.Instructions,
-                topInstructions: res.data[0].extendedInstructions.Topping,
-                textInput: res.data[0].extendedIngredients.Ingredients.map(ingredient => ingredient.originalString).join("\n")
+                Ingredients: res.data[0].Ingredients,
+                Instructions: res.data[0].Instructions,
+                textInput: res.data[0].Ingredients.join("\n")
             })
+            console.log(this.state.Ingredients)
         })
-
         // API for when comments are ready to be populated
         // API.getComments(id)
         // .then(res => {
@@ -54,11 +49,11 @@ class Develop extends Component {
 
     handleChange(event) {
         event.preventDefault();
-        console.log(event.target.value.split("\n"))
-        console.log(this);
         this.setState({
             textInput: event.target.value
+
         })
+        console.log(this.state.Ingredients)
     }
 
     editRecipe = () => {
@@ -68,22 +63,38 @@ class Develop extends Component {
         })
     }
 
-    saveRecipe = () => {
+    updateRecipe = () => {
 
         // API.copyRecipe
         this.setState({
             isEditable: false
         })
 
+        console.log("...updatings recipe", this.state.recipe._id);
+        const _id = this.state.recipe._id
+        const textInput = this.state.textInput.split("\n")
+        console.log("___ID", _id);
+        console.log("TEXTINPUT", textInput);
+
+        // update ingredients
+        API.updateRecipe({
+            _id: _id,
+            textInput: textInput
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log("ERRRRRRR", err))
+
     }
 
     render() {
         const { sourceUrl, title, img, servings } = this.state.recipe;
-        const { Ingredients, Instructions, topIngredients, topInstructions, comments } = this.state
+        const { Ingredients, Instructions } = this.state
+
         const ingredients = Ingredients.map(ingredient => {
+            console.log(ingredient)
             return <ul>
                 <li>
-                    {ingredient.originalString}
+                    {ingredient}
                 </li>
             </ul>
         })
@@ -106,12 +117,12 @@ class Develop extends Component {
                 {/* Buttons */}
                 <Row>
                     {this.state.isEditable ? (
-                        <EditVersionBtn onClick={this.saveRecipe}> 
-                            Save Recipe
+                        <EditVersionBtn onClick={this.updateRecipe}> 
+                            Save Ingredients
                         </EditVersionBtn>
                     ) : ( 
                         <EditVersionBtn onClick={this.editRecipe}>
-                            Edit Recipe
+                            Edit Ingredients
                         </EditVersionBtn>
                     )}
                 </Row>

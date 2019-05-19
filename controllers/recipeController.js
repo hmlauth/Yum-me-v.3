@@ -9,8 +9,8 @@ module.exports = {
         .map(function(doc) {
             const searchArr = [];
             for (var i = 0; i < doc.length; i++) {
-                for (var j = 0; j < doc[i].extendedIngredients.Ingredients.length; j++) {
-                    if (doc[i].extendedIngredients.Ingredients[j].name.search(req.params.search) >= 0) {
+                for (var j = 0; j < doc[i].Ingredients.length; j++) {
+                    if (doc[i].title.search(req.params.search) >= 0 || doc[i].Ingredients[j].search(req.params.search) >= 0) {
                         searchArr.push(doc[i]);
                         break;
                         }
@@ -59,6 +59,8 @@ module.exports = {
     },
     
     updateRecipe: function(req, res) {
+        console.log("INSIDE UPDATE CONTROLLER")
+       
     },
 
     // Each recipe copy will reference the original recipe's ObjectId. This route will locate all recipe copies with the reference to the selected req.params.id
@@ -71,3 +73,26 @@ module.exports = {
         .catch(err => res.status(422).json(err))
     }
 }
+
+
+
+//// CHICKEN SCRATCH FOR POSSIBLE UPDATE ////
+// db.Recipe.find({_id: req.body._id})
+        // .map(function(doc) {
+        //     for (var d = 0; d < doc.length; d++) {
+        //         if (doc[d].extendedIngredients.Ingredients) {
+        //             console.log(doc[d].extendedIngredients.Ingredients)
+        //             // for (var i = 0; i < doc[d].extendedIngredients.Ingredients.length; i++) {
+        //                 for (var j = 0; j < req.body.textInput.length; j++) {
+        //                     db.Recipe.update({originalString: req.body.textInput[j]}
+        //                         // $set: {
+        //                         //     originalString: req.body.textInput[j]
+        //                         // }
+        //                     )
+        //                     console.log("\nreq.body.textInput[j]",req.body.textInput[j])
+                            
+        //                 }
+        //             }
+        //         }
+        // })
+        // .then(dbUpdate => console.log("\n--------------\nDB UPDATE\n", dbUpdate))
