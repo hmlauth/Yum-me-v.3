@@ -1,6 +1,26 @@
 // controller only requires the models file to dictate how information is added and retrieved to/from the database
 const db = require("../models");
 
+// Helper function
+function deepAssign(a, b, step = 0) {
+    if(step > 10) {
+        return {}
+    }
+    for (i in b) {
+        if(Array.isArray(b[i])) {
+            a[i] = deepAssign([], b[i], step + 1)
+        } else if(typeof b[i] === 'object') {
+            a[i] = deepAssign({}, b[i], step + 1)
+        } else if(typeof b[i] === 'function') {
+            throw new Error('you can not clone functions')
+        } else {
+            a[i] = b[i]
+        }
+    }
+    console.log("FINAL A", a)
+    return a
+}
+
 // Here is where we define all the methods called in the routes/api/recipes.js file that required this file.
 
 module.exports = {
@@ -35,13 +55,25 @@ module.exports = {
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
         .then(dbUser => {
-            console.log("Populated User", dbUser);
-            console.log("Populated User", dbUser.version);
-            const newDbUser = []
-            dbUser.version.map(index => {
-                newDbUser.push(index.recipeMongoId[0])
-            })
-            console.log('\n******\n NewDbUser', newDbUser);
+            let dbUserLength = dbUser.version.length;
+            let newDbUser = [];
+            let idCheck = [];
+            // most recent data stored at end of array. Iterate backwards over array and push only those with unique "id"
+            for (let i = dbUserLength - 1; i >= 0; --i) {
+            let recipe = dbUser.version[i].recipeMongoId[0];
+                console.log("***i\n\n", recipe.id)
+                if (newDbUser.length === 0) {
+                    idCheck.push(recipe.id)
+                    newDbUser.push(recipe)
+                } else {
+                    for (let j = 0; j < idCheck.length; j++) {
+                        if (idCheck.includes(recipe.id) === false) {
+                            idCheck.push(recipe.id)
+                            newDbUser.push(recipe)
+                        }
+                    }
+                }
+                }
 
             res.json(newDbUser)
         })
@@ -135,25 +167,6 @@ module.exports = {
             )
         })
         .then(res => console.log(res))
-        // db.Version.find({recipeId: req.body.id})
-        // .then(dbVersion => {
-        //     console.log("\n------\ndbVersion", dbVersion)
-        //     console.log("dbVersion", dbVersion.length)
-        //     if (dbVersion.length === 0) {
-        //         db.Version.create({
-        //             recipeId: req.body.id,
-        //             recipeMongoId: req.body._id
-        //         }).then(dbVersion => 
-        //             console.log("\nVersion created", dbVersion))
-        //     } else if (dbVersion.length > 0) {
-        //         db.Version.updateOne(
-        //             {recipeId: req.body.id},
-        //             {$push: {recipeMongoId: req.body._id}
-        //         }).then(dbVersion => {
-        //             console.log("\nVersion updated", dbVersion)
-        //         })
-        //     }
-        // })
     },
 
     // In process of loading most recently saved version of that particular recipe (identified by given id ('id'), not mongoid ('_id'))
@@ -166,41 +179,3 @@ module.exports = {
         .catch(err => res.status(422).json(err))
     }
 }
-
-
-//// CHICKEN SCRATCH FOR POSSIBLE UPDATE ////
-// db.Recipe.find({_id: req.body._id})
-        // .map(function(doc) {
-        //     for (var d = 0; d < doc.length; d++) {
-        //         if (doc[d].extendedIngredients.Ingredients) {
-        //             console.log(doc[d].extendedIngredients.Ingredients)
-        //             // for (var i = 0; i < doc[d].extendedIngredients.Ingredients.length; i++) {
-        //                 for (var j = 0; j < req.body.textInput.length; j++) {
-        //                     db.Recipe.update({originalString: req.body.textInput[j]}
-        //                         // $set: {
-        //                         //     originalString: req.body.textInput[j]
-        //                         // }
-        //                     )
-        //                     console.log("\nreq.body.textInput[j]",req.body.textInput[j])
-                            
-        //                 }
-        //             }
-        //         }
-        // })
-        // .then(dbUpdate => console.log("\n--------------\nDB UPDATE\n", dbUpdate))
-
-
-
-
-        // db.Version.create({
-        //     recipeId: dbRecipe.id,
-        //     $push: {recipeMongoId: dbRecipe._id}
-        // })
-        // // Now that Version of recipe(id) is initialized, push that Version(_id) to the User for later reference
-        // .then(dbVersion => {
-        //     console.log("\n*******\n\tDB VERSION", dbVersion)
-        //     return db.User.updateOne(
-        //         {_id: req.session.passport.user},
-        //         {$push: {version: dbVersion._id}}
-        //     )
-        // })
