@@ -78,7 +78,13 @@ class SearchCarousel extends React.Component {
             Ingredients,
             Instructions
         })
-            .then(res => console.log('Recipe Saved!', res))
+            .then(res => {
+                console.log('Recipe Saved!', res)
+                const { id, _id } = res.data;
+                API.logVersion({ id, _id })
+                .then(res => console.log("Version logged!", res))
+                .catch(err => console.log("Log Version ERRR", err))
+            })
             .catch(err => console.log('errrrrrror', err));
     }
 

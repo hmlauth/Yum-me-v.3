@@ -6,13 +6,11 @@ const VersionSchema = new Schema({
     type: String, 
     required: true 
   },
-  mongoId: [
+  // Every ObjectId given to all versions of the recipe from 1st - nth save
+  recipeMongoId: [
       {
-        type: String,
-        dateSaved: {
-            type: Date,
-            default: Date.now
-        }
+        type: Schema.Types.ObjectId,
+        ref: "Recipe"
       }
     ]
 });

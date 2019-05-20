@@ -31,10 +31,12 @@ module.exports = {
     // Currently locates all saved recipes regardless of user and returns found documents sort by most recently saved to oldest. Need to query using populate based on reference stored in User Model.
     findSaved: function(req, res) {
         console.log("\n*******************\n REQ.SESSION INFORMATION", req.session.passport.user)
+        // Find User
         db.User.find({_id: req.session.passport.user})
-        .populate('recipes')
+        // Specific that we want to populate the retrieved User with any associated recipes
+        .populate('recipeMongoId')
         .sort({dateSaved: -1})
-        .then(dbRecipe => console.log("\n********\tDBRECIPE per USER", dbRecipe))
+        .then(dbRecipe => console.log("\n********\tDB RECIPE USER > POPULATE > SORT ", dbRecipe))
         // db.Recipe.find({})
         //     .sort({dateSaved: -1})
         //     .then(dbModel => res.json(dbModel))
@@ -45,55 +47,54 @@ module.exports = {
     }, 
 
     // This function first checks if User has saved the recipe.
-    // If does exist, don't save. 
-    // If doesn't exist, save. 
-    // If saved, push _id of recipe to User.
+    // If recipe(id) does exist, don't save. 
+    // If recipe(id) doesn't exist, save. 
+    // If saved, push recipe(id) to User.recipe (reference). The recipe(_id) is also pushed for population of saved recipes.
+    // NOTE: This function only applies for the first time save from 'seedDate Collection' into 'Recipe Collection'.
     create: function(req, res) {
-        console.log("\t******INSIDE CREATE CONTROLLER", req.session.passport.user)
+        console.log("\n******************\n INSIDE CREATE CONTROLLER")
         db.User.find({_id: req.session.passport.user})
         .then(dbUser => {
-            console.log("DBUSER", dbUser[0].recipes)
             // check if references to recipes exist or not.
             // if not, then save recipe and push id reference
-            if ( dbUser[0].recipes.length === 0) {
+            if (dbUser[0].recipeId.length === 0) {
+                // Create recipe in database
                     db.Recipe.create(req.body)
+                    // Then also, push the recipe(id) to User
                     .then(dbRecipe => {
-                        return db.User.updateOne({_id: req.session.passport.user},
-                        {$push: {recipes: dbRecipe.id}
-                        })
+                        // console.log("DB RECIPE", dbRecipe)
+                        res.json(dbRecipe)
+                        return db.User.updateOne(
+                            {_id: req.session.passport.user},
+                            {$push: {recipeId: dbRecipe.id}}
+                        )
                     })
-                    .then(result => console.log("RESULT", result))
-                } else if (dbUser[0].recipes.length > 0) {
-                    console.log("dbUser[0].recipes.length", dbUser[0].recipes.length)
-                    for (var i = 0; i < dbUser[0].recipes.length; i++) {
-                        console.log("REQ BODY ID", req.body.id);
-                        console.log("dbUser[0].recipes[i]", dbUser[0].recipes[i])
-                        if (req.body.id != dbUser[0].recipes[i]) {
-                            console.log("dbUser[0].recipes[i]", dbUser[0].recipes[i])
+                    .then(dbRecipe => {
+                        console.log("Recipe Created", dbRecipe)
+                        res.json(dbRecipe)
+                    })
+                } else if (dbUser[0].recipeId.length > 0) {
+                    for (var i = 0; i < dbUser[0].recipeId.length; i++) {
+                        if (req.body.id != dbUser[0].recipeId[i]) {
                             db.Recipe.create(req.body)
                                 .then(dbRecipe => {
-                                    return db.User.updateOne({_id: req.session.passport.user},
-                                    {$push: {recipes: dbRecipe.id}
-                                    })
+                                    // console.log(dbRecipe)
+                                    res.json(dbRecipe)
+                                    return db.User.updateOne(
+                                        {_id: req.session.passport.user},
+                                        {$push: {recipeId: dbRecipe.id}}
+                                    )
                         })
-                        .then(result => console.log("RESULT", result))
+                        .then(dbRecipe => {
+                            console.log("RESULT", dbRecipe)
+                            res.json(dbRecipe)
+                        })
                     } else {
                         console.log('Recipe with ' + req.body.id + " has already been saved!")
                     }
                 }
             }
         })
-        // db.Recipe.find({id: req.body.id})
-        // .then(dbModel => {
-        //     if (dbModel.length === 0) {
-        //         db.Recipe.create(req.body)
-        //         .then(dbModel => {
-        //             console.log("Recipe Saved!", dbModel)
-        //                 res.json(dbModel)
-        //             })
-        //     }
-        // })
-        // .catch(err => res.status(422).json(err));
     },
 
     remove: function(req, res) {
@@ -116,26 +117,41 @@ module.exports = {
 
     // Once the "copy" of the recipe has been saved in the database, we log the newly created _id in our Version Model organized by the "id" of that recipe. We use "id" not the title just in case the title is ever modified. 
     logVersion: function(req, res) {
-        console.log("\n------\nINSIDE LOG VERSION CONTROLLER", req.body)
-        db.Version.find({recipeId: req.body.id})
-        .then(dbVersion => {
-            console.log("\n------\ndbVersion", dbVersion)
-            console.log("dbVersion", dbVersion.length)
-            if (dbVersion.length === 0) {
-                db.Version.create({
-                    recipeId: req.body.id,
-                    mongoId: req.body._id
-                }).then(dbVersion => 
-                    console.log("\nVersion created", dbVersion))
-            } else if (dbVersion.length > 0) {
-                db.Version.updateOne(
-                    {recipeId: req.body.id},
-                    {$push: {mongoId: req.body._id}
-                }).then(dbVersion => {
-                    console.log("\nVersion updated", dbVersion)
-                })
-            }
+        console.log("\n------\nINSIDE LOG VERSION CONTROLLER", req.body);
+        console.log("\n recipeMongoId \n\t", req.body._id)
+        // Create new Version
+        db.Version.create({
+            recipeId: req.body.id,
+            recipeMongoId: req.body._id
         })
+        .then(dbVersion => {
+            console.log("Version Created", dbVersion)
+            res.json(dbVersion)
+            return db.User.updateOne(
+                {_id: req.session.passport.user},
+                {$push: {version: dbVersion._id}}
+            )
+        })
+        .then(res => console.log(res))
+        // db.Version.find({recipeId: req.body.id})
+        // .then(dbVersion => {
+        //     console.log("\n------\ndbVersion", dbVersion)
+        //     console.log("dbVersion", dbVersion.length)
+        //     if (dbVersion.length === 0) {
+        //         db.Version.create({
+        //             recipeId: req.body.id,
+        //             recipeMongoId: req.body._id
+        //         }).then(dbVersion => 
+        //             console.log("\nVersion created", dbVersion))
+        //     } else if (dbVersion.length > 0) {
+        //         db.Version.updateOne(
+        //             {recipeId: req.body.id},
+        //             {$push: {recipeMongoId: req.body._id}
+        //         }).then(dbVersion => {
+        //             console.log("\nVersion updated", dbVersion)
+        //         })
+        //     }
+        // })
     },
 
     // In process of loading most recently saved version of that particular recipe (identified by given id ('id'), not mongoid ('_id'))
@@ -170,3 +186,19 @@ module.exports = {
         //         }
         // })
         // .then(dbUpdate => console.log("\n--------------\nDB UPDATE\n", dbUpdate))
+
+
+
+
+        // db.Version.create({
+        //     recipeId: dbRecipe.id,
+        //     $push: {recipeMongoId: dbRecipe._id}
+        // })
+        // // Now that Version of recipe(id) is initialized, push that Version(_id) to the User for later reference
+        // .then(dbVersion => {
+        //     console.log("\n*******\n\tDB VERSION", dbVersion)
+        //     return db.User.updateOne(
+        //         {_id: req.session.passport.user},
+        //         {$push: {version: dbVersion._id}}
+        //     )
+        // })
