@@ -26,6 +26,7 @@ class SavedCarousel extends React.Component {
         console.log("...loading saved recipes")
         API.getSavedRecipes()
             .then(res => {
+                console.log("\nPOPULATED RESPONSE.DATA", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
@@ -60,7 +61,12 @@ class SavedCarousel extends React.Component {
     }
 
     render() {
+        console.log("State Recipes", this.state.recipes)
         const { initialIndex, recipes, recipe, currIndex } = this.state;
+        console.log('recipes', recipes);
+        // console.log('recipes.length'. recipes.length)
+        console.log('recipe', recipe);
+
         return (
                  <div className="carousel-saved">
                  

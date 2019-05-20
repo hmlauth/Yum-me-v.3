@@ -29,21 +29,23 @@ module.exports = {
     },
 
     // Currently locates all saved recipes regardless of user and returns found documents sort by most recently saved to oldest. Need to query using populate based on reference stored in User Model.
-    findSaved: function(req, res) {
-        console.log("\n*******************\n REQ.SESSION INFORMATION", req.session.passport.user)
+    getSavedRecipes: function(req, res) {
         // Find User
-        db.User.find({_id: req.session.passport.user})
+        db.User.findOne({_id: req.session.passport.user})
         // Specific that we want to populate the retrieved User with any associated recipes
-        .populate('recipeMongoId')
-        .sort({dateSaved: -1})
-        .then(dbRecipe => console.log("\n********\tDB RECIPE USER > POPULATE > SORT ", dbRecipe))
-        // db.Recipe.find({})
-        //     .sort({dateSaved: -1})
-        //     .then(dbModel => res.json(dbModel))
-        .catch(err => {
-            console.log(err);
-            res.status(422).json(err)
-        });
+        .populate({path: 'version', populate: {path: 'recipeMongoId'}})
+        .then(dbUser => {
+            console.log("Populated User", dbUser);
+            console.log("Populated User", dbUser.version);
+            const newDbUser = []
+            dbUser.version.map(index => {
+                newDbUser.push(index.recipeMongoId[0])
+            })
+            console.log('\n******\n NewDbUser', newDbUser);
+
+            res.json(newDbUser)
+        })
+        .catch(err => console.log("Version ERRR", err))
     }, 
 
     // This function first checks if User has saved the recipe.

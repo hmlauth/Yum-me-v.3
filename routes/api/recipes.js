@@ -4,7 +4,7 @@ const API_KEY = process.env.API_KEY
 
 // Matches "/api/recipes" 
 router.route("/")
-    .get(recipeController.findSaved)
+    .get(recipeController.getSavedRecipes)
     .post(recipeController.create)
 
 router.route("/saveversion")

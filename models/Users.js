@@ -33,10 +33,6 @@ const usersSchema = new Schema({
         type: Schema.Types.String,
         ref: "Recipe"
     }],
-    // recipeMongoId: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Recipe"
-    // }],
     version: [{
         type: Schema.Types.ObjectId,
         ref: "Version"
