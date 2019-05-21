@@ -22,9 +22,14 @@ class Develop extends Component {
 
     }
 
+    // 1. Trigger child component (Develop page) to re-render if ingredients/instructions are updated.
+    // 2. Make instructions updatable
+    // 3. Show clickable links to render different versions of recipes in list
+    // 4. Add Comments!!! 
+    
     componentDidMount() {
-        const { id } = this.props.location.state
-            API.loadMostRecentlySavedVersion(id)
+        const { _id } = this.props.location.state
+            API.loadMostRecentlySavedVersion(_id)
             .then(res => {
                 console.log("loadMostRecentlySavedVersion", res.data)
                 this.setState({
@@ -81,10 +86,12 @@ class Develop extends Component {
             console.log("Version RESPONSE", res.data);
             const { id, _id } = res.data;
             API.logVersion({ id, _id })
-            .then(res => console.log("Version Created!", res))
+            .then(res => {
+                console.log("Version Created!", res)
+            })
         })
         .catch(err => console.log("ERRRRRRR", err))
-
+        
     }
 
     render() {

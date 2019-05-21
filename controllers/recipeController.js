@@ -169,7 +169,6 @@ module.exports = {
         .then(res => console.log(res))
     },
 
-    // In process of loading most recently saved version of that particular recipe (identified by given id ('id'), not mongoid ('_id'))
     loadMostRecentlySavedVersion: function(req, res) {
         console.log("Inside loadMostRecentlySavedVersion Controller", req.params.id)
         db.Recipe.find({_id: req.params.id})
@@ -177,5 +176,11 @@ module.exports = {
             res.json(versions)
         })
         .catch(err => res.status(422).json(err))
+    },
+
+    // load references to other version
+    viewOtherVersion: function(req, res) {
+        console.log("Inside viewOtherVersions Controller");
+        
     }
 }
