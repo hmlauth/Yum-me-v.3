@@ -3,7 +3,7 @@ import API from "../../utils/API";
 import SearchCard from "../Card/SearchCard";
 import { Col, Row } from "../Grid";
 import { Input, FormBtn } from "../Form";
-import "./style.css"
+import "./style.scss"
 
 
 class SearchCarousel extends React.Component {

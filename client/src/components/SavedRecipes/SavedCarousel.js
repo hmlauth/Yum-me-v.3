@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import CarouselCard from "../Card/CarouselCard";
 import Container from "../Container"
-import "./style.css"
+import "./style.scss"
 
 
 class SavedCarousel extends React.Component {
