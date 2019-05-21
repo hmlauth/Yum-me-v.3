@@ -153,27 +153,52 @@ module.exports = {
     logVersion: function(req, res) {
         console.log("\n------\nINSIDE LOG VERSION CONTROLLER", req.body);
         console.log("\n recipeMongoId \n\t", req.body._id)
-        // Create new Version
-        db.Version.create({
-            recipeId: req.body.id,
-            recipeMongoId: req.body._id
-        })
+        // Create new Version 
+        db.Version.find({recipeId: req.body.id})
         .then(dbVersion => {
-            console.log("Version Created", dbVersion)
-            res.json(dbVersion)
-            return db.User.updateOne(
-                {_id: req.session.passport.user},
-                {$push: {version: dbVersion._id}}
-            )
+            console.log(dbVersion)
+            if (dbVersion.length === 0 ) {
+                db.Version.create({
+                    recipeId: req.body.id,
+                    recipeMongoId: req.body._id
+                })
+                .then(dbVersion => {
+                    console.log("Version CREATED", dbVersion)
+                    res.json(dbVersion)
+                    return db.User.updateOne(
+                        {_id: req.session.passport.user},
+                        {$push: {version: dbVersion._id}}
+                    )
+                })
+                .then(res => console.log(res))
+            } else if (dbVersion.length > 0) {
+                db.Version.updateOne(
+                    {recipeId: req.body.id},
+                    {$push: {recipeMongoId: req.body._id}}
+                )
+                .then(console.log("Version UPDATED", dbVersion))
+            }
         })
-        .then(res => console.log(res))
+        // db.Version.create({
+        //     recipeId: req.body.id,
+        //     recipeMongoId: req.body._id
+        // })
+        // .then(dbVersion => {
+        //     console.log("Version Created", dbVersion)
+        //     res.json(dbVersion)
+        //     return db.User.updateOne(
+        //         {_id: req.session.passport.user},
+        //         {$push: {version: dbVersion._id}}
+        //     )
+        // })
+        // .then(res => console.log(res))
     },
 
     loadMostRecentlySavedVersion: function(req, res) {
         console.log("Inside loadMostRecentlySavedVersion Controller", req.params.id)
         db.Recipe.find({_id: req.params.id})
-        .then(versions => {
-            res.json(versions)
+        .then(dbRecipe => {
+            res.json(dbRecipe)
         })
         .catch(err => res.status(422).json(err))
     },
@@ -181,6 +206,6 @@ module.exports = {
     // load references to other version
     viewOtherVersion: function(req, res) {
         console.log("Inside viewOtherVersions Controller");
-        
+
     }
 }

@@ -26,9 +26,10 @@ class Develop extends Component {
     // 2. Make instructions updatable
     // 3. Show clickable links to render different versions of recipes in list
     // 4. Add Comments!!! 
-    
+
     componentDidMount() {
         const { _id } = this.props.location.state
+        console.log("location_id", _id)
             API.loadMostRecentlySavedVersion(_id)
             .then(res => {
                 console.log("loadMostRecentlySavedVersion", res.data)
