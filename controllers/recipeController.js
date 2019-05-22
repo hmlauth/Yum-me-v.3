@@ -55,25 +55,30 @@ module.exports = {
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
         .then(dbUser => {
+            console.log('\n\n*********\nDBUSER', dbUser)
+            console.log('\n\n*********\nDBUSER > VERSION > recipeMongoId', dbUser.version[0].recipeMongoId)
+
             let dbUserLength = dbUser.version.length;
             let newDbUser = [];
             let idCheck = [];
             // most recent data stored at end of array. Iterate backwards over array and push only those with unique "id"
             for (let i = dbUserLength - 1; i >= 0; --i) {
-            let recipe = dbUser.version[i].recipeMongoId[0];
-                console.log("***i\n\n", recipe.id)
+            let recipe = dbUser.version[i];
+                console.log("\n*** i: ", i)
                 if (newDbUser.length === 0) {
-                    idCheck.push(recipe.id)
-                    newDbUser.push(recipe)
+                    idCheck.push(recipe.recipeId)
+                    newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
                 } else {
                     for (let j = 0; j < idCheck.length; j++) {
-                        if (idCheck.includes(recipe.id) === false) {
-                            idCheck.push(recipe.id)
-                            newDbUser.push(recipe)
+                        if (idCheck.includes(recipe.recipeId) === false) {
+                            idCheck.push(recipe.recipeId)
+                            newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
                         }
                     }
                 }
                 }
+            console.log('newDbUser after slice[0]', newDbUser)
+            console.log('idCheck', idCheck)
 
             res.json(newDbUser)
         })
