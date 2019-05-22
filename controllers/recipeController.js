@@ -6,6 +6,7 @@ const db = require("../models");
 module.exports = {
     // This function finds all documents in SeedRecipe collection then returns only those documents with the searchTerm in the title or ingredient list of that document.
     searchRecipes: function(req, res) {
+        console.log("\n**********\nINSIDE SEARCH RECIPES CONTROLLER", req.body)
         db.SeedRecipe.find()
         .map(function(doc) {
             const searchArr = [];
@@ -17,13 +18,14 @@ module.exports = {
                         }
                 }
             }
-            
+            console.log("\nSEARCH ARR", searchArr)
             return searchArr
 
         })
 
-        .then(dbModel => {
-            res.json(dbModel) 
+        .then(searchResults => {
+            console.log('\nsearchResults', searchResults)
+            res.json(searchResults) 
         })
         .catch(err => res.status(422).json(err))
     },
