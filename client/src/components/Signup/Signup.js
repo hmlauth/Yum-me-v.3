@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
 import { Link } from "react-router-dom";
+import { Header, Icon, Modal } from 'semantic-ui-react'
+import "./style.css";
 
 class Signup extends Component {
+    state = { modalOpen: false }
+
+    handleOpen = () => this.setState({ modalOpen: true })
+  
+    handleClose = () => this.setState({ modalOpen: false })
+    
     state = {
         validUsername: false,
         validPassword: false,
@@ -80,7 +88,23 @@ class Signup extends Component {
                     </FormGroup>
                     {/* if all fields are valid, allow the user to submit the form */}
                     {(this.state.validUsername && this.state.validPassword && this.state.confirmPassword) ? (
-                        <Button onClick={this.props.handleSignup} color="success" block>Signup</Button>
+                        <Modal id="modalSignUp"
+                            trigger={<Button onClick={this.props.handleOpen} onClick={this.props.handleSignup} color="success" block>Signup</Button>}
+                            open={this.state.modalOpen}
+                            onClose={this.handleClose}
+                            basic
+                            size='small'
+                        >
+                            <Header icon='food' content='Welcome to Yum(Me)' />
+                            <Modal.Content>
+                            <h3>Thank you for signing up!</h3>
+                            </Modal.Content>
+                            <Modal.Actions>
+                            {/* <Button color='green' onClick={this.handleClose} inverted>
+                                <Icon name='checkmark' /> Let's go!
+                            </Button> */}
+                            </Modal.Actions>
+                      </Modal>
                     ) : (
                         <Button onClick={this.props.handleSignup} color="danger" block disabled>Signup</Button>
                     )}

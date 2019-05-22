@@ -4,12 +4,19 @@ import Container from "../../components/Container";
 import { Row, Col } from "../../components/Grid";
 import Header from "../../components/Header"
 import { EditVersionBtn } from "../../components/Buttons";
+import { Button } from "reactstrap";
+import { Link } from "react-router-dom"
+import "./develop.scss";
+import loading from '../../assets/images/loading.gif';
 
 class Develop extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            loggedIn: false,
+            user: null,
+            loading: true,
             recipes: [],
             recipe: [],
             Ingredients: [],
@@ -41,7 +48,40 @@ class Develop extends Component {
                 ingredientTextInput: res.data[0].Ingredients.join("\n")
             })
         })
+
+        // API for when comments are ready to be populated
+        // API.getComments(id)
+        // .then(res => {
+        //     console.log("getComments", res.data);
+        //     this.setState({
+        //         comments: res.data
+        //     })
+        // })
+        this.loading();
+
+        API.isLoggedIn().then(user => {
+            if (user.data.loggedIn) {
+                this.setState({
+                    loggedIn: true,
+                    user: user.data.user
+                });
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+
+        console.log(this.props)
+
     }
+
+    loading() {
+        setTimeout(() => {
+            this.setState({
+                loading: false
+            })
+        }, 3000)
+    }
+
 
     handleChange(event) {
         event.preventDefault();
@@ -127,50 +167,76 @@ class Develop extends Component {
         })
 
         return (
-            <Container fluid>
-            {/* header */}
-                <Row>
-                    <Header>
-                        {title}
-                    </Header>
-                </Row>
-                {/* Buttons */}
-                <Row>
-                    {this.state.isEditable ? (
-                        <EditVersionBtn onClick={this.saveVersion}> 
-                            Save Ingredients
-                        </EditVersionBtn>
-                    ) : ( 
-                        <EditVersionBtn onClick={this.editRecipe}>
-                            Edit Ingredients
-                        </EditVersionBtn>
+            <div className="developPage">
+                {this.state.loggedIn ? (
+                    <div>
+                        <Container fluid>
+                        {/* header */}
+                            <Row>
+                                <Header>
+                                    {title}
+                                </Header>
+                            </Row>
+                            {/* Buttons */}
+                            <Row>
+                                {this.state.isEditable ? (
+                                    <EditVersionBtn onClick={this.saveVersion}> 
+                                        Save Ingredients
+                                    </EditVersionBtn>
+                                ) : ( 
+                                    <EditVersionBtn onClick={this.editRecipe}>
+                                        Edit Ingredients
+                                    </EditVersionBtn>
+                                )}
+                            </Row>
+                        {/* Recipe */}
+                            <Row>
+                                <Col size="5">
+                                    {this.state.isEditable ? 
+                                    <textarea 
+                                        value={this.state.ingredientTextInput} 
+                                        onChange={this.handleChange}>
+                                    </textarea> :
+                                    ingredients
+                                
+                                }    
+                                </Col>
+                                <Col size="5">
+                                    {instructions}
+                                </Col>
+                            </Row>
+                        
+                            <Row>
+
+                                {/* Comments */}
+
+                            </Row>
+                        </Container>
+                    </div>
+
+                ) : (
+                    <div className="noUser">
+                    {!this.state.loading ? (
+                        <>
+                            <h1>Please log in.</h1>
+                            <Link className="loginLink" to="/login">
+                            <Button className="loginBtn" color="info" block>Login</Button>
+                            </Link>
+                       <br></br>
+                        </>
+                    ) : (
+
+                        <img src={loading} className="loadingIcon" alt="loading"></img>
+
+                        )}
+                </div>
+
                     )}
-                </Row>
-            {/* Recipe */}
-                <Row>
-                    <Col size="5">
-                        {this.state.isEditable ? 
-                        <textarea 
-                            value={this.state.ingredientTextInput} 
-                            onChange={this.handleChange}>
-                        </textarea> :
-                        ingredients
-                    }    
-                    </Col>
-                    <Col size="5">
-                        {instructions}
-                    </Col>
-                </Row>
-            
-                <Row>
+            </div>
+    
+        )
 
-                    {/* Comments */}
-
-                </Row>
-            </Container>
-            
-        )}
-
+    }
 }
 
 export default Develop;

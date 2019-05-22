@@ -1,16 +1,16 @@
 @import "../../sass/variable.scss";
 
 .homeBox {
-    background-color:rgba(0, 0, 0, 0.6);
+    background-color:rgba(0, 0, 0, 0.747);
     color:white;
     padding-top: 30px;
     padding-right: 20px;
     padding-left: 20px;
     margin: 0 auto;
     margin-top: 10px;
-    width: 65%;
+    width: 100%;
     font-family: $text-font;
-    text-shadow: 0px 0 darkslategrey, 0 1px darkslategrey, 0px 0 darkslategrey, 0 0px darkslategrey;
+    text-shadow: 0px 0 rgb(255, 251, 251), 0 1px rgb(243, 84, 10), 0px 0 rgb(231, 11, 11), 0 0px rgb(236, 11, 11);
         #userTitle {
         font-family: $title-font;
         text-align: center;
@@ -85,3 +85,33 @@
     70% { top: -0.3em; }
     100% { top: 0; }
 }
+
+.process-box {
+    box-shadow: 0px 1px 5px 3px #f9f9f9;
+    background: $white;
+    border: 1px solid rgba(89, 96, 130, 0.1);
+    padding: 30px 25px 25px;
+    &:hover {
+      .bg-icon {
+        transform: scale(2.5) rotate(5deg);
+        transition: all 0.3s ease;
+      }
+    }
+    .bg-icon {
+      opacity: 0.05;
+      transform: scale(2.5) rotate(15deg);
+      position: absolute;
+      left: 80px;
+      bottom: 60px;
+      transition: all 0.3s ease;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    img {
+      height: 60px;
+    }
+    h3 {
+      margin-top: 30px;
+    }
+  }

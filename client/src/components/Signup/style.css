@@ -1,0 +1,8 @@
+#modalSignUp {
+    text-align: center;
+    height: 150px;
+    width: 500px;
+    position: relative;
+    border: 1px red solid;
+    border-radius: 10px;
+}

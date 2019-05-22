@@ -4,8 +4,20 @@ import { Button } from "reactstrap";
 import API from "../../utils/API";
 import chef from '../../assets/images/chef.png';
 import "./Home.scss";
+import "semantic-ui-css/semantic.min.css";
+import Feature from "./feature";
+import SmoothScrolling from "../../components/SmoothScroll/SmoothScrolling";
 
 class Home extends Component {
+
+  constructor(props) {
+    super();
+    this.scrollUp = this.scrollUp.bind(this);
+  }
+
+  scrollUp() {
+    SmoothScrolling.scrollTo("begin");
+  }
 
   state = {
     loggedIn: false,
@@ -41,6 +53,7 @@ class Home extends Component {
           <Button color="danger" className="cookBtn" block size= "lg"><a href="/landing" style={{color: "white"}}>Let's start cooking!</a></Button>
         ) : (<></>)}
         <br></br>
+        <Feature />
       </div>
     );
   }

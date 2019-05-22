@@ -1,6 +1,5 @@
 import React from "react";
 import "./Footer.scss";
-import raygun from '../../assets/images/icon-ray.png';
 function Footer() {
     return (
         <footer className="footer">
