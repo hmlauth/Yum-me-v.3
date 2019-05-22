@@ -35,7 +35,7 @@ export default {
     return axios.post("api/recipes/saveversion", version)
   },
   logVersion: function(version) {
-    console.log("Version", version);
+    console.log("Version Route", version);
     return axios.post("api/recipes/logversion", version)
   },
   // YouTube Search

@@ -29,7 +29,7 @@ class Develop extends Component {
 
     componentDidMount() {
         const { _id } = this.props.location.state
-        console.log("location_id", _id)
+        console.log("location_id", _id);
         API.loadMostRecentlySavedVersion(_id)
         .then(res => {
             console.log("loadMostRecentlySavedVersion", res.data)
@@ -72,7 +72,7 @@ class Develop extends Component {
 
         const { id, sourceUrl, img, title, servings } = this.state.recipe
 
-        // update ingredients
+        // Save updated version of recipe as a 'new' recipe
         API.saveVersion({
             id,
             sourceUrl,
@@ -86,13 +86,24 @@ class Develop extends Component {
         .then(res => {
             console.log("Version RESPONSE", res.data);
             const { id, _id } = res.data;
-            API.logVersion({ id, _id })
+            API.loadMostRecentlySavedVersion(_id)
             .then(res => {
-                console.log("Version Created!", res)
-                // this.loadMostRecentlySavedVersion()
+                console.log("loadMostRecentlySavedVersion", res.data)
+                this.setState({
+                    recipes: res.data,
+                    recipe: res.data[0],
+                    Ingredients: res.data[0].Ingredients,
+                    Instructions: res.data[0].Instructions,
+                    ingredientTextInput: res.data[0].Ingredients.join("\n")
+                })
             })
-        })
-        .catch(err => console.log("ERRRRRRR", err))
+            .then(
+                API.logVersion({ id, _id })
+                    .then(res => {
+                        console.log("Version Created!", res)
+                    })
+            )
+        }).catch(err => console.log("ERRRRRRR", err))
         
     }
 

@@ -64,7 +64,6 @@ class SavedCarousel extends React.Component {
         console.log("State Recipes", this.state.recipes)
         const { initialIndex, recipes, recipe, currIndex } = this.state;
         console.log('recipes', recipes);
-        // console.log('recipes.length'. recipes.length)
         console.log('recipe', recipe);
 
         return (
