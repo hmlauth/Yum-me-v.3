@@ -42,10 +42,6 @@ export default {
   videoSearch: function(searchTerm) {
     return axios.get("/api/videos/" + searchTerm)
   },
-  // copyRecipe: function() {
-  //   console.log("Inside API routes copyRecipe");
-  //   return axios.post("/api/recipes/")
-  // },
   // saveComment: function() {
   //   console.log("Inside API routes saveComment");
   //   return axios.post("/api/recipes/")

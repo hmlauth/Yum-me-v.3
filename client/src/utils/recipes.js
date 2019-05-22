@@ -203,6 +203,103 @@ const hannasAPI = [
                 "Cover with foil and set in the freezer for about 3 hours to firm up and then transfer to the refrigerator for a couple more hours."
             ],
         "user": null
+    },
+     // Cocont Chicken Curry
+     {
+        "id": "7",
+        "sourceUrl": "https://salu-salo.com/coconut-curry-chicken/",
+        "img":  "https://i1.wp.com/salu-salo.com/wp-content/uploads/2016/04/Coconut-Curry-Chicken-4.jpg?resize=300%2C300&ssl=1",
+        "title": "Coconut Chicken Curry",
+        "servings": "6",
+        "Ingredients": [
+            '2 lbs chicken breasts, boneless, skinless, cut into 1/2-inch chunks',
+            'Salt and pepper',
+            '1 1/2 tablespoons vegetable oil',
+            '2 tablespoons curry powder',
+            '1/2 onion, thinly sliced',
+            '2 cloves garlic, crushed',
+            '1 can (14 ounce) coconut milk',
+            '1 can (14.5 ounce) diced tomato, drained',
+            '1 can (8 ounce) tomato sauce (passata may be used if tomato sauce is not available)',
+            '3 tablespoons sugar'
+            ],
+        "Instructions": [
+            'Season the chicken chunks with salt and pepper.',
+            'Mix curry powder and oil. Heat a large skillet over medium-high heat and add the curry oil mixture. Heat curry oil for 1 minute.',
+            'Add garlic and onions and cook for 1 minute.',
+            'Add chicken chunks and toss lightly to coat with the curry oil mixture.',
+            'Reduce heat to medium, and cook for 7 to 10 minutes, or until chicken is no longer pink in center and juices run clear.',
+            'Pour coconut milk, diced tomatoes, tomato sauce, and sugar into the pan, and stir to combine. Cover and simmer, stirring occasionally, approximately 30 to 40 minutes.',
+            'Serve immediately, over rice. Enjoy!'
+            ],
+        "user": null
+    },
+     // Pasta Bolognese
+     {
+        "id": "8",
+        "sourceUrl": "https://www.foodandwine.com/recipes/pasta-bolognese",
+        "img":  "https://www.jessicagavin.com/wp-content/uploads/2015/04/beef-bolognese-pasta-with-fork-1200-1.jpg",
+        "title": "Pasta Bolognese",
+        "servings": "8 to 10",
+        "Ingredients": [
+            '1/4 cup extra-virgin olive oil', 
+            '1 medium onion, finely diced', 
+            '1 medium carrot, finely diced', 
+            '1 medium celery rib, finely diced', 
+            '2 ounces thickly sliced pancetta, finely diced',
+            '1/2 pound ground beef', 
+            '1/2 pound ground veal', 
+            '1/4 pound ground pork', 
+            '2 large garlic cloves, chopped', 
+            '3/4 cup dry white wine', 
+            'One 28-ounce can peeled Italian tomatoes—seeded and finely chopped, juices reserved',
+            '1 cup chicken stock or canned low-sodium broth', 
+            '1/2 teaspoon dried thyme', 
+            '1 bay leaf', 
+            'Salt and freshly ground pepper', 
+            '1/4 cup heavy cream', 
+            '2 pounds penne rigate', 
+            'Freshly grated Parmesan, for serving',
+            ],
+        "Instructions": [
+            'Heat 1 tablespoon of the olive oil in a large, heavy saucepan until shimmering. Add the onion, carrot, celery and pancetta and cook over moderate heat, stirring occasionally, until the vegetables are softened but not browned, about 8 minutes. Scrape the vegetable mixture into a large bowl.',
+            'Add the remaining 3 tablespoons of olive oil to the saucepan and heat until just shimmering. Add the beef, veal and pork and cook over moderately high heat until just barely pink, about 5 minutes. Return the vegetable mixture to the saucepan. Add the garlic and cook over high heat until fragrant, about 1 minute. Add the wine and cook, stirring occasionally, until almost evaporated, about 8 minutes. Stir in the tomatoes and their juices, the chicken stock, thyme and bay leaf. Season with a generous pinch of salt and pepper and bring to a boil over high heat. Cover partially and cook over moderately low heat for 1 hour. Discard the bay leaf. Stir in the heavy cream and cook the sauce just until heated through.',
+            'In a large pot of boiling salted water, cook the pasta until al dente. Drain well, return to the pot and toss with the sauce. Serve the pasta in deep bowls and pass the Parmesan at the table.',
+            'The sauce can be refrigerated for up to 3 days and frozen up to 1 month.',
+            'A Barbera from Italy or California has enough weight and flavor to stand up to the rich meat sauce and enough acidity to balance the tomatoes.'
+            ],
+        "user": null
+    },
+    // Mini Lucky Charms Cheesecakes
+    {
+        "id": "9",
+        "sourceUrl": "https://www.tastemade.com/videos/mini-lucky-charms-cheesecakes",
+        "img":  "https://i.ytimg.com/vi/2kCVc_biOuU/maxresdefault.jpg",
+        "title": "Mini Lucky Charms Cheesecakes",
+        "servings": "3",
+        "Ingredients": [
+            '50 grams lucky charms cereal (marshmallows removed)',
+            '30 grams unsalted butter, melted',
+            'Filling:',
+            '400 grams cream cheese, room temperature',
+            '80 grams granulated sugar',
+            '400 milliliters whipping cream',
+            '1/4 cup lemon juice (from about 1 lemon)', 
+            '1 teaspoon vanilla extract',
+            '2 teaspoons powdered gelatin',
+            '2 1/2 tablespoon cold water', 
+            'Pink, yellow and blue food colouring',
+            'Lucky charms marshmallows (+ extra for topping)',
+            'Whipped cream'
+            ],
+        "Instructions": [
+            'First, make the base of the cheesecake. Pulse the lucky charms cereal in a food processor until finely ground. Add the melted butter, then press them into the bottom of three 4-inch spring form pans. Place these in the fridge while you make the filling.',
+            'To make the filling, place the cream cheese in a bowl and beat with an electric mixer until smooth. Add the whipping cream, lemon juice, vanilla extract and sugar and mix until smooth. Mix together the gelatin and water in a small bowl and microwave for 30 seconds. Add the gelatin to the filling, and mix together with an electric mixer until fully combined. Divide the mixture into 3 bowls and dye them pink, yellow and blue.',
+            'Divide the pink filling between the pans and smooth the surface. Sprinkle some lucky charms marshmallows on top and gently press down with a knife. Place in the freezer for 15 minutes, or until the surface is firm. Repeat with the yellow layer, adding some more marshmallows. Freeze for 15 minutes. Smooth the blue layer on top and place the cheesecakes into the fridge (not freezer) for 2-3 hours, or overnight.',
+            'Carefully remove the cakes from the spring form pan by running a sharp knife around the edges of the cake, then release the sides of the pan and carefully slide off the cake.',
+            'Dollop some whipped cream on top and decorate with lucky charms marshmallows. Enjoy!'
+            ],
+        "user": null
     }
 ];
 
