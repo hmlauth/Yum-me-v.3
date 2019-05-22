@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./TopNav.scss";
 import API from "../../utils/API";
+import { Button, Modal } from 'semantic-ui-react'
 import {
     Collapse,
     Navbar,
@@ -16,6 +17,14 @@ import {
 } from 'reactstrap';
 
 export default class Navigation extends Component {
+
+    state = { open: false }
+
+    closeConfigShow = (closeOnEscape, closeOnDimmerClick) => () => {
+        this.setState({ closeOnEscape, closeOnDimmerClick, open: true })
+      }
+    
+      close = () => this.setState({ open: false })
 
     constructor(props) {
         super(props);
@@ -52,12 +61,18 @@ export default class Navigation extends Component {
         });
     }
 
+    
     render() {
+        const { open, closeOnDimmerClick } = this.state
         return (
             <div>
                 <Navbar className="navbar" light expand="md">
                     <NavbarBrand href="/" className="titleFont">
                     <img src="http://yum.me/images/logo.png" alt="logo"></img> </NavbarBrand>
+                    <a
+                    className="nav-link" href="#work" >
+                    How it works
+                    </a>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
@@ -81,7 +96,29 @@ export default class Navigation extends Component {
                                                 <NavLink href="/develop">Develop</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
-                                                <NavLink onClick={this.logout}>Logout</NavLink>
+                                                <NavLink onClick={this.closeConfigShow(true, false)}>Logout</NavLink>
+                                                <Modal id="modal"
+                                                    open={open}
+                                                    closeOnDimmerClick={closeOnDimmerClick}
+                                                    onClose={this.close}
+                                                    >
+                                                    <Modal.Header>Log Out</Modal.Header>
+                                                    <Modal.Content>
+                                                        <p>Are you sure you want to log out?</p>
+                                                    </Modal.Content>
+                                                    <Modal.Actions>
+                                                        <Button onClick={this.close} negative>
+                                                        No
+                                                        </Button>
+                                                        <Button
+                                                        onClick={this.logout}
+                                                        positive
+                                                        labelPosition='right'
+                                                        icon='checkmark'
+                                                        content='Yes'
+                                                        />
+                                                    </Modal.Actions>
+                                                </Modal>
                                             </DropdownItem>
                                         </>
                                     ) : (
