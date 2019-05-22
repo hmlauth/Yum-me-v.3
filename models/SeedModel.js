@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const RecipeSchema = new Schema({
+const SeedRecipeSchema = new Schema({
   id: {
     type: String, 
     required: true 
@@ -20,17 +20,14 @@ const RecipeSchema = new Schema({
   },
   servings: String,
     Ingredients: {
-      type: Array
+        type: Array
     },
     Instructions: {
-      type: Array
+        type: Array
     },
-  dateSaved: { 
-    type: Date, 
-    default: Date.now 
-  }
+  user: String
 });
 
-const Recipe = mongoose.model("Recipe", RecipeSchema);
+const SeedRecipe = mongoose.model("SeedRecipe", SeedRecipeSchema);
 
-module.exports = Recipe;
+module.exports = SeedRecipe;

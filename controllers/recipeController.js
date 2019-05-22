@@ -4,13 +4,14 @@ const db = require("../models");
 // Here is where we define all the methods called in the routes/api/recipes.js file that required this file.
 
 module.exports = {
+    // This function finds all documents in SeedRecipe collection then returns only those documents with the searchTerm in the title or ingredient list of that document.
     searchRecipes: function(req, res) {
-        db.Recipe.find({user: null})
+        db.SeedRecipe.find()
         .map(function(doc) {
             const searchArr = [];
             for (var i = 0; i < doc.length; i++) {
-                for (var j = 0; j < doc[i].extendedIngredients.Ingredients.length; j++) {
-                    if (doc[i].extendedIngredients.Ingredients[j].name.search(req.params.search) >= 0) {
+                for (var j = 0; j < doc[i].Ingredients.length; j++) {
+                    if (doc[i].title.search(req.params.search) >= 0 || doc[i].Ingredients[j].search(req.params.search) >= 0) {
                         searchArr.push(doc[i]);
                         break;
                         }
@@ -26,35 +27,98 @@ module.exports = {
         })
         .catch(err => res.status(422).json(err))
     },
-    // the findAll method accepts a request and response.
-    findSaved: function(req, res) {
-        // use the Recipes model as defined in the ../models directory
-        // eventually need to update find method to include all those recipes for the specified user. 
-        db.Recipe.find({$and : [{user: {$ne: null}}]})
-            .sort({dateSaved: -1})
-            // run mongoose method .find utilizing the req.query to retrieve all appropriate entries
-            // return all documents and send it to front end in json
-            .then(dbModel => res.json(dbModel))
-            .catch(err => {
-                console.log(err);
-                res.status(422).json(err)
-            });
-    }, 
-    create: function(req, res) {
-        db.Recipe.find({$and : [ {id: req.body.id}, {user: {$ne: null}} ]})
-            .then(dbModel => {
-                if (dbModel.length === 0) {
-                    db.Recipe.create(req.body)
-                    .then(data => {
-                        console.log(req.user._id);
-                    })
-                    .then(dbModel => {
-                        res.json(dbModel)
-                    })
+
+    // Currently locates all saved recipes regardless of user and returns found documents sort by most recently saved to oldest. Need to query using populate based on reference stored in User Model.
+    getSavedRecipes: function(req, res) {
+        // Find User
+        db.User.findOne({_id: req.session.passport.user})
+        // Specific that we want to populate the retrieved User with any associated recipes
+        .populate({path: 'version', populate: {path: 'recipeMongoId'}})
+        .then(dbUser => {
+            console.log('\n\n*********\nDBUSER', dbUser)
+            console.log('\n\n*********\nDBUSER > VERSION > recipeMongoId', dbUser.version[0].recipeMongoId)
+
+            let dbUserLength = dbUser.version.length;
+            let newDbUser = [];
+            let idCheck = [];
+            // most recent data stored at end of array. Iterate backwards over array and push only those with unique "id"
+            for (let i = dbUserLength - 1; i >= 0; --i) {
+            let recipe = dbUser.version[i];
+                console.log("\n*** i: ", i)
+                if (newDbUser.length === 0) {
+                    idCheck.push(recipe.recipeId)
+                    newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
+                } else {
+                    for (let j = 0; j < idCheck.length; j++) {
+                        if (idCheck.includes(recipe.recipeId) === false) {
+                            idCheck.push(recipe.recipeId)
+                            newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
+                        }
+                    }
                 }
-            })
-            .catch(err => res.status(422).json(err));
-        },
+                }
+            console.log('newDbUser after slice[0]', newDbUser)
+            console.log('idCheck', idCheck)
+
+            res.json(newDbUser)
+        })
+        .catch(err => console.log("Version ERRR", err))
+    }, 
+
+    // This function first checks if User has saved the recipe.
+    // If recipe(id) does exist, don't save. 
+    // If recipe(id) doesn't exist, save. 
+    // If saved, push recipe(id) to User.recipe (reference). The recipe(_id) is also pushed for population of saved recipes.
+    // NOTE: This function only applies for the first time save from 'seedDate Collection' into 'Recipe Collection'.
+    create: function(req, res) {
+        console.log("\n******************\n INSIDE CREATE CONTROLLER")
+        db.User.find({_id: req.session.passport.user})
+        .then(dbUser => {
+            console.log("\n********\nCREATE DB USER", dbUser)
+            // check if references to recipes exist or not.
+            // if not, then save recipe and push id reference
+            if (dbUser[0].recipeId.length === 0) {
+                console.log("\n********\nCREATE REQ.BODY", req.body)
+                // Create recipe in database
+                    db.Recipe.create(req.body)
+                    // Then also, push the recipe(id) to User
+                    .then(dbRecipe => {
+                        console.log("\n********\nCREATE DB USER AFTER CREATED", dbRecipe)
+                        // console.log("DB RECIPE", dbRecipe)
+                        res.json(dbRecipe) // send created recipe back up to front end
+                        return db.User.updateOne(
+                            {_id: req.session.passport.user},
+                            {$push: {recipeId: dbRecipe.id}}
+                        )
+                    })
+                    .then(dbRecipe => {
+                        console.log("Recipe Created", dbRecipe)
+                        // res.json(dbRecipe)
+                    })
+                } else if (dbUser[0].recipeId.length > 0) {
+                    for (var i = 0; i < dbUser[0].recipeId.length; i++) {
+                        if (req.body.id != dbUser[0].recipeId[i]) {
+                            db.Recipe.create(req.body)
+                                .then(dbRecipe => {
+                                    // console.log(dbRecipe)
+                                    res.json(dbRecipe)
+                                    return db.User.updateOne(
+                                        {_id: req.session.passport.user},
+                                        {$push: {recipeId: dbRecipe.id}}
+                                    )
+                        })
+                        .then(dbRecipe => {
+                            console.log("RESULT", dbRecipe)
+                            res.json(dbRecipe)
+                        })
+                    } else {
+                        console.log('Recipe with ' + req.body.id + " has already been saved!")
+                    }
+                }
+            }
+        })
+    },
+
     remove: function(req, res) {
         db.Recipe.findById({ _id: req.params.id })
             .then(dbModel => dbModel.remove())
@@ -62,16 +126,74 @@ module.exports = {
             .catch(err => res.status(422).json(err))
     },
     
-    updateRecipe: function(req, res) {
+    // From develop page, this function saves a copy of the recipe after updates have been made.
+    saveVersion: function(req, res) {
+        db.Recipe.create(req.body)
+                .then(dbModel => {
+                    console.log("\nRecipe Saved!\n", dbModel)
+                    res.json(dbModel)
+                    })
+                .catch(err => res.status(422).json(err));
+       
     },
 
-    // Each recipe copy will reference the original recipe's ObjectId. This route will locate all recipe copies with the reference to the selected req.params.id
-    getVersions: function(req, res) {
-        console.log("Inside getVersions Controller", req.params.id)
+    // Once the "copy" of the recipe has been saved in the database, we log the newly created _id in our Version Model organized by the "id" of that recipe. We use "id" not the title just in case the title is ever modified. 
+    logVersion: function(req, res) {
+        console.log("\n------\nINSIDE LOG VERSION CONTROLLER", req.body);
+        console.log("\n recipeMongoId \n\t", req.body._id)
+        // Create new Version 
+        db.Version.find({recipeId: req.body.id})
+        .then(dbVersion => {
+            console.log(dbVersion)
+            if (dbVersion.length === 0 ) {
+                db.Version.create({
+                    recipeId: req.body.id,
+                    recipeMongoId: req.body._id
+                })
+                .then(dbVersion => {
+                    console.log("Version CREATED", dbVersion)
+                    res.json(dbVersion)
+                    return db.User.updateOne(
+                        {_id: req.session.passport.user},
+                        {$push: {version: dbVersion._id}}
+                    )
+                })
+                .then(res => console.log(res))
+            } else if (dbVersion.length > 0) {
+                db.Version.updateOne(
+                    {recipeId: req.body.id},
+                    {$push: {recipeMongoId: req.body._id}}
+                )
+                .then(console.log("Version UPDATED", dbVersion))
+            }
+        })
+        // db.Version.create({
+        //     recipeId: req.body.id,
+        //     recipeMongoId: req.body._id
+        // })
+        // .then(dbVersion => {
+        //     console.log("Version Created", dbVersion)
+        //     res.json(dbVersion)
+        //     return db.User.updateOne(
+        //         {_id: req.session.passport.user},
+        //         {$push: {version: dbVersion._id}}
+        //     )
+        // })
+        // .then(res => console.log(res))
+    },
+
+    loadMostRecentlySavedVersion: function(req, res) {
+        console.log("Inside loadMostRecentlySavedVersion Controller", req.params.id)
         db.Recipe.find({_id: req.params.id})
-        .then(versions => {
-            res.json(versions)
+        .then(dbRecipe => {
+            res.json(dbRecipe)
         })
         .catch(err => res.status(422).json(err))
+    },
+
+    // load references to other version
+    viewOtherVersion: function(req, res) {
+        console.log("Inside viewOtherVersions Controller");
+
     }
 }

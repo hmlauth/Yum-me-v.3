@@ -14,41 +14,38 @@ class Develop extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loggedIn: false,
+            user: null,
+            loading: true,
             recipes: [],
             recipe: [],
             Ingredients: [],
-            topIngredients: [],
             Instructions: [],
-            topInstructions: [],
-            comments: [],
-            isEditable: false,
-            textInput: []
+            ingredientTextInput: [],
+            isEditable: false
         }
 
         this.handleChange = this.handleChange.bind(this)
 
     }
 
-    state = {
-        loggedIn: false,
-        user: null,
-        loading: true
-    }
+    // 1. Trigger child component (Develop page) to re-render if ingredients/instructions are updated.
+    // 2. Make instructions updatable
+    // 3. Show clickable links to render different versions of recipes in list
+    // 4. Add Comments!!! 
 
     componentDidMount() {
-        const { id } = this.props.location.state
-        console.log(id)
-        API.getVersions(id)
+        const { _id } = this.props.location.state
+        console.log("location_id", _id);
+        API.loadMostRecentlySavedVersion(_id)
         .then(res => {
-            console.log("getVersions", res.data)
+            console.log("loadMostRecentlySavedVersion", res.data)
             this.setState({
                 recipes: res.data,
                 recipe: res.data[0],
-                Ingredients: res.data[0].extendedIngredients.Ingredients,
-                topIngredients: res.data[0].extendedIngredients.Toppings,
-                Instructions: res.data[0].extendedInstructions.Instructions,
-                topInstructions: res.data[0].extendedInstructions.Topping,
-                textInput: res.data[0].extendedIngredients.Ingredients.map(ingredient => ingredient.originalString).join("\n")
+                Ingredients: res.data[0].Ingredients,
+                Instructions: res.data[0].Instructions,
+                ingredientTextInput: res.data[0].Ingredients.join("\n")
             })
         })
 
@@ -89,9 +86,8 @@ class Develop extends Component {
     handleChange(event) {
         event.preventDefault();
         console.log(event.target.value.split("\n"))
-        console.log(this);
         this.setState({
-            textInput: event.target.value
+            ingredientTextInput: event.target.value
         })
     }
 
@@ -102,22 +98,63 @@ class Develop extends Component {
         })
     }
 
-    saveRecipe = () => {
+    saveVersion = () => {
 
         // API.copyRecipe
         this.setState({
             isEditable: false
         })
 
+        console.log("...saving copy of recipe", this.state.recipe._id);
+
+        const ingredientTextInput = this.state.ingredientTextInput.split("\n")
+        console.log("ingredientTextInput", ingredientTextInput);
+
+        const { id, sourceUrl, img, title, servings } = this.state.recipe
+
+        // Save updated version of recipe as a 'new' recipe
+        API.saveVersion({
+            id,
+            sourceUrl,
+            img, 
+            title, 
+            servings,
+            Ingredients: ingredientTextInput,
+            Instructions: this.state.Instructions
+
+        })
+        .then(res => {
+            console.log("Version RESPONSE", res.data);
+            const { id, _id } = res.data;
+            API.loadMostRecentlySavedVersion(_id)
+            .then(res => {
+                console.log("loadMostRecentlySavedVersion", res.data)
+                this.setState({
+                    recipes: res.data,
+                    recipe: res.data[0],
+                    Ingredients: res.data[0].Ingredients,
+                    Instructions: res.data[0].Instructions,
+                    ingredientTextInput: res.data[0].Ingredients.join("\n")
+                })
+            })
+            .then(
+                API.logVersion({ id, _id })
+                    .then(res => {
+                        console.log("Version Created!", res)
+                    })
+            )
+        }).catch(err => console.log("ERRRRRRR", err))
+        
     }
 
     render() {
         const { sourceUrl, title, img, servings } = this.state.recipe;
-        const { Ingredients, Instructions, topIngredients, topInstructions, comments } = this.state
+        const { Ingredients, Instructions } = this.state
+
         const ingredients = Ingredients.map(ingredient => {
             return <ul>
                 <li>
-                    {ingredient.originalString}
+                    {ingredient}
                 </li>
             </ul>
         })
@@ -143,12 +180,12 @@ class Develop extends Component {
                             {/* Buttons */}
                             <Row>
                                 {this.state.isEditable ? (
-                                    <EditVersionBtn onClick={this.saveRecipe}> 
-                                        Save Recipe
+                                    <EditVersionBtn onClick={this.saveVersion}> 
+                                        Save Ingredients
                                     </EditVersionBtn>
                                 ) : ( 
                                     <EditVersionBtn onClick={this.editRecipe}>
-                                        Edit Recipe
+                                        Edit Ingredients
                                     </EditVersionBtn>
                                 )}
                             </Row>
@@ -157,7 +194,7 @@ class Develop extends Component {
                                 <Col size="5">
                                     {this.state.isEditable ? 
                                     <textarea 
-                                        value={this.state.textInput} 
+                                        value={this.state.ingredientTextInput} 
                                         onChange={this.handleChange}>
                                     </textarea> :
                                     ingredients

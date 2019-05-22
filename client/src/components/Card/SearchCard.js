@@ -4,9 +4,9 @@ import { ViewBtn } from "../Buttons/ViewBtn";
 import "./style.css"
 
 const SearchCard = props => {
-    console.log(props);
+    console.log('SearchCard Props', props); // GOOD
     const { id, recipe, onClick, sourceUrl } = props;
-
+    console.log('SearchCard recipe', recipe);
     return (
         <div id={`card-${id}`} className="card">
             <img src={recipe.img} alt={recipe.title} className="card-img"/>

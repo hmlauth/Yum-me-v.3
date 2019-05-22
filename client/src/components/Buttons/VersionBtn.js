@@ -11,7 +11,7 @@ export const VersionBtn = props => {
   return (
     <Link to={{
         pathname: '/develop', 
-        state: {id: props.id}
+        state: {_id: props.id}
       }}>
       <button 
         className="btn btn-warn version-btn float-left" >

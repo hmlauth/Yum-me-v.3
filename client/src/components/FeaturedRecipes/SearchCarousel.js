@@ -3,7 +3,7 @@ import API from "../../utils/API";
 import SearchCard from "../Card/SearchCard";
 import { Col, Row } from "../Grid";
 import { Input, FormBtn } from "../Form";
-import "./style.css"
+import "./style.scss"
 
 
 class SearchCarousel extends React.Component {
@@ -45,7 +45,7 @@ class SearchCarousel extends React.Component {
 
         API.searchRecipes(this.state.searchTerm)
             .then(res => {
-                console.log('res', res.data);
+                console.log('res', res.data); // GOOD
                 this.setState({
                     recipes: res.data,
                 });
@@ -59,14 +59,15 @@ class SearchCarousel extends React.Component {
     saveRecipe = recipe => {
 
         console.log("...saving recipe", recipe);
+
         const {
             id,
             sourceUrl,
             img,
             title,
             servings,
-            extendedIngredients,
-            extendedInstructions
+            Ingredients,
+            Instructions
         } = recipe
 
         API.saveRecipe({
@@ -75,13 +76,18 @@ class SearchCarousel extends React.Component {
             img,
             title,
             servings,
-            extendedIngredients,
-            extendedInstructions
+            Ingredients,
+            Instructions
         })
-            .then(res => console.log('Recipe Saved!', res))
-            .catch(err => console.log('errrrrrror', err));
+        .then(res => {
+            console.log('Recipe Saved!', res)
+            const { id, _id } = res.data;
+            API.logVersion({ id, _id })
+            .then(res => console.log("Version logged!", res))
+            .catch(err => console.log("Log Version ERRR", err))
+        })
+        .catch(err => console.log('errrrrrror', err));
     }
-
 
     nextRecipe = () => {
         const newIndex = this.state.currIndex + 1

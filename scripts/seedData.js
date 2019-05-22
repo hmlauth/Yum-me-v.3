@@ -8,7 +8,7 @@ var db = require('../models');
 
 // add clear data base functionality first. 
 
-db.Recipe.collection.insert(data, function(err, res) {
+db.SeedRecipe.collection.insert(data, function(err, res) {
     console.log("ERR", err);
     console.log("Res", res);
 })

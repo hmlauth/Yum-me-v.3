@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import CarouselCard from "../Card/CarouselCard";
 import Container from "../Container"
-import "./style.css"
+import "./style.scss"
 
 
 class SavedCarousel extends React.Component {
@@ -26,6 +26,7 @@ class SavedCarousel extends React.Component {
         console.log("...loading saved recipes")
         API.getSavedRecipes()
             .then(res => {
+                console.log("\nPOPULATED RESPONSE.DATA", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
@@ -60,7 +61,11 @@ class SavedCarousel extends React.Component {
     }
 
     render() {
+        console.log("State Recipes", this.state.recipes)
         const { initialIndex, recipes, recipe, currIndex } = this.state;
+        console.log('recipes', recipes);
+        console.log('recipe', recipe);
+
         return (
                  <div className="carousel-saved">
                  

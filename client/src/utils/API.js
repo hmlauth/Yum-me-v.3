@@ -10,29 +10,34 @@ export default {
 
   // Searches all seed data recipes
   searchRecipes: function(searchTerm) {
+    console.log("SEARCH TERM", searchTerm)
     return axios.get("/api/recipes/search/" + searchTerm);
   },
-
   // Gets all saved OriginalRecipes
   getSavedRecipes: function() {
     return axios.get("/api/recipes");
   },
-
   // Gets all saved CopyRecipes and OriginalRecipes
-  getVersions: function(id) {
-    console.log("Inside getVersion route", id)
+  loadMostRecentlySavedVersion: function(id) {
+    console.log("Inside loadMostRecentlySavedVersion route", id)
     return axios.get("/api/recipes/" + id);
   },
-
   deleteRecipe: function(id) {
     return axios.delete("/api/recipes/" + id);
   },
-
   // Saves a recipe to the database from front end "Get Inspired" different from saving updated version of an already saved recipe.
   saveRecipe: function(recipe) {
+    console.log("RECIPE", recipe)
     return axios.post("/api/recipes", recipe)
   },
-
+  saveVersion: function(version) {
+    console.log("version", version)
+    return axios.post("api/recipes/saveversion", version)
+  },
+  logVersion: function(version) {
+    console.log("Version Route", version);
+    return axios.post("api/recipes/logversion", version)
+  },
   // YouTube Search
   videoSearch: function(searchTerm) {
     return axios.get("/api/videos/" + searchTerm)
@@ -41,7 +46,6 @@ export default {
   //   console.log("Inside API routes copyRecipe");
   //   return axios.post("/api/recipes/")
   // },
-
   // saveComment: function() {
   //   console.log("Inside API routes saveComment");
   //   return axios.post("/api/recipes/")
