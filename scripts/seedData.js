@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var data = require("../client/src/utils/recipes")
 // Connect to the Mongo DB - 'recipeScraper'
-var databaseUri = 'mongodb://localhost/yummedb';
+var databaseUri = process.env.MONGODB_URI || 'mongodb://localhost/yummedb';
 mongoose.connect(databaseUri);
 
 var db = require('../models');
