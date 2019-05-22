@@ -1,26 +1,6 @@
 // controller only requires the models file to dictate how information is added and retrieved to/from the database
 const db = require("../models");
 
-// Helper function
-function deepAssign(a, b, step = 0) {
-    if(step > 10) {
-        return {}
-    }
-    for (i in b) {
-        if(Array.isArray(b[i])) {
-            a[i] = deepAssign([], b[i], step + 1)
-        } else if(typeof b[i] === 'object') {
-            a[i] = deepAssign({}, b[i], step + 1)
-        } else if(typeof b[i] === 'function') {
-            throw new Error('you can not clone functions')
-        } else {
-            a[i] = b[i]
-        }
-    }
-    console.log("FINAL A", a)
-    return a
-}
-
 // Here is where we define all the methods called in the routes/api/recipes.js file that required this file.
 
 module.exports = {
