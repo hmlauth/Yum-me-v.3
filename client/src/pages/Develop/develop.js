@@ -4,6 +4,10 @@ import Container from "../../components/Container";
 import { Row, Col } from "../../components/Grid";
 import Header from "../../components/Header"
 import { EditVersionBtn } from "../../components/Buttons";
+import { Button } from "reactstrap";
+import { Link } from "react-router-dom"
+import "./develop.scss";
+import loading from '../../assets/images/loading.gif';
 
 class Develop extends Component {
 
@@ -23,6 +27,12 @@ class Develop extends Component {
 
         this.handleChange = this.handleChange.bind(this)
 
+    }
+
+    state = {
+        loggedIn: false,
+        user: null,
+        loading: true
     }
 
     componentDidMount() {
@@ -50,7 +60,31 @@ class Develop extends Component {
         //         comments: res.data
         //     })
         // })
+        this.loading();
+
+        API.isLoggedIn().then(user => {
+            if (user.data.loggedIn) {
+                this.setState({
+                    loggedIn: true,
+                    user: user.data.user
+                });
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+
+        console.log(this.props)
+
     }
+
+    loading() {
+        setTimeout(() => {
+            this.setState({
+                loading: false
+            })
+        }, 3000)
+    }
+
 
     handleChange(event) {
         event.preventDefault();
@@ -96,51 +130,76 @@ class Develop extends Component {
         })
 
         return (
-            <Container fluid>
-            {/* header */}
-                <Row>
-                    <Header>
-                        {title}
-                    </Header>
-                </Row>
-                {/* Buttons */}
-                <Row>
-                    {this.state.isEditable ? (
-                        <EditVersionBtn onClick={this.saveRecipe}> 
-                            Save Recipe
-                        </EditVersionBtn>
-                    ) : ( 
-                        <EditVersionBtn onClick={this.editRecipe}>
-                            Edit Recipe
-                        </EditVersionBtn>
+            <div className="developPage">
+                {this.state.loggedIn ? (
+                    <div>
+                        <Container fluid>
+                        {/* header */}
+                            <Row>
+                                <Header>
+                                    {title}
+                                </Header>
+                            </Row>
+                            {/* Buttons */}
+                            <Row>
+                                {this.state.isEditable ? (
+                                    <EditVersionBtn onClick={this.saveRecipe}> 
+                                        Save Recipe
+                                    </EditVersionBtn>
+                                ) : ( 
+                                    <EditVersionBtn onClick={this.editRecipe}>
+                                        Edit Recipe
+                                    </EditVersionBtn>
+                                )}
+                            </Row>
+                        {/* Recipe */}
+                            <Row>
+                                <Col size="5">
+                                    {this.state.isEditable ? 
+                                    <textarea 
+                                        value={this.state.textInput} 
+                                        onChange={this.handleChange}>
+                                    </textarea> :
+                                    ingredients
+                                
+                                }    
+                                </Col>
+                                <Col size="5">
+                                    {instructions}
+                                </Col>
+                            </Row>
+                        
+                            <Row>
+
+                                {/* Comments */}
+
+                            </Row>
+                        </Container>
+                    </div>
+
+                ) : (
+                    <div className="noUser">
+                    {!this.state.loading ? (
+                        <>
+                            <h1>Please log in.</h1>
+                            <Link className="loginLink" to="/login">
+                            <Button className="loginBtn" color="info" block>Login</Button>
+                            </Link>
+                       <br></br>
+                        </>
+                    ) : (
+
+                        <img src={loading} className="loadingIcon" alt="loading"></img>
+
+                        )}
+                </div>
+
                     )}
-                </Row>
-            {/* Recipe */}
-                <Row>
-                    <Col size="5">
-                        {this.state.isEditable ? 
-                        <textarea 
-                            value={this.state.textInput} 
-                            onChange={this.handleChange}>
-                        </textarea> :
-                        ingredients
-                    
-                    }    
-                    </Col>
-                    <Col size="5">
-                        {instructions}
-                    </Col>
-                </Row>
-            
-                <Row>
+            </div>
+    
+        )
 
-                    {/* Comments */}
-
-                </Row>
-            </Container>
-            
-        )}
-
+    }
 }
 
 export default Develop;
