@@ -22,10 +22,13 @@ class Develop extends Component {
             Ingredients: [],
             Instructions: [],
             ingredientTextInput: [],
-            isEditable: false
+            instructionTextInput: [],
+            isIngredientEditable: false,
+            isInstructionEditable: false
         }
 
-        this.handleChange = this.handleChange.bind(this)
+        this.handleIngredientChange = this.handleIngredientChange.bind(this)
+        this.handleInstructionChange = this.handleInstructionChange.bind(this)
 
     }
 
@@ -38,16 +41,17 @@ class Develop extends Component {
         const { _id } = this.props.location.state
         console.log("location_id", _id);
         API.loadMostRecentlySavedVersion(_id)
-        .then(res => {
-            console.log("loadMostRecentlySavedVersion", res.data)
-            this.setState({
-                recipes: res.data,
-                recipe: res.data[0],
-                Ingredients: res.data[0].Ingredients,
-                Instructions: res.data[0].Instructions,
-                ingredientTextInput: res.data[0].Ingredients.join("\n")
+            .then(res => {
+                console.log("loadMostRecentlySavedVersion", res.data)
+                this.setState({
+                    recipes: res.data,
+                    recipe: res.data[0],
+                    Ingredients: res.data[0].Ingredients,
+                    Instructions: res.data[0].Instructions,
+                    ingredientTextInput: res.data[0].Ingredients.join("\n"),
+                    instructionTextInput: res.data[0].Instructions.join("\n")
+                })
             })
-        })
 
         // API for when comments are ready to be populated
         // API.getComments(id)
@@ -83,7 +87,7 @@ class Develop extends Component {
     }
 
 
-    handleChange(event) {
+    handleIngredientChange(event) {
         event.preventDefault();
         console.log(event.target.value.split("\n"))
         this.setState({
@@ -91,18 +95,32 @@ class Develop extends Component {
         })
     }
 
-    editRecipe = () => {
-        console.log("editRecipe")
+    handleInstructionChange(event) {
+        event.preventDefault();
+        console.log(event.target.value.split("\n"))
         this.setState({
-            isEditable: true
+            instructionTextInput: event.target.value
         })
     }
 
-    saveVersion = () => {
+    editIngredients = () => {
+        this.setState({
+            isIngredientEditable: true
+        })
+    }
+
+    editInstructions = () => {
+        this.setState({
+            isInstructionEditable: true
+        })
+    }
+
+    saveRecipe = () => {
 
         // API.copyRecipe
         this.setState({
-            isEditable: false
+            isIngredientEditable: false,
+            isInstructionEditable: false
         })
 
         console.log("...saving copy of recipe", this.state.recipe._id);
@@ -110,41 +128,45 @@ class Develop extends Component {
         const ingredientTextInput = this.state.ingredientTextInput.split("\n")
         console.log("ingredientTextInput", ingredientTextInput);
 
+        const instructionTextInput = this.state.instructionTextInput.split("\n")
+        console.log("instructionTextInput", instructionTextInput);
+
         const { id, sourceUrl, img, title, servings } = this.state.recipe
 
         // Save updated version of recipe as a 'new' recipe
         API.saveVersion({
             id,
             sourceUrl,
-            img, 
-            title, 
+            img,
+            title,
             servings,
             Ingredients: ingredientTextInput,
-            Instructions: this.state.Instructions
+            Instructions: instructionTextInput
 
         })
-        .then(res => {
-            console.log("Version RESPONSE", res.data);
-            const { id, _id } = res.data;
-            API.loadMostRecentlySavedVersion(_id)
             .then(res => {
-                console.log("loadMostRecentlySavedVersion", res.data)
-                this.setState({
-                    recipes: res.data,
-                    recipe: res.data[0],
-                    Ingredients: res.data[0].Ingredients,
-                    Instructions: res.data[0].Instructions,
-                    ingredientTextInput: res.data[0].Ingredients.join("\n")
-                })
-            })
-            .then(
-                API.logVersion({ id, _id })
+                console.log("UPDATED RECIPE RESPONSE", res.data);
+                const { id, _id } = res.data;
+                API.loadMostRecentlySavedVersion(_id)
                     .then(res => {
-                        console.log("Version Created!", res)
+                        console.log("loadMostRecentlySavedVersion", res.data)
+                        this.setState({
+                            recipes: res.data,
+                            recipe: res.data[0],
+                            Ingredients: res.data[0].Ingredients,
+                            Instructions: res.data[0].Instructions,
+                            ingredientTextInput: res.data[0].Ingredients.join("\n"),
+                            instructionTextInput: res.data[0].Instructions.join("\n"),
+                        })
                     })
-            )
-        }).catch(err => console.log("ERRRRRRR", err))
-        
+                    .then(
+                        API.logVersion({ id, _id })
+                            .then(res => {
+                                console.log("Version Created!", res)
+                            })
+                    )
+            }).catch(err => console.log("ERRRRRRR", err))
+
     }
 
     render() {
@@ -171,41 +193,72 @@ class Develop extends Component {
                 {this.state.loggedIn ? (
                     <div>
                         <Container fluid>
-                        {/* header */}
+                            {/* header */}
                             <Row>
                                 <Header>
-                                    {title}
+                                    <span id='recipe-title'>
+                                        {title}
+                                    </span>
                                 </Header>
                             </Row>
-                            {/* Buttons */}
-                            <Row>
-                                {this.state.isEditable ? (
-                                    <EditVersionBtn onClick={this.saveVersion}> 
-                                        Save Ingredients
-                                    </EditVersionBtn>
-                                ) : ( 
-                                    <EditVersionBtn onClick={this.editRecipe}>
-                                        Edit Ingredients
-                                    </EditVersionBtn>
-                                )}
-                            </Row>
-                        {/* Recipe */}
-                            <Row>
+
+                            {/* Recipe */}
+                            <Row class='recipe-content'>
                                 <Col size="5">
-                                    {this.state.isEditable ? 
-                                    <textarea 
-                                        value={this.state.ingredientTextInput} 
-                                        onChange={this.handleChange}>
-                                    </textarea> :
-                                    ingredients
-                                
-                                }    
+                                    {/* Buttons */}
+                                    <Row>
+                                        {this.state.isIngredientEditable ? (
+                                            <EditVersionBtn onClick={this.saveRecipe}>
+                                                Save Ingredients
+                                            </EditVersionBtn>
+                                        ) : (
+                                            <EditVersionBtn onClick={this.editIngredients}>
+                                                    Edit Ingredients
+                                            </EditVersionBtn>
+                                        )}
+                                    </Row>
+                                    <Row>
+                                        {this.state.isIngredientEditable ?
+                                            <textarea
+                                                value={this.state.ingredientTextInput}
+                                                onChange={this.handleIngredientChange}>
+                                            </textarea> :
+                                            <div class='recipe-content-list'>
+                                                {ingredients}
+                                            </div>
+                                            
+                                        }
+                                    </Row>
                                 </Col>
                                 <Col size="5">
-                                    {instructions}
+                                    {/* Buttons */}
+                                    <Row>
+                                        {this.state.isInstructionEditable ? (
+                                            <EditVersionBtn onClick={this.saveRecipe}>
+                                                Save Instructions
+                                            </EditVersionBtn>
+                                        ) : (
+                                            <EditVersionBtn onClick={this.editInstructions}>
+                                                    Edit Instructions
+                                            </EditVersionBtn>
+                                        )}
+                                    </Row>
+                                    <Row>
+                                        {this.state.isInstructionEditable ?
+                                            <textarea
+                                                value={this.state.instructionTextInput}
+                                                onChange={this.handleInstructionChange}>
+                                            </textarea> :
+                                            <div class='recipe-content-list'>
+                                                {instructions}
+                                            </div>
+                                            
+                                        }
+                                    </Row>
+
                                 </Col>
                             </Row>
-                        
+
                             <Row>
 
                                 {/* Comments */}
@@ -215,25 +268,25 @@ class Develop extends Component {
                     </div>
 
                 ) : (
-                    <div className="noUser">
-                    {!this.state.loading ? (
-                        <>
-                            <h1>Please log in.</h1>
-                            <Link className="loginLink" to="/login">
-                            <Button className="loginBtn" color="info" block>Login</Button>
-                            </Link>
-                       <br></br>
-                        </>
-                    ) : (
+                        <div className="noUser">
+                            {!this.state.loading ? (
+                                <>
+                                    <h1>Please log in.</h1>
+                                    <Link className="loginLink" to="/login">
+                                        <Button className="loginBtn" color="info" block>Login</Button>
+                                    </Link>
+                                    <br></br>
+                                </>
+                            ) : (
 
-                        <img src={loading} className="loadingIcon" alt="loading"></img>
+                                    <img src={loading} className="loadingIcon" alt="loading"></img>
 
-                        )}
-                </div>
+                                )}
+                        </div>
 
                     )}
             </div>
-    
+
         )
 
     }

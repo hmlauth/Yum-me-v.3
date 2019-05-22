@@ -1,10 +1,5 @@
 import React from "react";
-import { 
-  BrowserRouter,
-  Switch,
-  Route,
-  Link,
-  NavLink} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export const VersionBtn = props => {

@@ -32,6 +32,7 @@ module.exports = {
 
     // Currently locates all saved recipes regardless of user and returns found documents sort by most recently saved to oldest. Need to query using populate based on reference stored in User Model.
     getSavedRecipes: function(req, res) {
+        console.log('INSIDE GET SAVED RECIPES', req.body)
         // Find User
         db.User.findOne({_id: req.session.passport.user})
         // Specific that we want to populate the retrieved User with any associated recipes
@@ -76,7 +77,7 @@ module.exports = {
         console.log("\n******************\n INSIDE CREATE CONTROLLER")
         db.User.find({_id: req.session.passport.user})
         .then(dbUser => {
-            console.log("\n********\nCREATE DB USER", dbUser)
+            console.log("\n********\nCREATE > DB USER", dbUser)
             // check if references to recipes exist or not.
             // if not, then save recipe and push id reference
             if (dbUser[0].recipeId.length === 0) {
@@ -100,9 +101,10 @@ module.exports = {
                 } else if (dbUser[0].recipeId.length > 0) {
                     for (var i = 0; i < dbUser[0].recipeId.length; i++) {
                         if (req.body.id != dbUser[0].recipeId[i]) {
+                            console.log("\n************\nRECIPE VERSION ALREADY SAVED, UPDATING VERSION", req.body)
                             db.Recipe.create(req.body)
                                 .then(dbRecipe => {
-                                    // console.log(dbRecipe)
+                                    console.log("AFTER CREATE", dbRecipe)
                                     res.json(dbRecipe)
                                     return db.User.updateOne(
                                         {_id: req.session.passport.user},
