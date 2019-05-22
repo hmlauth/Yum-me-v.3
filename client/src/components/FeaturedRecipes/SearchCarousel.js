@@ -45,7 +45,7 @@ class SearchCarousel extends React.Component {
 
         API.searchRecipes(this.state.searchTerm)
             .then(res => {
-                console.log('res', res.data);
+                console.log('res', res.data); // GOOD
                 this.setState({
                     recipes: res.data,
                 });
@@ -59,6 +59,7 @@ class SearchCarousel extends React.Component {
     saveRecipe = recipe => {
 
         console.log("...saving recipe", recipe);
+
         const {
             id,
             sourceUrl,
@@ -78,14 +79,14 @@ class SearchCarousel extends React.Component {
             Ingredients,
             Instructions
         })
-            .then(res => {
-                console.log('Recipe Saved!', res)
-                const { id, _id } = res.data;
-                API.logVersion({ id, _id })
-                .then(res => console.log("Version logged!", res))
-                .catch(err => console.log("Log Version ERRR", err))
-            })
-            .catch(err => console.log('errrrrrror', err));
+        .then(res => {
+            console.log('Recipe Saved!', res)
+            const { id, _id } = res.data;
+            API.logVersion({ id, _id })
+            .then(res => console.log("Version logged!", res))
+            .catch(err => console.log("Log Version ERRR", err))
+        })
+        .catch(err => console.log('errrrrrror', err));
     }
 
     nextRecipe = () => {

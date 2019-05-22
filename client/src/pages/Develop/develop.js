@@ -30,17 +30,17 @@ class Develop extends Component {
     componentDidMount() {
         const { _id } = this.props.location.state
         console.log("location_id", _id)
-            API.loadMostRecentlySavedVersion(_id)
-            .then(res => {
-                console.log("loadMostRecentlySavedVersion", res.data)
-                this.setState({
-                    recipes: res.data,
-                    recipe: res.data[0],
-                    Ingredients: res.data[0].Ingredients,
-                    Instructions: res.data[0].Instructions,
-                    ingredientTextInput: res.data[0].Ingredients.join("\n")
-                })
+        API.loadMostRecentlySavedVersion(_id)
+        .then(res => {
+            console.log("loadMostRecentlySavedVersion", res.data)
+            this.setState({
+                recipes: res.data,
+                recipe: res.data[0],
+                Ingredients: res.data[0].Ingredients,
+                Instructions: res.data[0].Instructions,
+                ingredientTextInput: res.data[0].Ingredients.join("\n")
             })
+        })
     }
 
     handleChange(event) {
@@ -89,6 +89,7 @@ class Develop extends Component {
             API.logVersion({ id, _id })
             .then(res => {
                 console.log("Version Created!", res)
+                // this.loadMostRecentlySavedVersion()
             })
         })
         .catch(err => console.log("ERRRRRRR", err))

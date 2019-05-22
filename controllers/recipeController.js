@@ -89,15 +89,18 @@ module.exports = {
         console.log("\n******************\n INSIDE CREATE CONTROLLER")
         db.User.find({_id: req.session.passport.user})
         .then(dbUser => {
+            console.log("\n********\nCREATE DB USER", dbUser)
             // check if references to recipes exist or not.
             // if not, then save recipe and push id reference
             if (dbUser[0].recipeId.length === 0) {
+                console.log("\n********\nCREATE REQ.BODY", req.body)
                 // Create recipe in database
                     db.Recipe.create(req.body)
                     // Then also, push the recipe(id) to User
                     .then(dbRecipe => {
+                        console.log("\n********\nCREATE DB USER AFTER CREATED", dbRecipe)
                         // console.log("DB RECIPE", dbRecipe)
-                        res.json(dbRecipe)
+                        res.json(dbRecipe) // send created recipe back up to front end
                         return db.User.updateOne(
                             {_id: req.session.passport.user},
                             {$push: {recipeId: dbRecipe.id}}
@@ -105,7 +108,7 @@ module.exports = {
                     })
                     .then(dbRecipe => {
                         console.log("Recipe Created", dbRecipe)
-                        res.json(dbRecipe)
+                        // res.json(dbRecipe)
                     })
                 } else if (dbUser[0].recipeId.length > 0) {
                     for (var i = 0; i < dbUser[0].recipeId.length; i++) {
