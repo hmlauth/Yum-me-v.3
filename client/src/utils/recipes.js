@@ -300,6 +300,36 @@ const hannasAPI = [
             'Dollop some whipped cream on top and decorate with lucky charms marshmallows. Enjoy!'
             ],
         "user": null
+    },
+     // Chicken Noodle Soup
+     {
+        "id": "10",
+        "sourceUrl": "https://tasty.co/recipe/chicken-noodle-soup",
+        "img":  "https://www.jocooks.com/wp-content/uploads/2018/01/instant-pot-chicken-noodle-soup-1-3.jpg",
+        "title": "Chicken Noodle Soup",
+        "servings": "8",
+        "Ingredients": [
+            '2 tablespoons  butter',
+            '1 cup  onion, diced',
+            '2 cloves garlic, minced',
+            '1 cup  celery, diced',
+            '1 cup  carrot, diced',
+            '½ lb  cooked chicken, shredded',
+            '56 fl oz  chicken broth',
+            '2 cups  egg noodle',
+            '1 teaspoon  salt',
+            '1 teaspoon  pepper',
+            '2 leaves dried bay leaf'
+            ],
+        "Instructions": [
+            'In a large pot, melt butter and add onions and garlic. Cook until onions have begun to soften.',
+            'Add celery, carrots, and cooked shredded chicken.',
+            'Add the chicken broth, egg noodles, salt, pepper and bay leaves.',
+            'Bring to a boil and then reduce heat, cover and simmer for 20 minutes.',
+            'Remove bay leaves from the soup.',
+            'Enjoy!'
+            ],
+        "user": null
     }
 ];
 
