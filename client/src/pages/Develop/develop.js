@@ -42,8 +42,6 @@ class Develop extends Component {
 
     componentDidMount() {
         const { _id, id } = this.props.location.state
-        console.log("location_id", _id);
-        console.log("location id", id);
 
         API.loadMostRecentlySavedVersion(_id)
             .then(res => {
@@ -93,10 +91,8 @@ class Develop extends Component {
     }
 
     loadVersion(_id) {
-        console.log('LOAD VERSION _ID', _id)
         API.loadMostRecentlySavedVersion(_id)
             .then(res => {
-                console.log("Load Version", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
@@ -155,8 +151,6 @@ class Develop extends Component {
             isInstructionEditable: false
         })
 
-        console.log("...saving copy of recipe", this.state.recipe._id);
-
         const ingredientTextInput = this.state.ingredientTextInput.split("\n")
         console.log("ingredientTextInput", ingredientTextInput);
 
@@ -179,6 +173,8 @@ class Develop extends Component {
             .then(res => {
                 console.log("UPDATED RECIPE RESPONSE", res.data);
                 const { id, _id } = res.data;
+
+                // Render the updated recipe version to the page
                 API.loadMostRecentlySavedVersion(_id)
                     .then(res => {
                         console.log("loadMostRecentlySavedVersion", res.data)
@@ -191,18 +187,20 @@ class Develop extends Component {
                             instructionTextInput: res.data[0].Instructions.join("\n"),
                         })
                     })
-                    .then(
-                        API.logVersion({ id, _id })
-                            .then(res => {
-                                console.log("Version Created!", res)
-                            })
-                    )
+                    console.log('AFTER MOST RECENTLY SAVED UPDATED', this.state.recipe.id)
+                     this.listAllVersions(this.state.recipe.id)
+
+                    API.logVersion({ id, _id })
+                        .then(res => console.log("Version Created!", res))
+
             }).catch(err => console.log("ERRRRRRR", err))
+
+            
 
     }
 
     render() {
-        const { sourceUrl, title, img, servings } = this.state.recipe;
+        const { title, img, servings } = this.state.recipe;
         const { Ingredients, Instructions, versions } = this.state
 
         const ingredients = Ingredients.map(ingredient => {
@@ -221,7 +219,6 @@ class Develop extends Component {
         })
 
         const versionList = versions.map(version => {
-            console.log('versionList mapping', version._id)
             return (
                 <VersionList
                     _id={version._id}
@@ -238,9 +235,11 @@ class Develop extends Component {
                         <Container fluid>
                         {/* Versions */}
                             <Row>
+                                <div className="version-list">
                                 { versionList }
+                                </div>
                             </Row>
-                            {/* header */}
+                            {/* Header */}
                             <Row>
                                 <Header>
                                     <span id='recipe-title'>

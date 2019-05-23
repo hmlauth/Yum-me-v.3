@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import API from "../../utils/API";
 import CarouselCard from "../Card/CarouselCard";
-import Container from "../Container"
 import "./style.scss"
 
 

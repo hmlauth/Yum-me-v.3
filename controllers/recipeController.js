@@ -160,22 +160,13 @@ module.exports = {
                     {recipeId: req.body.id},
                     {$push: {recipeMongoId: req.body._id}}
                 )
-                .then(console.log("Version UPDATED", dbVersion))
+                .then(dbVersion => {
+                    console.log("Version UPDATED", dbVersion); 
+                    res.json(dbVersion)
+                    }
+                )
             }
         })
-        // db.Version.create({
-        //     recipeId: req.body.id,
-        //     recipeMongoId: req.body._id
-        // })
-        // .then(dbVersion => {
-        //     console.log("Version Created", dbVersion)
-        //     res.json(dbVersion)
-        //     return db.User.updateOne(
-        //         {_id: req.session.passport.user},
-        //         {$push: {version: dbVersion._id}}
-        //     )
-        // })
-        // .then(res => console.log(res))
     },
 
     loadMostRecentlySavedVersion: function(req, res) {
@@ -187,7 +178,7 @@ module.exports = {
         .catch(err => res.status(422).json(err))
     },
 
-    // load references to other version
+    // From develop page, this function provides the information to list out versions in chronogical order
     listAllVersions: function(req, res) {
         console.log("\n*********\nInside listAllVersions Controller", req.params.id);
 
@@ -196,8 +187,6 @@ module.exports = {
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
         .then(dbUser => {
-            console.log('dbUser', dbUser);
-            console.log('dbUser.version', dbUser.version);
             var allVersions = [];
             for (let i = 0; i < dbUser.version.length; i++) {
                 let recipe = dbUser.version[i];
@@ -209,7 +198,6 @@ module.exports = {
                     
                 }
             }
-            console.log("\n********\n", allVersions)
             res.json(allVersions)
         })
     }
