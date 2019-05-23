@@ -17,7 +17,7 @@ import React from 'react';
 				<iframe className="embed-responsive-item" src={url}></iframe>
 			</div>
 			<div className="details">
-				<h2>{video.snippet.title}</h2>
+				<h2 id='videoTitle'>{video.snippet.title}</h2>
 				<div>{video.snippet.description}</div>
 			</div>
 		</div>

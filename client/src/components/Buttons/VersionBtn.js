@@ -14,7 +14,7 @@ export const VersionBtn = props => {
         state: {_id: props.id}
       }}>
       <button 
-        className="btn btn-warn version-btn float-left" >
+        className="btn btn-warning version-btn float-left" >
           Develop
       </button>
     </Link>

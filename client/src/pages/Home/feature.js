@@ -21,14 +21,11 @@ class Feature extends React.Component {
                 <Grid stackable>
                     <Grid.Column width={10}>
                     <Header as="h1" id="featureTitle">
-                        First feature heading.{" "}
-                        <span className="sub">It'll blow your mind.</span>
+                        Get Inspired!{" "}
+                        <span className="sub">Research and compare.</span>
                     </Header>
                     <p>
-                        Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-                        id ligula porta felis euismod semper. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-                        ac cursus commodo.
+                        The process was always the same - review at least 10 recipes before deciding which two were most aligned with the vision. Search unique and technical recipes then save it directly to your development page.
                     </p>
                     </Grid.Column>
                     <Grid.Column width={6}>
@@ -45,13 +42,10 @@ class Feature extends React.Component {
                     </Grid.Column>
                     <Grid.Column width={10}>
                     <Header as="h1" id="featureTitle">
-                        Oh yeah, <span className="sub">it's that good.</span>
+                        Sharpen Your Skills! <span className="sub">Watch YouTube videos.</span>
                     </Header>
                     <p>
-                        Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-                        id ligula porta felis euismod semper. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-                        ac cursus commodo.
+                        Have video access while cooking so you can learn how to roll pasta, emulsify oil, frost your cupcakes or create chocolate decals without having to alternate between Youtube and the page on which your recipe resides.
                     </p>
                     </Grid.Column>
                 </Grid>
@@ -61,13 +55,10 @@ class Feature extends React.Component {
                 <Grid stackable>
                     <Grid.Column width={10}>
                     <Header as="h1" id="featureTitle">
-                        And lastly, <span className="sub">this one.</span>
+                        Recipe Development! <span className="sub">Access to every version.</span>
                     </Header>
                     <p>
-                        Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-                        id ligula porta felis euismod semper. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-                        ac cursus commodo.
+                        Have you ever modified a recipe and then either forgotten what you did or wished you could have each version ever saved? Now you can! Yum(Me)! saves every version of your recipe so you can experiment with out the fear of forgetting or having to spend the energy remembering! All versions are date stamped.
                     </p>
                     </Grid.Column>
                     <Grid.Column width={6}>

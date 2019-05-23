@@ -11,6 +11,7 @@
     "jquery": "^3.4.1",
     "lodash": "^4.17.4",
     "node-sass": "^4.11.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-bootstrap": "^1.0.0-beta.8",
@@ -21,6 +22,7 @@
     "reactstrap": "^7.1.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.85.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "youtube-api-search": "0.0.5"
   },
   "scripts": {

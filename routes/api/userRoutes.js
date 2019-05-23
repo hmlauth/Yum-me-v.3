@@ -29,7 +29,7 @@ router.post("/signup", function(req, res, next) {
     if (err) throw err;
     if (user) {
       console.log("user already exists")
-      return res.json("user already exists");
+      return res.json("User already exists.");
     }
     if (!user) {
       let newUser = new db.User({
