@@ -6,7 +6,6 @@ const db = require("../models");
 module.exports = {
     // This function finds all documents in SeedRecipe collection then returns only those documents with the searchTerm in the title or ingredient list of that document.
     searchRecipes: function(req, res) {
-        console.log("\n**********\nINSIDE SEARCH RECIPES CONTROLLER", req.body)
         db.SeedRecipe.find()
         .map(function(doc) {
             const searchArr = [];
@@ -18,13 +17,11 @@ module.exports = {
                         }
                 }
             }
-            console.log("\nSEARCH ARR", searchArr)
             return searchArr
 
         })
 
         .then(searchResults => {
-            console.log('\nsearchResults', searchResults)
             res.json(searchResults) 
         })
         .catch(err => res.status(422).json(err))
@@ -115,6 +112,7 @@ module.exports = {
         })
     },
 
+    // Delete from database (not functional yet)
     remove: function(req, res) {
         db.Recipe.findById({ _id: req.params.id })
             .then(dbModel => dbModel.remove())
@@ -135,12 +133,11 @@ module.exports = {
 
     // Once the "copy" of the recipe has been saved in the database, we log the newly created _id in our Version Model organized by the "id" of that recipe. We use "id" not the title just in case the title is ever modified. 
     logVersion: function(req, res) {
-        console.log("\n------\nINSIDE LOG VERSION CONTROLLER", req.body);
-        console.log("\n recipeMongoId \n\t", req.body._id)
         // Create new Version 
         db.Version.find({recipeId: req.body.id})
         .then(dbVersion => {
             console.log(dbVersion)
+            // Create version if it hasn't been created already (identified by recipe 'id')
             if (dbVersion.length === 0 ) {
                 db.Version.create({
                     recipeId: req.body.id,
@@ -155,6 +152,7 @@ module.exports = {
                     )
                 })
                 .then(res => console.log(res))
+            // Else, update the existing version model with the new recipe's _id (given by mongo)
             } else if (dbVersion.length > 0) {
                 db.Version.updateOne(
                     {recipeId: req.body.id},
@@ -169,8 +167,8 @@ module.exports = {
         })
     },
 
+    // Loads the most recently saved version to the develop page to be editted
     loadMostRecentlySavedVersion: function(req, res) {
-        // console.log("Inside loadMostRecentlySavedVersion Controller", req.params.id)
         db.Recipe.find({_id: req.params.id})
         .then(dbRecipe => {
             res.json(dbRecipe)
@@ -180,7 +178,6 @@ module.exports = {
 
     // From develop page, this function provides the information to list out versions in chronogical order
     listAllVersions: function(req, res) {
-        console.log("\n*********\nInside listAllVersions Controller", req.params.id);
 
         // Find User
         db.User.findOne({_id: req.session.passport.user})

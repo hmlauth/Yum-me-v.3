@@ -35,11 +35,6 @@ class Develop extends Component {
 
     }
 
-    // 1. Trigger child component (Develop page) to re-render if ingredients/instructions are updated.
-    // 2. Make instructions updatable
-    // 3. Show clickable links to render different versions of recipes in list
-    // 4. Add Comments!!! 
-
     componentDidMount() {
         const { _id, id } = this.props.location.state
 
@@ -145,7 +140,6 @@ class Develop extends Component {
 
     saveRecipe = () => {
 
-        // API.copyRecipe
         this.setState({
             isIngredientEditable: false,
             isInstructionEditable: false
@@ -187,7 +181,7 @@ class Develop extends Component {
                             instructionTextInput: res.data[0].Instructions.join("\n"),
                         })
 
-                        console.log('AFTER MOST RECENTLY SAVED UPDATED', this.state.recipe.id)
+                        // Update state with new date stamp of version
                         this.listAllVersions(this.state.recipe.id)
                     })
                     
