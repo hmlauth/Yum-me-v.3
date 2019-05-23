@@ -186,9 +186,11 @@ class Develop extends Component {
                             ingredientTextInput: res.data[0].Ingredients.join("\n"),
                             instructionTextInput: res.data[0].Instructions.join("\n"),
                         })
+
+                        console.log('AFTER MOST RECENTLY SAVED UPDATED', this.state.recipe.id)
+                        this.listAllVersions(this.state.recipe.id)
                     })
-                    console.log('AFTER MOST RECENTLY SAVED UPDATED', this.state.recipe.id)
-                     this.listAllVersions(this.state.recipe.id)
+                    
 
                     API.logVersion({ id, _id })
                         .then(res => console.log("Version Created!", res))
