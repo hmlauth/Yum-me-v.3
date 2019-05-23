@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import SearchCard from "../Card/SearchCard";
 import { Col, Row } from "../Grid";
 import { Input, FormBtn } from "../Form";
+import { Button, Icon } from 'semantic-ui-react'
 import "./style.scss"
 
 
@@ -133,16 +134,23 @@ class SearchCarousel extends React.Component {
             <Row>
                 <Col size="col-12">
                     <div className="carousel-search">
-                        <button
+                    <Button animated basic inverted basic inverted color='green'> 
+                    <Button.Content visible >Prev</Button.Content>
+                    <Button.Content hidden
                             onClick={() => this.prevRecipe()}
                             disabled={currIndex === initialIndex}>
-                            Prev
-                            </button>
-                        <button
+                    <Icon name='arrow left' />
+                    </Button.Content>
+                    </Button>
+                    
+                    <Button animated basic inverted basic inverted color='green'> 
+                    <Button.Content visible >Next</Button.Content>
+                    <Button.Content hidden
                             onClick={() => this.nextRecipe()}
                             disabled={currIndex === recipes.length - 1}>
-                            Next
-                            </button>
+                    <Icon name='arrow right' />
+                    </Button.Content>
+                    </Button>
 
                         <div className="page">
                             <div className={`cards-slider active-slide-${recipe.id}`} id="search-card-slider">

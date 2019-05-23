@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./index.css";
 import './index.scss';
 
+window.__forceSmoothScrollPolyfill__ = true;
+
 ReactDOM.render(
   <Router>
     <Route component={App} />

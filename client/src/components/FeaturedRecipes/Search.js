@@ -9,7 +9,7 @@ class Search extends Component {
       <Container fluid>
         <Row>
           <Col size="12">
-            <h2>
+            <h2 id='header'>
               Get Inspired!
             </h2>
           </Col>

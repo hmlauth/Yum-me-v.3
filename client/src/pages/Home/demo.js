@@ -46,7 +46,7 @@ class Demo extends React.Component {
 		         <div className="col-lg-4 text-center">
 		            <div className="process-box">
 		               <img src="/images/icon/3.png" alt=""/>
-		               <h3>Create Your Own Recipe</h3>
+		               <h3>Develop</h3>
 		               <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
                         id ligula porta felis euismod semper. Praesent commodo cursus
                         magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus

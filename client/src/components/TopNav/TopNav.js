@@ -17,7 +17,8 @@ import {
 } from 'reactstrap';
 
 export default class Navigation extends Component {
-
+    
+    
     state = { open: false }
 
     closeConfigShow = (closeOnEscape, closeOnDimmerClick) => () => {
@@ -62,17 +63,21 @@ export default class Navigation extends Component {
     }
 
     
+    
+    
     render() {
         const { open, closeOnDimmerClick } = this.state
         return (
+            
             <div>
                 <Navbar className="navbar" light expand="md">
+                    
                     <NavbarBrand href="/" className="titleFont">
                     <img src="http://yum.me/images/logo.png" alt="logo"></img> </NavbarBrand>
-                    <a
+                    {/* <a 
                     className="nav-link" href="#work" >
                     How it works
-                    </a>
+                    </a> */}
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
@@ -90,11 +95,11 @@ export default class Navigation extends Component {
                                                 <NavLink href="/profile">Profile</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
-                                                <NavLink href="/landing">Landing</NavLink>
+                                                <NavLink href="/landing">Explore</NavLink>
                                             </DropdownItem>
-                                            <DropdownItem>
+                                            {/* <DropdownItem>
                                                 <NavLink href="/develop">Develop</NavLink>
-                                            </DropdownItem>
+                                            </DropdownItem> */}
                                             <DropdownItem>
                                                 <NavLink onClick={this.closeConfigShow(true, false)}>Logout</NavLink>
                                                 <Modal id="modal"
