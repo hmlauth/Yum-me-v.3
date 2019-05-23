@@ -35,8 +35,6 @@ Initialize the `package.json` file then install the following node packages:
 # Back-End
 
 ```
-    "auth0-js": "^9.10.2",
-    "auth0-lock": "^11.16.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.6",
     "bcrypt-nodejs": "0.0.3",
