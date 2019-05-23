@@ -18,9 +18,13 @@ export default {
     return axios.get("/api/recipes");
   },
   // Gets all saved CopyRecipes and OriginalRecipes
-  loadMostRecentlySavedVersion: function(id) {
-    console.log("Inside loadMostRecentlySavedVersion route", id)
-    return axios.get("/api/recipes/" + id);
+  loadMostRecentlySavedVersion: function(_id) {
+    console.log("Inside loadMostRecentlySavedVersion route", _id)
+    return axios.get("/api/recipes/" + _id);
+  },
+  listAllVersions: function(id) {
+    console.log('Inside listAllVersions route', id)
+    return axios.get('/api/recipes/listallversions/' + id)
   },
   deleteRecipe: function(id) {
     return axios.delete("/api/recipes/" + id);

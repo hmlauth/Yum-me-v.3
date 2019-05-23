@@ -15,7 +15,9 @@ const CarouselCard = props => {
             {props.isActive && (
                 <VersionBtn 
                     recipe={props.recipe}
-                    id={props.id}/>
+                    _id={props._id}
+                    id={props.id}
+                    />
             )}
             
             

@@ -86,7 +86,8 @@ class SavedCarousel extends React.Component {
                             {
                                 recipes.map(r => <CarouselCard 
                                     key={r._id} 
-                                    id={r._id}
+                                    _id={r._id}
+                                    id={r.id}
                                     recipe={r} 
                                     isActive={r.id === recipe.id} 
                                 />)

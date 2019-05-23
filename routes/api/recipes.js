@@ -17,6 +17,9 @@ router.route("/logversion")
 router.route("/search/:search")
     .get(recipeController.searchRecipes)
 
+// Matched "api/recipes" api/recipes/listallversions
+router.route('/listallversions/:id')
+    .get(recipeController.listAllVersions)
 
 // Matches "/api/recipes"
 router.route("/:id")

@@ -5,7 +5,8 @@ import { Row, Col } from "../../components/Grid";
 import Header from "../../components/Header"
 import { EditVersionBtn } from "../../components/Buttons";
 import { Button } from "reactstrap";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { VersionList } from "../../components/List"
 import "./develop.scss";
 import loading from '../../assets/images/loading.gif';
 
@@ -24,11 +25,13 @@ class Develop extends Component {
             ingredientTextInput: [],
             instructionTextInput: [],
             isIngredientEditable: false,
-            isInstructionEditable: false
+            isInstructionEditable: false,
+            versions: []
         }
 
         this.handleIngredientChange = this.handleIngredientChange.bind(this)
         this.handleInstructionChange = this.handleInstructionChange.bind(this)
+        this.loadVersion = this.loadVersion.bind(this)
 
     }
 
@@ -38,8 +41,10 @@ class Develop extends Component {
     // 4. Add Comments!!! 
 
     componentDidMount() {
-        const { _id } = this.props.location.state
+        const { _id, id } = this.props.location.state
         console.log("location_id", _id);
+        console.log("location id", id);
+
         API.loadMostRecentlySavedVersion(_id)
             .then(res => {
                 console.log("loadMostRecentlySavedVersion", res.data)
@@ -53,14 +58,15 @@ class Develop extends Component {
                 })
             })
 
-        // API for when comments are ready to be populated
-        // API.getComments(id)
-        // .then(res => {
-        //     console.log("getComments", res.data);
-        //     this.setState({
-        //         comments: res.data
-        //     })
-        // })
+        API.listAllVersions(id)
+            .then(res => {
+                console.log("All Versions", res)
+                this.setState({
+                    versions: res.data
+                })
+            })
+            .catch(err => console.log('ERRR', err))
+
         this.loading();
 
         API.isLoggedIn().then(user => {
@@ -86,6 +92,32 @@ class Develop extends Component {
         }, 3000)
     }
 
+    loadVersion(_id) {
+        console.log('LOAD VERSION _ID', _id)
+        API.loadMostRecentlySavedVersion(_id)
+            .then(res => {
+                console.log("Load Version", res.data)
+                this.setState({
+                    recipes: res.data,
+                    recipe: res.data[0],
+                    Ingredients: res.data[0].Ingredients,
+                    Instructions: res.data[0].Instructions,
+                    ingredientTextInput: res.data[0].Ingredients.join("\n"),
+                    instructionTextInput: res.data[0].Instructions.join("\n")
+                })
+            })
+        }
+    
+    listAllVersions(id) {
+        API.listAllVersions(id)
+            .then(res => {
+                console.log("All Versions", res)
+                this.setState({
+                    versions: res.data
+                })
+            })
+            .catch(err => console.log('ERRR', err))
+    }
 
     handleIngredientChange(event) {
         event.preventDefault();
@@ -171,7 +203,7 @@ class Develop extends Component {
 
     render() {
         const { sourceUrl, title, img, servings } = this.state.recipe;
-        const { Ingredients, Instructions } = this.state
+        const { Ingredients, Instructions, versions } = this.state
 
         const ingredients = Ingredients.map(ingredient => {
             return <ul>
@@ -188,11 +220,26 @@ class Develop extends Component {
             </ul>
         })
 
+        const versionList = versions.map(version => {
+            console.log('versionList mapping', version._id)
+            return (
+                <VersionList
+                    _id={version._id}
+                    onClick={this.loadVersion}>
+                    {version.dateSaved}
+                </VersionList>
+            )
+        })
+
         return (
             <div className="developPage">
                 {this.state.loggedIn ? (
                     <div>
                         <Container fluid>
+                        {/* Versions */}
+                            <Row>
+                                { versionList }
+                            </Row>
                             {/* header */}
                             <Row>
                                 <Header>

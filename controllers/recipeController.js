@@ -32,22 +32,17 @@ module.exports = {
 
     // Currently locates all saved recipes regardless of user and returns found documents sort by most recently saved to oldest. Need to query using populate based on reference stored in User Model.
     getSavedRecipes: function(req, res) {
-        console.log('INSIDE GET SAVED RECIPES', req.body)
         // Find User
         db.User.findOne({_id: req.session.passport.user})
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
         .then(dbUser => {
-            console.log('\n\n*********\nDBUSER', dbUser)
-            console.log('\n\n*********\nDBUSER > VERSION > recipeMongoId', dbUser.version[0].recipeMongoId)
-
             let dbUserLength = dbUser.version.length;
             let newDbUser = [];
             let idCheck = [];
             // most recent data stored at end of array. Iterate backwards over array and push only those with unique "id"
             for (let i = dbUserLength - 1; i >= 0; --i) {
             let recipe = dbUser.version[i];
-                console.log("\n*** i: ", i)
                 if (newDbUser.length === 0) {
                     idCheck.push(recipe.recipeId)
                     newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
@@ -59,10 +54,7 @@ module.exports = {
                         }
                     }
                 }
-                }
-            console.log('newDbUser after slice[0]', newDbUser)
-            console.log('idCheck', idCheck)
-
+            }
             res.json(newDbUser)
         })
         .catch(err => console.log("Version ERRR", err))
@@ -187,7 +179,7 @@ module.exports = {
     },
 
     loadMostRecentlySavedVersion: function(req, res) {
-        console.log("Inside loadMostRecentlySavedVersion Controller", req.params.id)
+        // console.log("Inside loadMostRecentlySavedVersion Controller", req.params.id)
         db.Recipe.find({_id: req.params.id})
         .then(dbRecipe => {
             res.json(dbRecipe)
@@ -196,8 +188,29 @@ module.exports = {
     },
 
     // load references to other version
-    viewOtherVersion: function(req, res) {
-        console.log("Inside viewOtherVersions Controller");
+    listAllVersions: function(req, res) {
+        console.log("\n*********\nInside listAllVersions Controller", req.params.id);
 
+        // Find User
+        db.User.findOne({_id: req.session.passport.user})
+        // Specific that we want to populate the retrieved User with any associated recipes
+        .populate({path: 'version', populate: {path: 'recipeMongoId'}})
+        .then(dbUser => {
+            console.log('dbUser', dbUser);
+            console.log('dbUser.version', dbUser.version);
+            var allVersions = [];
+            for (let i = 0; i < dbUser.version.length; i++) {
+                let recipe = dbUser.version[i];
+                if (recipe.recipeId === req.params.id) {
+                    console.log(recipe.recipeMongoId.length)
+                    for (let i = recipe.recipeMongoId.length - 1; i >= 0 ; --i) {
+                        allVersions.push(recipe.recipeMongoId[i])
+                    }
+                    
+                }
+            }
+            console.log("\n********\n", allVersions)
+            res.json(allVersions)
+        })
     }
 }
