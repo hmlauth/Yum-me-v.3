@@ -18,9 +18,13 @@ export default {
     return axios.get("/api/recipes");
   },
   // Gets all saved CopyRecipes and OriginalRecipes
-  loadMostRecentlySavedVersion: function(id) {
-    console.log("Inside loadMostRecentlySavedVersion route", id)
-    return axios.get("/api/recipes/" + id);
+  loadMostRecentlySavedVersion: function(_id) {
+    console.log("Inside loadMostRecentlySavedVersion route", _id)
+    return axios.get("/api/recipes/" + _id);
+  },
+  listAllVersions: function(id) {
+    console.log('Inside listAllVersions route', id)
+    return axios.get('/api/recipes/listallversions/' + id)
   },
   deleteRecipe: function(id) {
     return axios.delete("/api/recipes/" + id);
@@ -42,10 +46,6 @@ export default {
   videoSearch: function(searchTerm) {
     return axios.get("/api/videos/" + searchTerm)
   },
-  // copyRecipe: function() {
-  //   console.log("Inside API routes copyRecipe");
-  //   return axios.post("/api/recipes/")
-  // },
   // saveComment: function() {
   //   console.log("Inside API routes saveComment");
   //   return axios.post("/api/recipes/")

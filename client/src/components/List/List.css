@@ -1,3 +1,16 @@
 .card {
     max-width: 540px
 }
+
+#version-item:hover {
+    color: red;
+}
+
+#version-item:active {
+    color: blue;
+}
+
+
+.version-list-group {
+    padding-right: 30px;
+}

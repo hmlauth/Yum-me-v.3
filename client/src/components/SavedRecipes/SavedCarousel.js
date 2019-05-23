@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import API from "../../utils/API";
 import CarouselCard from "../Card/CarouselCard";
-import Container from "../Container"
 import "./style.scss"
 
 
@@ -86,7 +85,8 @@ class SavedCarousel extends React.Component {
                             {
                                 recipes.map(r => <CarouselCard 
                                     key={r._id} 
-                                    id={r._id}
+                                    _id={r._id}
+                                    id={r.id}
                                     recipe={r} 
                                     isActive={r.id === recipe.id} 
                                 />)
