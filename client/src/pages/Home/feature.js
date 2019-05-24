@@ -29,7 +29,7 @@ class Feature extends React.Component {
                     </p>
                     </Grid.Column>
                     <Grid.Column width={6}>
-                    <Image src="/images/cook.jpg" />
+                    <Image src="https://www.mediabistro.com/wp-content/uploads/2016/09/cookbook-writer.jpg" />
                     </Grid.Column>
                 </Grid>
                 </Segment>
@@ -62,7 +62,7 @@ class Feature extends React.Component {
                     </p>
                     </Grid.Column>
                     <Grid.Column width={6}>
-                    <Image src="/images/cook2.jpg" />
+                    <Image src="https://cdn.shopify.com/s/files/1/0078/1828/1017/articles/blog_nav-online-recipes2_863x.jpg?v=1546627900" />
                     </Grid.Column>
                 </Grid>
                 </Segment>
