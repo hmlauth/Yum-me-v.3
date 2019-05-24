@@ -69,23 +69,17 @@ class SavedCarousel extends React.Component {
         return (
                  <div className="carousel-saved">
                  
-                <Button animated basic inverted basic inverted color='green'> 
-                <Button.Content visible >Prev</Button.Content>
-                <Button.Content hidden
-                    onClick={() => this.prevRecipe()}
-                    disabled={currIndex === initialIndex}>
-                <Icon name='arrow left' />
-                </Button.Content>
-                </Button>
+                    <button type="button" class="btn btn-outline-success"
+                        onClick={() => this.prevRecipe()}
+                        disabled={currIndex === initialIndex}>
+                        Prev
+                    </button>
 
-                <Button animated basic inverted basic inverted color='green'>
-                <Button.Content visible >Next</Button.Content>
-                <Button.Content hidden
-                    onClick={() => this.nextRecipe()}
-                    disabled={currIndex === recipes.length - 1}>
-                <Icon name='arrow right' />
-                </Button.Content>
-                </Button>
+                    <button type="button" class="btn btn-outline-success"
+                        onClick={() => this.nextRecipe()}
+                        disabled={currIndex === recipes.length - 1}>
+                        Next
+                    </button>
 
                 {recipes.length  ? (
                 <div className="page">
