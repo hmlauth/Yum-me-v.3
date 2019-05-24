@@ -17,27 +17,27 @@ class Demo extends React.Component {
 		      <div className="row">
 		         <div className="col-lg-4 text-center">
 		            <div className="process-box">
-		               <img src="/images/icon/1.png" alt=""/>
+		               <img src="http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-3/256/sign-up-icon.png" alt=""/>
 		               <h3>Sign up</h3>
 		               <p>
 								Create a Yum(Me) account. </p>
-		               <img src="/images/icon/1.png" alt="" className="bg-icon"/>
+		               <img src="http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-3/256/sign-up-icon.png" alt="" className="bg-icon"/>
 		            </div>
 		         </div>
 		         <div className="col-lg-4 text-center">
 		            <div className="process-box">
-		               <img src="/images/icon/2.png" alt=""/>
+		               <img src="https://cdn2.iconfinder.com/data/icons/ui-1/75/19-512.png" alt=""/>
 		               <h3>Explore</h3>
 		               <p> Search your favorite recipes. </p>
-		               <img src="/images/icon/2.png" alt="" className="bg-icon"/>
+		               <img src="https://cdn2.iconfinder.com/data/icons/ui-1/75/19-512.png" alt="" className="bg-icon"/>
 		            </div>
 		         </div>
 		         <div className="col-lg-4 text-center">
 		            <div className="process-box">
-		               <img src="/images/icon/3.png" alt=""/>
+		               <img src="https://cdn4.iconfinder.com/data/icons/food-and-drinks-2-8/36/179-512.png" alt=""/>
 		               <h3>Develop</h3>
 		               <p>Make it your own! </p>
-		               <img src="/images/icon/3.png" alt="" className="bg-icon"/>
+		               <img src="https://cdn4.iconfinder.com/data/icons/food-and-drinks-2-8/36/179-512.png" alt="" className="bg-icon"/>
 		            </div>
 		         </div>
 		      </div>
