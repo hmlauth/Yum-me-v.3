@@ -1,8 +1,7 @@
 # Yum-me-v.3
 
-<strong>Video Demonstration:</strong>
-<strong>Website Live:</strong> 
-<strong>Heroku Link:</strong> 
+<strong>Video Demonstration:</strong><br>
+<strong>Heroku Link:</strong> https://thawing-thicket-66873.herokuapp.com/ <br>  
   
 ## Set-Up
 Initialize the `package.json` file then install the following node packages:
@@ -54,9 +53,8 @@ Initialize the `package.json` file then install the following node packages:
  ```
   
 ### Technologies Used
-- `MERN` Stack
+- MERN Stack
 - `Passport` user authentication
-- `React`
 - `Youtube` API
 - Semantic-UI-React
 - Heroku deployment
@@ -95,7 +93,25 @@ yarn-error.log*
 - Version control
 
 ### Future Development
+#### UI/UX
+1. Carousel for versions (like an actual book)
+2. Carousels – Hide text when not active
+3. Uniform aesthetic and readability
+4. Date Stamps
+5. Streamline styling
 
+#### Functionality
+1. Commenting and cleaning up code
+2. Add comments section
+3. Option to delete a version or entire series
+4. Create your own recipe 
+5. Website Scraping
+6. Grocery list preparation
+7. Videos display while recipe is visible
+8. Side-by-side comparison of recipes when searching
+9. State-management
+10. Reduce number of data requests with server
+11. Memory (Saving changes only not entire recipe)
 
 <hr>
 
