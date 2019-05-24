@@ -80,7 +80,7 @@ module.exports = {
                         )
                     })
                     .then(dbRecipe => {
-                        res.json(dbRecipe)
+                        // res.json(dbRecipe)
                     })
                 } else if (dbUser[0].recipeId.length > 0) {
                     for (var i = 0; i < dbUser[0].recipeId.length; i++) {
