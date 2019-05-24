@@ -11,11 +11,6 @@ class Demo extends React.Component {
 		         <div className="col-md-8 offset-md-2 text-center">
 		            <div className="section-title">
 		               <h1> How Yum(Me) Works</h1>
-		               <h4>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-                        id ligula porta felis euismod semper. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-                        ac cursus commodo.
-							</h4>
 		            </div>
 		         </div>
 		      </div>
@@ -25,10 +20,7 @@ class Demo extends React.Component {
 		               <img src="/images/icon/1.png" alt=""/>
 		               <h3>Sign up</h3>
 		               <p>
-							Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-							id ligula porta felis euismod semper. Praesent commodo cursus
-							magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-							ac cursus commodo. </p>
+								Create a Yum(Me) account. </p>
 		               <img src="/images/icon/1.png" alt="" className="bg-icon"/>
 		            </div>
 		         </div>
@@ -36,10 +28,7 @@ class Demo extends React.Component {
 		            <div className="process-box">
 		               <img src="/images/icon/2.png" alt=""/>
 		               <h3>Explore</h3>
-		               <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-                        id ligula porta felis euismod semper. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-                        ac cursus commodo. </p>
+		               <p> Search your favorite recipes. </p>
 		               <img src="/images/icon/2.png" alt="" className="bg-icon"/>
 		            </div>
 		         </div>
@@ -47,10 +36,7 @@ class Demo extends React.Component {
 		            <div className="process-box">
 		               <img src="/images/icon/3.png" alt=""/>
 		               <h3>Develop</h3>
-		               <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum
-                        id ligula porta felis euismod semper. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus
-                        ac cursus commodo. </p>
+		               <p>Make it your own! </p>
 		               <img src="/images/icon/3.png" alt="" className="bg-icon"/>
 		            </div>
 		         </div>

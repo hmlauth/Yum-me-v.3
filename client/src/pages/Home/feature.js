@@ -29,7 +29,7 @@ class Feature extends React.Component {
                     </p>
                     </Grid.Column>
                     <Grid.Column width={6}>
-                    <Image src="/images/pho.jpeg" />
+                    <Image src="/images/cook.jpg" />
                     </Grid.Column>
                 </Grid>
                 </Segment>
@@ -62,7 +62,7 @@ class Feature extends React.Component {
                     </p>
                     </Grid.Column>
                     <Grid.Column width={6}>
-                    <Image src="/images/pho.jpeg" />
+                    <Image src="/images/cook2.jpg" />
                     </Grid.Column>
                 </Grid>
                 </Segment>
