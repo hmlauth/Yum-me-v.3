@@ -16,6 +16,13 @@
 	padding: 10px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
+	color: white;
+	font-size: 18px;
+	margin-bottom: 300px;
+}
+
+#videoTitle {
+	font-size: 23px
 }
 
 .list-group-item {
@@ -30,3 +37,11 @@
 .media-heading {
 	padding: 0px 10px;
 }
+
+#header {
+	/* text-decoration-line: underline; */
+	border: 1px solid gray;
+	text-align: center;
+	border-radius: 4px;
+}
+

@@ -12,10 +12,10 @@ passport.use(new LocalStrategy(
             console.log(user);
             
             if (!user) {
-                return done(null, false, {message: "User not found :)"});
+                return done(null, false, {message: "User not found."});
             }
             if (!user.validPassword(password, user.password)) {
-                return done(null, false, {message: "invalid password"});
+                return done(null, false, {message: "Invalid password."});
             } else {
                 return done(null, user)
             }

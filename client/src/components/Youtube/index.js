@@ -31,7 +31,7 @@ class Youtube extends Component {
     const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 500);
     return (
       <div>
-        <h2>
+        <h2 id='header'>
           Sharpen Your Skills!
         </h2>
         <SearchBar onSearchTermChange={videoSearch}/>

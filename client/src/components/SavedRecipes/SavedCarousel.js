@@ -2,6 +2,7 @@ import React from "react";
 import API from "../../utils/API";
 import CarouselCard from "../Card/CarouselCard";
 import "./style.scss"
+import { Button, Icon } from 'semantic-ui-react'
 
 
 class SavedCarousel extends React.Component {
@@ -68,16 +69,18 @@ class SavedCarousel extends React.Component {
         return (
                  <div className="carousel-saved">
                  
-                <button
-                    onClick={() => this.prevRecipe()}
-                    disabled={currIndex === initialIndex}>
-                    Prev
-                </button>
-                <button
-                    onClick={() => this.nextRecipe()}
-                    disabled={currIndex === recipes.length - 1}>
-                    Next
-                </button>
+                    <button type="button" class="btn btn-outline-success"
+                        onClick={() => this.prevRecipe()}
+                        disabled={currIndex === initialIndex}>
+                        Prev
+                    </button>
+
+                    <button type="button" class="btn btn-outline-success"
+                        onClick={() => this.nextRecipe()}
+                        disabled={currIndex === recipes.length - 1}>
+                        Next
+                    </button>
+
                 {recipes.length  ? (
                 <div className="page">
                     <div className={`cards-slider active-slide-${recipe.id}`}>
