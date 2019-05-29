@@ -189,5 +189,36 @@ module.exports = {
             }
             res.json(allVersions)
         })
+    },
+    // Need a POST to create
+    // Need a GET to pull - this will include populate
+    // Save comment - needs to be associated with specific version id
+    // date/time stamped
+    saveComment: function(req, res) {
+        console.log("SAVE COMMENT req.body", req.body)
+        db.Comment.create(req.body)
+        .then(dbComment => {
+            console.log("COMMENT RESPONSE", dbComment)
+            
+            db.Version.updateOne(
+                {recipeId: req.body.id},
+                {$push: {commentId: dbComment._id}}
+            )
+            .then(dbVersion => {
+                console.log("Version UPDATED", dbVersion); 
+                // res.json(dbVersion)
+                }
+            )
+        })
     }
 }
+
+
+// .then(dbRecipe => {
+                        
+//     res.json(dbRecipe) // send created recipe back up to front end
+//     return db.User.updateOne(
+//         {_id: req.session.passport.user},
+//         {$push: {recipeId: dbRecipe.id}}
+//     )
+// })

@@ -2,6 +2,7 @@ module.exports = {
     User: require("./Users"),
     Recipe: require("./Recipe"),
     SeedRecipe: require("./SeedModel"),
-    Version: require("./Versions")
+    Version: require("./Versions"),
+    Comment: require("./Comment")
   };
   

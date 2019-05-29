@@ -24,13 +24,17 @@ class Develop extends Component {
             Instructions: [],
             ingredientTextInput: [],
             instructionTextInput: [],
+            commentTextInput: [],
             isIngredientEditable: false,
             isInstructionEditable: false,
-            versions: []
+            isCommentEditable: false,
+            versions: [],
+            comments: []
         }
 
         this.handleIngredientChange = this.handleIngredientChange.bind(this)
         this.handleInstructionChange = this.handleInstructionChange.bind(this)
+        this.handleCommentChange = this.handleCommentChange.bind(this)
         this.loadVersion = this.loadVersion.bind(this)
 
     }
@@ -59,6 +63,15 @@ class Develop extends Component {
                 })
             })
             .catch(err => console.log('ERRR', err))
+
+        // API.listComments(id)
+        // .then(res => {
+        //     console.log("All Comments", res)
+        //     this.setState({
+        //         comments: res.data
+        //     })
+        // })
+        // .catch(err => console.log("ERRR", err))
 
         this.loading();
 
@@ -97,8 +110,8 @@ class Develop extends Component {
                     instructionTextInput: res.data[0].Instructions.join("\n")
                 })
             })
-        }
-    
+    }
+
     listAllVersions(id) {
         API.listAllVersions(id)
             .then(res => {
@@ -126,6 +139,14 @@ class Develop extends Component {
         })
     }
 
+    handleCommentChange(event) {
+        event.preventDefault();
+        console.log(event.target.value)
+        this.setState({
+            commentTextInput: event.target.value
+        })
+    }
+
     editIngredients = () => {
         this.setState({
             isIngredientEditable: true
@@ -135,6 +156,12 @@ class Develop extends Component {
     editInstructions = () => {
         this.setState({
             isInstructionEditable: true
+        })
+    }
+
+    editComment = () => {
+        this.setState({
+            isCommentEditable: true
         })
     }
 
@@ -184,15 +211,32 @@ class Develop extends Component {
                         // Update state with new date stamp of version
                         this.listAllVersions(this.state.recipe.id)
                     })
-                    
 
-                    API.logVersion({ id, _id })
-                        .then(res => console.log("Version Created!", res))
+
+                API.logVersion({ id, _id })
+                    .then(res => console.log("Version Created!", res))
 
             }).catch(err => console.log("ERRRRRRR", err))
+    }
 
-            
+    saveComment = () => {
 
+        this.setState({
+            isCommentEditable: false
+        })
+
+        const commentTextInput = this.state.commentTextInput;
+        console.log('commentTextInput', commentTextInput);
+
+        const { id } = this.state.recipe
+
+        API.saveComment({
+            id: id,
+            comment: commentTextInput
+        })
+        .then(res => {
+            console.log("saveComment RES.DATA", res.data)
+        })
     }
 
     render() {
@@ -229,10 +273,10 @@ class Develop extends Component {
                 {this.state.loggedIn ? (
                     <div>
                         <Container fluid>
-                        {/* Versions */}
+                            {/* Versions */}
                             <Row>
                                 <div className="version-list">
-                                { versionList }
+                                    {versionList}
                                 </div>
                             </Row>
                             {/* Header */}
@@ -254,10 +298,10 @@ class Develop extends Component {
                                                 Save Ingredients
                                             </EditVersionBtn>
                                         ) : (
-                                            <EditVersionBtn onClick={this.editIngredients}>
+                                                <EditVersionBtn onClick={this.editIngredients}>
                                                     Edit Ingredients
                                             </EditVersionBtn>
-                                        )}
+                                            )}
                                     </Row>
                                     <Row>
                                         {this.state.isIngredientEditable ?
@@ -268,7 +312,7 @@ class Develop extends Component {
                                             <div class='recipe-content-list'>
                                                 {ingredients}
                                             </div>
-                                            
+
                                         }
                                     </Row>
                                 </Col>
@@ -280,10 +324,10 @@ class Develop extends Component {
                                                 Save Instructions
                                             </EditVersionBtn>
                                         ) : (
-                                            <EditVersionBtn onClick={this.editInstructions}>
+                                                <EditVersionBtn onClick={this.editInstructions}>
                                                     Edit Instructions
                                             </EditVersionBtn>
-                                        )}
+                                            )}
                                     </Row>
                                     <Row>
                                         {this.state.isInstructionEditable ?
@@ -294,17 +338,39 @@ class Develop extends Component {
                                             <div class='recipe-content-list'>
                                                 {instructions}
                                             </div>
-                                            
+
                                         }
                                     </Row>
 
                                 </Col>
-                            </Row>
+                                <Col size="2">
+                                    {/* Comments */}
+                                    {/* Buttons */}
+                                    <Row>
+                                        {this.state.isCommentEditable ? (
+                                            <EditVersionBtn onClick={this.saveComment}>
+                                                Save Comments
+                                            </EditVersionBtn>
+                                        ) : (
+                                            <EditVersionBtn onClick={this.editComment}>
+                                                Edit Comments
+                                            </EditVersionBtn>
+                                            )}
+                                    </Row>
+                                    <Row>
+                                        {this.state.isCommentEditable ?
+                                            <textarea
+                                                value={this.state.commentTextInput}
+                                                onChange={this.handleCommentChange}>
+                                            </textarea> :
+                                            <div class='recipe-comment-list'>
+                                                {/* {comments} */}
+                                                <p>This is a comment</p>
+                                            </div>
 
-                            <Row>
-
-                                {/* Comments */}
-
+                                        }
+                                    </Row>
+                                </Col>
                             </Row>
                         </Container>
                     </div>

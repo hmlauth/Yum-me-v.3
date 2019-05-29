@@ -12,7 +12,13 @@ const VersionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Recipe"
       }
-    ]
+    ],
+  commentId: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ]
 });
 
 const Version = mongoose.model("Version", VersionSchema);
