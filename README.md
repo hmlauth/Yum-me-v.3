@@ -116,6 +116,6 @@ yarn-error.log*
 <hr>
 
 # The Creators
-- Hanna Lauth
-- Rodel Calanoc
+- Hanna Lauth - Back end / Front end
+- Rodel Calanoc - User authentication / Front end
 
