@@ -8,7 +8,7 @@ Initialize the `package.json` file then install the following node packages:
 
 ### Node packages
 
-# Front-End
+<strong>Front-End:</strong>
 
 ```
     "axios": "^0.18.0",
@@ -31,7 +31,7 @@ Initialize the `package.json` file then install the following node packages:
     "youtube-api-search": "0.0.5"
 ```
 
-# Back-End
+<strong>Back-End</strong>
 
 ```
     "axios": "^0.18.0",
