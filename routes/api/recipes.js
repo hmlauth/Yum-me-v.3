@@ -13,6 +13,9 @@ router.route("/saveversion")
 router.route("/savecomment")
     .post(recipeController.saveComment)
 
+router.route("/comments/:id")
+    .get(recipeController.getComments)
+
 router.route("/logversion")
     .post(recipeController.logVersion)
 

@@ -64,14 +64,13 @@ class Develop extends Component {
             })
             .catch(err => console.log('ERRR', err))
 
-        // API.listComments(id)
-        // .then(res => {
-        //     console.log("All Comments", res)
-        //     this.setState({
-        //         comments: res.data
-        //     })
-        // })
-        // .catch(err => console.log("ERRR", err))
+            API.getComments(id)
+            .then(res => {
+                console.log("getComments RES", res)
+                this.setState({
+                    comments: res.data
+                })
+            })
 
         this.loading();
 
@@ -236,12 +235,19 @@ class Develop extends Component {
         })
         .then(res => {
             console.log("saveComment RES.DATA", res.data)
+            API.getComments(id)
+            .then(res => {
+                console.log("getComments RES", res)
+                this.setState({
+                    comments: res.data
+                })
+            })
         })
     }
 
     render() {
         const { title, img, servings } = this.state.recipe;
-        const { Ingredients, Instructions, versions } = this.state
+        const { Ingredients, Instructions, versions, comments } = this.state
 
         const ingredients = Ingredients.map(ingredient => {
             return <ul>
@@ -254,6 +260,14 @@ class Develop extends Component {
             return <ul>
                 <li>
                     {instruction}
+                </li>
+            </ul>
+        })
+
+        const commentList = comments.map(comment => {
+            return <ul>
+                <li>
+                    {comment.dateSaved} {comment.comment}
                 </li>
             </ul>
         })
@@ -324,7 +338,7 @@ class Develop extends Component {
                                                 Save Instructions
                                             </EditVersionBtn>
                                         ) : (
-                                                <EditVersionBtn onClick={this.editInstructions}>
+                                            <EditVersionBtn onClick={this.editInstructions}>
                                                     Edit Instructions
                                             </EditVersionBtn>
                                             )}
@@ -364,10 +378,8 @@ class Develop extends Component {
                                                 onChange={this.handleCommentChange}>
                                             </textarea> :
                                             <div class='recipe-comment-list'>
-                                                {/* {comments} */}
-                                                <p>This is a comment</p>
+                                                {commentList}
                                             </div>
-
                                         }
                                     </Row>
                                 </Col>

@@ -41,6 +41,11 @@ export default {
     return axios.post("/api/recipes/savecomment", comment)
   },
 
+  getComments: function(id) {
+    console.log("Inside API routes getComments", id);
+    return axios.get('/api/recipes/comments/' + id)
+  },
+
     // logs in user
     login: function(loginInfo) {
       return axios.post("/api/users/login", loginInfo);

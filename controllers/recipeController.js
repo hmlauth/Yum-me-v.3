@@ -198,17 +198,38 @@ module.exports = {
         console.log("SAVE COMMENT req.body", req.body)
         db.Comment.create(req.body)
         .then(dbComment => {
-            console.log("COMMENT RESPONSE", dbComment)
-            
+            console.log("COMMENT RESPONSE", dbComment);
+            const commentId = dbComment._id;
             db.Version.updateOne(
                 {recipeId: req.body.id},
-                {$push: {commentId: dbComment._id}}
+                {$push: {commentId: commentId}}
             )
             .then(dbVersion => {
                 console.log("Version UPDATED", dbVersion); 
-                // res.json(dbVersion)
+                res.json(dbVersion)
                 }
             )
+        })
+    },
+    
+    getComments: function(req, res) {
+        console.log("Inside getComments controller", req.params.id)
+        // Find User
+        db.User.findOne({_id: req.session.passport.user})
+        // Specific that we want to populate the retrieved User with any associated recipes
+        .populate({path: 'version', populate: {path: 'commentId'}})
+        .then(dbUser => {
+            console.log("dbUser after populated comments", dbUser);
+            var comments = [];
+            for (let i = 0; i < dbUser.version.length; i++) {
+                let recipe = dbUser.version[i];
+                if (recipe.recipeId === req.params.id) {
+                    for (let i = recipe.commentId.length - 1; i >= 0 ; --i) {
+                        comments.push(recipe.commentId[i])
+                    }
+                }
+            }
+            res.json(comments)
         })
     }
 }
