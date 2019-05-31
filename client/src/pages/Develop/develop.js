@@ -43,64 +43,41 @@ class Develop extends Component {
         const { _id, id } = this.props.location.state
 
         API.loadMostRecentlySavedVersion(_id)
-            .then(res => {
-                console.log("loadMostRecentlySavedVersion", res.data)
-                this.setState({
+            .then(res => this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
                     Ingredients: res.data[0].Ingredients,
                     Instructions: res.data[0].Instructions,
                     ingredientTextInput: res.data[0].Ingredients.join("\n"),
                     instructionTextInput: res.data[0].Instructions.join("\n")
-                })
-            })
+                }))
 
         API.listAllVersions(id)
-            .then(res => {
-                console.log("All Versions", res)
-                this.setState({
-                    versions: res.data
-                })
-            })
+            .then(res => this.setState({versions: res.data}))
             .catch(err => console.log('ERRR', err))
 
-            API.getComments(id)
-            .then(res => {
-                console.log("getComments RES", res)
-                this.setState({
-                    comments: res.data
-                })
-            })
+        API.getComments(id)
+        .then(res => this.setState({comments: res.data}))
 
         this.loading();
 
-        API.isLoggedIn().then(user => {
-            if (user.data.loggedIn) {
+        API.isLoggedIn()
+            .then(user => user.data.loggedIn ? 
                 this.setState({
-                    loggedIn: true,
+                    loggedIn: true, 
                     user: user.data.user
-                });
-            }
-        }).catch(err => {
-            console.log(err);
-        });
-
-        console.log(this.props)
-
+                }) : console.log("User not logged in!")
+            )
+            .catch(err => console.log(err));
     }
 
     loading() {
-        setTimeout(() => {
-            this.setState({
-                loading: false
-            })
-        }, 3000)
+        setTimeout(() => this.setState({loading: false}), 3000)
     }
 
     loadVersion(_id) {
         API.loadMostRecentlySavedVersion(_id)
-            .then(res => {
-                this.setState({
+            .then(res => this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
                     Ingredients: res.data[0].Ingredients,
@@ -108,61 +85,33 @@ class Develop extends Component {
                     ingredientTextInput: res.data[0].Ingredients.join("\n"),
                     instructionTextInput: res.data[0].Instructions.join("\n")
                 })
-            })
+            )
     }
 
     listAllVersions(id) {
         API.listAllVersions(id)
-            .then(res => {
-                console.log("All Versions", res)
-                this.setState({
-                    versions: res.data
-                })
-            })
+            .then(res => this.setState({versions: res.data}))
             .catch(err => console.log('ERRR', err))
     }
 
     handleIngredientChange(event) {
         event.preventDefault();
-        console.log(event.target.value.split("\n"))
-        this.setState({
-            ingredientTextInput: event.target.value
-        })
+        this.setState({ingredientTextInput: event.target.value})
     }
 
     handleInstructionChange(event) {
         event.preventDefault();
-        console.log(event.target.value.split("\n"))
-        this.setState({
-            instructionTextInput: event.target.value
-        })
+        this.setState({instructionTextInput: event.target.value})
     }
 
     handleCommentChange(event) {
         event.preventDefault();
-        console.log(event.target.value)
-        this.setState({
-            commentTextInput: event.target.value
-        })
+        this.setState({commentTextInput: event.target.value})
     }
 
-    editIngredients = () => {
-        this.setState({
-            isIngredientEditable: true
-        })
-    }
-
-    editInstructions = () => {
-        this.setState({
-            isInstructionEditable: true
-        })
-    }
-
-    editComment = () => {
-        this.setState({
-            isCommentEditable: true
-        })
-    }
+    editIngredients = () => this.setState({isIngredientEditable: true})
+    editInstructions = () => this.setState({isInstructionEditable: true})
+    editComment = () => this.setState({isCommentEditable: true})
 
     saveRecipe = () => {
 
@@ -172,11 +121,7 @@ class Develop extends Component {
         })
 
         const ingredientTextInput = this.state.ingredientTextInput.split("\n")
-        console.log("ingredientTextInput", ingredientTextInput);
-
         const instructionTextInput = this.state.instructionTextInput.split("\n")
-        console.log("instructionTextInput", instructionTextInput);
-
         const { id, sourceUrl, img, title, servings } = this.state.recipe
 
         // Save updated version of recipe as a 'new' recipe
@@ -191,13 +136,10 @@ class Develop extends Component {
 
         })
             .then(res => {
-                console.log("UPDATED RECIPE RESPONSE", res.data);
                 const { id, _id } = res.data;
-
                 // Render the updated recipe version to the page
                 API.loadMostRecentlySavedVersion(_id)
                     .then(res => {
-                        console.log("loadMostRecentlySavedVersion", res.data)
                         this.setState({
                             recipes: res.data,
                             recipe: res.data[0],
@@ -215,18 +157,16 @@ class Develop extends Component {
                 API.logVersion({ id, _id })
                     .then(res => console.log("Version Created!", res))
 
-            }).catch(err => console.log("ERRRRRRR", err))
+            })
+            .catch(err => console.log("ERRRRRRR", err))
+
     }
 
     saveComment = () => {
 
-        this.setState({
-            isCommentEditable: false
-        })
+        this.setState({isCommentEditable: false})
 
         const commentTextInput = this.state.commentTextInput;
-        console.log('commentTextInput', commentTextInput);
-
         const { id } = this.state.recipe
 
         API.saveComment({
@@ -234,53 +174,25 @@ class Develop extends Component {
             comment: commentTextInput
         })
         .then(res => {
-            console.log("saveComment RES.DATA", res.data)
             API.getComments(id)
-            .then(res => {
-                console.log("getComments RES", res)
-                this.setState({
-                    comments: res.data
-                })
-            })
+            .then(res => this.setState({comments: res.data}))
         })
     }
 
     render() {
-        const { title, img, servings } = this.state.recipe;
+        const { title } = this.state.recipe;
         const { Ingredients, Instructions, versions, comments } = this.state
-
-        const ingredients = Ingredients.map(ingredient => {
-            return <ul>
-                <li>
-                    {ingredient}
-                </li>
-            </ul>
-        })
-        const instructions = Instructions.map(instruction => {
-            return <ul>
-                <li>
-                    {instruction}
-                </li>
-            </ul>
-        })
-
-        const commentList = comments.map(comment => {
-            return <ul>
-                <li>
-                    {comment.dateSaved} {comment.comment}
-                </li>
-            </ul>
-        })
-
-        const versionList = versions.map(version => {
-            return (
+        const ingredients = Ingredients.map(ingredient => (<ul><li>{ingredient}</li></ul>))
+        const instructions = Instructions.map(instruction => (<ul><li>{instruction}</li></ul>))
+        const commentList = comments.map(comment => (<ul><li>{comment.dateSaved} {comment.comment}</li></ul>))
+        const versionList = versions.map(version => 
                 <VersionList
                     _id={version._id}
                     onClick={this.loadVersion}>
-                    {version.dateSaved}
-                </VersionList>
-            )
-        })
+
+                        {version.dateSaved}
+
+                </VersionList>)
 
         return (
             <div className="developPage">
@@ -312,7 +224,7 @@ class Develop extends Component {
                                                 Save Ingredients
                                             </EditVersionBtn>
                                         ) : (
-                                                <EditVersionBtn onClick={this.editIngredients}>
+                                            <EditVersionBtn onClick={this.editIngredients}>
                                                     Edit Ingredients
                                             </EditVersionBtn>
                                             )}
@@ -355,7 +267,6 @@ class Develop extends Component {
 
                                         }
                                     </Row>
-
                                 </Col>
                                 <Col size="2">
                                     {/* Comments */}
