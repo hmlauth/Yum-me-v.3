@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import API from "../../utils/API";
 import Container from "../../components/Container";
 import { Row, Col } from "../../components/Grid";
@@ -180,18 +181,22 @@ class Develop extends Component {
     }
 
     render() {
-        const { title } = this.state.recipe;
+        const { title, servings } = this.state.recipe;
         const { Ingredients, Instructions, versions, comments } = this.state
         const ingredients = Ingredients.map(ingredient => (<ul><li>{ingredient}</li></ul>))
         const instructions = Instructions.map(instruction => (<ul><li>{instruction}</li></ul>))
-        const commentList = comments.map(comment => (<ul><li>{comment.dateSaved} {comment.comment}</li></ul>))
+        const commentList = comments.map(comment => (
+            <ul id='comment-list'>
+                <li>
+                    <span className='comment-date-stamp'>{moment(comment.dateSaved).format('LLL')}</span> {comment.comment}
+                </li>
+            </ul>
+            ))
         const versionList = versions.map(version => 
                 <VersionList
                     _id={version._id}
                     onClick={this.loadVersion}>
-
-                        {version.dateSaved}
-
+                        {moment(version.dateSaved).format('LLL')}
                 </VersionList>)
 
         return (
@@ -213,7 +218,9 @@ class Develop extends Component {
                                     </span>
                                 </Header>
                             </Row>
-
+                            <Row>
+                                <p id="servings"> Servings: {servings} </p>
+                            </Row>
                             {/* Recipe */}
                             <Row class='recipe-content'>
                                 <Col size="5">

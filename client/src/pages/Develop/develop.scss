@@ -2,6 +2,7 @@
 
 .developPage {
     
+    margin-bottom: 5em;
 
     .noUser {
         background-color:rgba(0, 0, 0, 0.6);
@@ -38,11 +39,25 @@
         }
     }
 
-    ul li {
-        color: white
+    ul {
+        padding-left: 25px;
     }
 
-    #recipe-title {
+    #comment-list {
+        list-style-type: none;
+        padding-left: 10px;
+    }
+
+    ul li {
+        color: white;
+        padding-left: 0;
+    }
+
+    .comment-date-stamp {
+        color: grey;
+    }
+
+    #recipe-title, #servings {
         color: white
     }
 
