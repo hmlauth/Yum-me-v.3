@@ -29,7 +29,6 @@ class SearchCarousel extends React.Component {
     handleInputChange = event => {
         // Pull the name and value properties off of the event.target (the element which triggered the event)
         const { value } = event.target;
-
         // Set the state for the appropriate input field
         this.setState({
             searchTerm: value,
@@ -42,24 +41,17 @@ class SearchCarousel extends React.Component {
     }
 
     searchRecipes = event => {
-        console.log('SEARCH TERM', this.state.searchTerm)
-
         API.searchRecipes(this.state.searchTerm)
             .then(res => {
-                console.log('res', res.data); // GOOD
                 this.setState({
                     recipes: res.data,
-                });
+                    recipe: res.data[0]
+                })
             })
-            .catch(err => {
-                console.log("ERR", err)
-            })
-
+            .catch(err => console.log("ERR", err))
     }
 
     saveRecipe = recipe => {
-
-        console.log("...saving recipe", recipe);
 
         const {
             id,
@@ -69,7 +61,7 @@ class SearchCarousel extends React.Component {
             servings,
             Ingredients,
             Instructions
-        } = recipe
+        } = recipe;
 
         API.saveRecipe({
             id,
@@ -80,8 +72,7 @@ class SearchCarousel extends React.Component {
             Ingredients,
             Instructions
         })
-        .then(res => {
-            console.log('Recipe Saved!', res)
+        .then(res => {     
             const { id, _id } = res.data;
             API.logVersion({ id, _id })
             .then(res => console.log("Version logged!", res))
@@ -91,7 +82,7 @@ class SearchCarousel extends React.Component {
     }
 
     nextRecipe = () => {
-        const newIndex = this.state.currIndex + 1
+        const newIndex = this.state.currIndex + 1;
         this.setState({
             recipe: this.state.recipes[newIndex],
             currIndex: newIndex

@@ -10,6 +10,12 @@ router.route("/")
 router.route("/saveversion")
     .post(recipeController.saveVersion)
 
+router.route("/savecomment")
+    .post(recipeController.saveComment)
+
+router.route("/comments/:id")
+    .get(recipeController.getComments)
+
 router.route("/logversion")
     .post(recipeController.logVersion)
 

@@ -3,14 +3,8 @@ import axios from "axios";
 
 export default {
 
-  // Saves user 
-  saveUser: function(userId) {
-    console.log("Inside API route saveUser", userId)
-  },
-
   // Searches all seed data recipes
   searchRecipes: function(searchTerm) {
-    console.log("SEARCH TERM", searchTerm)
     return axios.get("/api/recipes/search/" + searchTerm);
   },
   // Gets all saved OriginalRecipes
@@ -19,11 +13,9 @@ export default {
   },
   // Gets all saved CopyRecipes and OriginalRecipes
   loadMostRecentlySavedVersion: function(_id) {
-    console.log("Inside loadMostRecentlySavedVersion route", _id)
     return axios.get("/api/recipes/" + _id);
   },
   listAllVersions: function(id) {
-    console.log('Inside listAllVersions route', id)
     return axios.get('/api/recipes/listallversions/' + id)
   },
   deleteRecipe: function(id) {
@@ -31,25 +23,28 @@ export default {
   },
   // Saves a recipe to the database from front end "Get Inspired" different from saving updated version of an already saved recipe.
   saveRecipe: function(recipe) {
-    console.log("RECIPE", recipe)
     return axios.post("/api/recipes", recipe)
   },
   saveVersion: function(version) {
-    console.log("version", version)
     return axios.post("api/recipes/saveversion", version)
   },
   logVersion: function(version) {
-    console.log("Version Route", version);
     return axios.post("api/recipes/logversion", version)
   },
   // YouTube Search
   videoSearch: function(searchTerm) {
     return axios.get("/api/videos/" + searchTerm)
   },
-  // saveComment: function() {
-  //   console.log("Inside API routes saveComment");
-  //   return axios.post("/api/recipes/")
-  // }
+  // Save comment
+  saveComment: function(comment) {
+    console.log("Inside API routes saveComment", comment);
+    return axios.post("/api/recipes/savecomment", comment)
+  },
+
+  getComments: function(id) {
+    console.log("Inside API routes getComments", id);
+    return axios.get('/api/recipes/comments/' + id)
+  },
 
     // logs in user
     login: function(loginInfo) {
