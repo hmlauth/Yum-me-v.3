@@ -152,20 +152,10 @@ module.exports = {
         db.User.findOne({_id: req.session.passport.user})
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
-        .then(dbUser => {
-            var allVersions = [];
-            for (let i = 0; i < dbUser.version.length; i++) {
-                let recipe = dbUser.version[i];
-                if (recipe.recipeId === req.params.id) {
-                    console.log(recipe.recipeMongoId.length)
-                    for (let i = recipe.recipeMongoId.length - 1; i >= 0 ; --i) {
-                        allVersions.push(recipe.recipeMongoId[i])
-                    }
-                    
-                }
-            }
-            res.json(allVersions)
-        })
+        .then(dbUser => 
+            res.json(orderNewestToOldest(
+                dbUser.version.find(element => element.recipeId === req.params.id).recipeMongoId)
+            ))
     },
     saveComment: function(req, res) {
         db.Comment.create(req.body)
@@ -183,17 +173,19 @@ module.exports = {
         db.User.findOne({_id: req.session.passport.user})
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'commentId'}})
-        .then(dbUser => {
-            var comments = [];
-            for (let i = 0; i < dbUser.version.length; i++) {
-                let recipe = dbUser.version[i];
-                if (recipe.recipeId === req.params.id) {
-                    for (let i = recipe.commentId.length - 1; i >= 0 ; --i) {
-                        comments.push(recipe.commentId[i])
-                    }
-                }
-            }
-            res.json(comments)
-        })
+        .then(dbUser => 
+            res.json(orderNewestToOldest(
+                dbUser.version.find(element => element.recipeId === req.params.id).commentId)
+            ))
+
     }
+}
+
+// Helper function
+function orderNewestToOldest(input) {
+    var sortedArray = [];
+    for (let i = input.length - 1; i >= 0; --i) {
+        sortedArray.push(input[i])
+    }
+    return sortedArray
 }
