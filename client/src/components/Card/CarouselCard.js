@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { VersionBtn } from "../Buttons/VersionBtn";
 import "./style.css"
 
@@ -9,7 +10,7 @@ const CarouselCard = props => {
             <div className="details">
                 <p className="title">
                     {props.recipe.title}<br />
-                    {props.recipe.dateSaved}
+                    {moment(props.recipe.dateSaved).format('LLL')}
                 </p>
             </div>
             {props.isActive && (

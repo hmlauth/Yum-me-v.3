@@ -32,25 +32,11 @@ module.exports = {
         // Specific that we want to populate the retrieved User with any associated recipes
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
         .then(dbUser => {
-            let dbUserLength = dbUser.version.length;
-            let newDbUser = [];
-            let idCheck = [];
-            // most recent data stored at end of array. Iterate backwards over array and push only those with unique "id"
-            for (let i = dbUserLength - 1; i >= 0; --i) {
-            let recipe = dbUser.version[i];
-                if (newDbUser.length === 0) {
-                    idCheck.push(recipe.recipeId)
-                    newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
-                } else {
-                    for (let j = 0; j < idCheck.length; j++) {
-                        if (idCheck.includes(recipe.recipeId) === false) {
-                            idCheck.push(recipe.recipeId)
-                            newDbUser.push(recipe.recipeMongoId.slice(-1)[0])
-                        }
-                    }
-                }
-            }
-            res.json(newDbUser)
+            const recentlySavedRecipeVersions = [];
+            dbUser.version.forEach(element =>
+                recentlySavedRecipeVersions.push(element.recipeMongoId.slice(-1)[0])
+            )
+            res.json(recentlySavedRecipeVersions)
         })
         .catch(err => console.log("Version ERRR", err))
     }, 
@@ -69,20 +55,19 @@ module.exports = {
                     db.Recipe.create(req.body)
                     // Then also, push the recipe(id) to User
                     .then(dbRecipe => {
-                        
                         res.json(dbRecipe) // send created recipe back up to front end
-                        return db.User.updateOne(
+                        return db.User.updateOne( // update user with given mongoId
                             {_id: req.session.passport.user},
                             {$push: {recipeId: dbRecipe.id}}
                         )
                     })
-                } else if (dbUser[0].recipeId.length > 0) {
+                } else if (dbUser[0].recipeId.length > 0) { // if user has previously saved recipes
                     for (var i = 0; i < dbUser[0].recipeId.length; i++) {
-                        if (req.body.id != dbUser[0].recipeId[i]) {
-                            db.Recipe.create(req.body)
+                        if (req.body.id != dbUser[0].recipeId[i]) { // ensure recipeId does not exist
+                            db.Recipe.create(req.body) // save recipe
                                 .then(dbRecipe => {
-                                    res.json(dbRecipe)
-                                    return db.User.updateOne(
+                                    res.json(dbRecipe) // send newest recipe up to front end
+                                    return db.User.updateOne( // update user with given mongoId
                                         {_id: req.session.passport.user},
                                         {$push: {recipeId: dbRecipe.id}}
                                     )
@@ -147,7 +132,6 @@ module.exports = {
     },
     // From develop page, this function provides the information to list out versions in chronogical order
     listAllVersions: function(req, res) {
-
         // Find User
         db.User.findOne({_id: req.session.passport.user})
         // Specific that we want to populate the retrieved User with any associated recipes

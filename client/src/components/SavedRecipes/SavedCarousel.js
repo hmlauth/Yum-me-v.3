@@ -23,10 +23,8 @@ class SavedCarousel extends React.Component {
     };
 
     loadSavedRecipes = () => {
-        console.log("...loading saved recipes")
         API.getSavedRecipes()
             .then(res => {
-                console.log("\nPOPULATED RESPONSE.DATA", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
@@ -54,17 +52,13 @@ class SavedCarousel extends React.Component {
     }
 
     deleteRecipe = id => {
-    console.log("...deleting recipe", id);
       API.deleteRecipe(id)
         .then(res => this.loadSavedRecipes())
         .catch(err => console.log(err));
     }
 
     render() {
-        console.log("State Recipes", this.state.recipes)
         const { initialIndex, recipes, recipe, currIndex } = this.state;
-        console.log('recipes', recipes);
-        console.log('recipe', recipe);
 
         return (
                  <div className="carousel-saved">
