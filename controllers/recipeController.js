@@ -33,9 +33,16 @@ module.exports = {
         .populate({path: 'version', populate: {path: 'recipeMongoId'}})
         .then(dbUser => {
             const recentlySavedRecipeVersions = [];
-            dbUser.version.forEach(element =>
-                recentlySavedRecipeVersions.push(element.recipeMongoId.slice(-1)[0])
-            )
+            dbUser.version.forEach(element => {
+                let [ last ] = element.recipeMongoId.reverse()
+                recentlySavedRecipeVersions.push(last)
+            })            
+            // a is the current index, b is the next index
+            recentlySavedRecipeVersions.sort(function(a, b) {
+                a = new Date(a.dateSaved);
+                b = new Date(b.dateSaved);
+                return a>b ? -1 : a<b ? 1 : 0;
+            });
             res.json(recentlySavedRecipeVersions)
         })
         .catch(err => console.log("Version ERRR", err))
