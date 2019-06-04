@@ -2,7 +2,6 @@
 const router = require("express").Router();
 const YTSearch = require('youtube-api-search');
 const API_KEY = process.env.API_KEY;
-console.log('api key', API_KEY)
 
 // Match "/api/videos"
 router.route("/:search")

@@ -2,7 +2,6 @@ import React from "react";
 import API from "../../utils/API";
 import CarouselCard from "../Card/CarouselCard";
 import "./style.scss"
-import { Button, Icon } from 'semantic-ui-react'
 
 
 class SavedCarousel extends React.Component {
@@ -25,6 +24,7 @@ class SavedCarousel extends React.Component {
     loadSavedRecipes = () => {
         API.getSavedRecipes()
             .then(res => {
+                console.log("Loading Saved Recipes", res.data)
                 this.setState({
                     recipes: res.data,
                     recipe: res.data[0],
@@ -51,13 +51,16 @@ class SavedCarousel extends React.Component {
         })
     }
 
-    deleteRecipe = id => {
-      API.deleteRecipe(id)
-        .then(res => this.loadSavedRecipes())
-        .catch(err => console.log(err));
+    deleteRecipe = (_id) => {
+        console.log("Inside deleteRecipe _id", _id);
+        API.deleteRecipe(_id)
+            .then(res => this.loadSavedRecipes())
+            .catch(err => console.log(err));
     }
 
     render() {
+        console.log(this.state.recipes.length)
+
         const { initialIndex, recipes, recipe, currIndex } = this.state;
 
         return (
@@ -85,7 +88,8 @@ class SavedCarousel extends React.Component {
                                     _id={r._id}
                                     id={r.id}
                                     recipe={r} 
-                                    isActive={r.id === recipe.id} 
+                                    isActive={r.id === recipe.id}
+                                    onClick={this.deleteRecipe} 
                                 />)
                             }
 
