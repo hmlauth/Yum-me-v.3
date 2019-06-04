@@ -91,7 +91,6 @@ module.exports = {
     },
     // Delete from database (not functional yet)
     remove: function(req, res) {
-        console.log('Inside recipeController', req.params.id)
         // find model
         db.Recipe.findById({ _id: req.params.id })
                 .then(dbModel => {
@@ -107,6 +106,7 @@ module.exports = {
                             return version.recipeId === dbModelRecipeId
                         })
 
+                        // extract ids
                         const versionMongoId = version[0]._id;
                         const versionRecipeId = version[0].recipeId;
 
@@ -115,12 +115,14 @@ module.exports = {
                             {_id: req.session.passport.user},
                             {$pull: {version: versionMongoId}, }
                         ).then(dbUser => console.log(dbUser))
+                        .catch(err => res.status(422).json(err))  
 
                         // Remove the version's recipeId reference from the user
                         db.User.updateOne(
                             {_id: req.session.passport.user},
                             {$pull: {recipeId: versionRecipeId}}
                         ).then(dbUser => console.log(dbUser))
+                        .catch(err => res.status(422).json(err))  
 
                         // Remove the version from the database
                         db.Version.findOneAndDelete({_id: versionMongoId})
@@ -128,7 +130,7 @@ module.exports = {
                         .catch(err => res.status(422).json(err))  
                         
                         dbModel.remove()
-                        
+
                         })
                     })
 
@@ -219,26 +221,3 @@ function orderNewestToOldest(input) {
     }
     return sortedArray
 }
-
-
-
-
-// dbUser.recipeId.map((cv, i, arr) => {
-//     console.log('arr inside map', arr)
-//     if (cv === dbModelRecipeId) {
-//         console.log('\n**********\n')
-//         console.log(arr);
-//         console.log(i)
-//         console.log(arr[i]);
-//         console.log('\n**********\n')
-//         return arr.splice(i,1)
-//     }
-// })
-// dbUser.version.map((version, versionIndex, versionArr) => {
-//     console.log("\n ******* \npopulated VERSION arr", versionArr);
-//     version.recipeMongoId.map( recipe => {
-//         if (recipe._id.toString() == dbModelMongoId.toString()) {
-//             return versionArr.splice(versionIndex,1)
-//         }
-//     })  
-// })
