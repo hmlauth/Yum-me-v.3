@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { VersionBtn } from "../Buttons/VersionBtn";
+import { DeleteBtn } from "../Buttons/DeleteBtn"
 import "./style.css"
 
 const CarouselCard = props => {
@@ -14,11 +15,18 @@ const CarouselCard = props => {
                 </p>
             </div>
             {props.isActive && (
-                <VersionBtn 
-                    recipe={props.recipe}
-                    _id={props._id}
-                    id={props.id}
-                    />
+                <div>
+                    <VersionBtn 
+                        recipe={props.recipe}
+                        _id={props._id}
+                        id={props.id}
+                        />
+                    <DeleteBtn
+                        _id={props._id}
+                        id={props.id} 
+                        onClick={props.onClick} 
+                    /> 
+                </div>
             )}
             
             

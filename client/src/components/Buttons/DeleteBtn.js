@@ -1,9 +1,10 @@
 import React from "react";
 
 export const DeleteBtn = props => {
+  const { _id } = props;
   return (
-    <button className="btn btn-warn delete-btn" 
-      onClick={() => props.onClick(props.id)} >
+    <button className="btn delete-btn"
+      onClick={() => props.onClick(_id)} >
         Delete
     </button>
   )

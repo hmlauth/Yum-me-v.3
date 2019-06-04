@@ -91,10 +91,47 @@ module.exports = {
     },
     // Delete from database (not functional yet)
     remove: function(req, res) {
+        console.log('Inside recipeController', req.params.id)
+        // find model
         db.Recipe.findById({ _id: req.params.id })
-            .then(dbModel => dbModel.remove())
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err))
+                .then(dbModel => {
+                    // then using model information update user's information
+                    const dbModelMongoId = dbModel._id;
+                    const dbModelRecipeId = dbModel.id;
+
+                    db.User.findOne({_id: req.session.passport.user})
+                    // Specific that we want to populate the retrieved User with any associated recipes
+                    .populate({path: 'version', populate: {path: 'recipeMongoId'}})
+                    .then(dbUser => {
+                        const version = dbUser.version.filter(version => {
+                            return version.recipeId === dbModelRecipeId
+                        })
+
+                        const versionMongoId = version[0]._id;
+                        const versionRecipeId = version[0].recipeId;
+
+                        db.User.update(
+                            {_id: req.session.passport.user},
+                            {$pull: {version: versionMongoId}, }
+                        )
+                        .then(dbUser => console.log(dbUser))
+
+                        db.User.update(
+                            {_id: req.session.passport.user},
+                            {$pull: {recipeId: versionRecipeId}}
+                        )
+                        .then(dbUser => console.log(dbUser))
+
+                        })
+                                            
+                    })
+
+                    // remove recipe
+                    // remove version
+
+                    // dbModel.remove()
+                .then(dbModel => res.json(dbModel))
+                .catch(err => res.status(422).json(err))
     },  
     // From develop page, this function saves a copy of the recipe after updates have been made.
     saveVersion: function(req, res) {
@@ -180,3 +217,26 @@ function orderNewestToOldest(input) {
     }
     return sortedArray
 }
+
+
+
+
+// dbUser.recipeId.map((cv, i, arr) => {
+//     console.log('arr inside map', arr)
+//     if (cv === dbModelRecipeId) {
+//         console.log('\n**********\n')
+//         console.log(arr);
+//         console.log(i)
+//         console.log(arr[i]);
+//         console.log('\n**********\n')
+//         return arr.splice(i,1)
+//     }
+// })
+// dbUser.version.map((version, versionIndex, versionArr) => {
+//     console.log("\n ******* \npopulated VERSION arr", versionArr);
+//     version.recipeMongoId.map( recipe => {
+//         if (recipe._id.toString() == dbModelMongoId.toString()) {
+//             return versionArr.splice(versionIndex,1)
+//         }
+//     })  
+// })
