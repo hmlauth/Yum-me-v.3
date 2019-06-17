@@ -51,7 +51,9 @@ Initialize the `package.json` file then install the following node packages:
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
  ```
-  
+### Run script
+<p>After mongod and mongo are running, run `node` to insert `seedData`</p>
+
 ### Technologies Used
 - MERN Stack
 - `Passport` user authentication
