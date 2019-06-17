@@ -52,7 +52,7 @@ Initialize the `package.json` file then install the following node packages:
     "path": "^0.12.7",
  ```
 ### Run script
-<p>After mongod and mongo are running, run `node` to insert `seedData`</p>
+<p>After mongod and mongo are running, run `node scripts/seedData.js` to insert seed data.</p>
 
 ### Technologies Used
 - MERN Stack
